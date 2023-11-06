@@ -52,7 +52,7 @@ public enum Router: URLRequestConvertible {
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
         urlRequest.headers = headers
-        print(url)
+        print(urlRequest)
         
         let encoding: ParameterEncoding = {
         switch method {

@@ -25,11 +25,13 @@ struct Country: Codable {
     let languages: [String: String]?
     let translations: [String: Translation]?
     let latlng: [Double]?
+    let landlocked: Bool?
     let area: Double?
     let demonyms: Demonyms?
     let flag: String?
     let maps: Maps?
     let population: Int?
+    let fifa: String?
     let car: Car?
     let timezones: [String]?
     let continents: [Continent]?
@@ -38,7 +40,9 @@ struct Country: Codable {
     let startOfWeek: StartOfWeek?
     let capitalInfo: CapitalInfo?
     let postalCode: PostalCode?
+    let cioc: String?
     let borders: [String]?
+    let gini: [String: Double]?
 }
 
 // MARK: - CapitalInfo
@@ -359,5 +363,6 @@ enum Status: String, Codable {
     case officiallyAssigned = "officially-assigned"
     case userAssigned = "user-assigned"
 }
+
 
 

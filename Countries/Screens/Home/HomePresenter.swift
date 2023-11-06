@@ -7,6 +7,15 @@
 
 import Foundation
 
-class HomePresenter {
+class HomePresenter: HomeViewToPresenterProtocol {
+    var view: HomePresenterToViewProtocol?
+    var interactor: HomePresenterToInteractorProtocol? = HomeInteractor()
+    
+    func updateUI() {
+        interactor?.fetchAllCountries()
+    }
+    
     
 }
+
+extension HomePresenter: HomeInteractorToPresenterProtocol { }

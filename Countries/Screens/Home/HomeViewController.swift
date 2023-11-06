@@ -8,11 +8,19 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    var presenter: HomeViewToPresenterProtocol? = HomePresenter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemMint
+        
+        getDatas()
+    }
+    
+    private func getDatas() {
+        presenter?.updateUI()
     }
 
 }
+
+extension HomeViewController: HomePresenterToViewProtocol { }
