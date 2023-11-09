@@ -6,15 +6,22 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HomePresenterToViewProtocol: AnyObject {
     var presenter: HomeViewToPresenterProtocol? { get set }
+    
+    func showCountries()
 }
 
 protocol HomeViewToPresenterProtocol: AnyObject {
     var view: HomePresenterToViewProtocol? { get set }
+    var interactor: HomePresenterToInteractorProtocol? { get set }
+    var router: HomePresenterToRouterProtocol? { get set }
     
     func updateUI()
+    func getAllCountries() -> [Country]?
+    func getCountryListCount() -> Int?
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
@@ -24,6 +31,12 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     func fetchAllCountries()
 }
 
-protocol HomeInteractorToPresenterProtocol: AnyObject {
-    var interactor: HomePresenterToInteractorProtocol? { get set }
+protocol HomeInteractorToPresenterProtocol: AnyObject {    
+    func successfullyFetched()
+}
+
+protocol HomePresenterToRouterProtocol {
+    var viewController: UIViewController? { get set }
+    
+    static func createModule() -> UIViewController
 }

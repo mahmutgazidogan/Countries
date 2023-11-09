@@ -8,14 +8,27 @@
 import Foundation
 
 class HomePresenter: HomeViewToPresenterProtocol {
+    
     var view: HomePresenterToViewProtocol?
-    var interactor: HomePresenterToInteractorProtocol? = HomeInteractor()
+    var interactor: HomePresenterToInteractorProtocol?
+    var router: HomePresenterToRouterProtocol?
     
     func updateUI() {
         interactor?.fetchAllCountries()
     }
     
+    func getAllCountries() -> [Country]? {
+        return interactor?.countryList
+    }
+
+    func getCountryListCount() -> Int? {
+        return interactor?.countryList?.count
+    }
     
 }
 
-extension HomePresenter: HomeInteractorToPresenterProtocol { }
+extension HomePresenter: HomeInteractorToPresenterProtocol {
+    func successfullyFetched() {
+        view?.showCountries()
+    }
+}
