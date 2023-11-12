@@ -25,10 +25,24 @@ class HomePresenter: HomeViewToPresenterProtocol {
         return interactor?.countryList?.count
     }
     
+    func getFilteredCountries(searchText: String) {
+        interactor?.filteredCountries(searchText: searchText)
+    }
+    
 }
 
 extension HomePresenter: HomeInteractorToPresenterProtocol {
+    
     func successfullyFetched() {
         view?.showCountries()
     }
+    
+    func startAnimating() {
+        view?.startAnimating()
+    }
+    
+    func stopAnimating() {
+        view?.stopAnimating()
+    }
+    
 }

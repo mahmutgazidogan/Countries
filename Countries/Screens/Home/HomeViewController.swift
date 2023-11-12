@@ -10,7 +10,7 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
-    var presenter: HomeViewToPresenterProtocol? //= HomePresenter()
+    var presenter: HomeViewToPresenterProtocol?
     
     private lazy var searchBar: UISearchBar = {
         let search = UISearchBar()
@@ -37,6 +37,13 @@ class HomeViewController: UIViewController {
         cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
         return cv
     }()
+    
+    private lazy var indicator: UIActivityIndicatorView = {
+        let ind = UIActivityIndicatorView()
+        ind.color = .black
+        ind.style = .large
+        return ind
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +54,10 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         searchBar.layer.cornerRadius = 20
-        searchBar.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
+        searchBar.layer.maskedCorners = [.layerMaxXMaxYCorner,
+                                         .layerMaxXMinYCorner,
+                                         .layerMinXMaxYCorner,
+                                         .layerMinXMinYCorner]
         searchBar.layer.masksToBounds = true
         searchBar.layer.borderColor = UIColor.gray.cgColor
         searchBar.layer.borderWidth = 0.5
@@ -64,7 +74,8 @@ class HomeViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         view.addSubviews(searchBar,
                          titleLabel,
-                         collectionView)
+                         collectionView,
+                         indicator)
         
         setupLayouts()
     }
@@ -87,39 +98,83 @@ class HomeViewController: UIViewController {
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        indicator.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+        
     }
     
 }
 
 extension HomeViewController: HomePresenterToViewProtocol {
+    
     func showCountries() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
+    
+    func startAnimating() {
+        indicator.startAnimating()
+    }
+    
+    func stopAnimating() {
+        indicator.stopAnimating()
+    }
+    
 }
 
-extension HomeViewController: UISearchBarDelegate { }
+extension HomeViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            presenter?.interactor?.isSearching = false
+        } else {
+            presenter?.interactor?.isSearching = true
+            presenter?.getFilteredCountries(searchText: searchText)
+            showCountries()
+        }
+    }
+    
+
+    
+}
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: collectionView.frame.width / 2.4 , height: 150)
         return size
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter?.getCountryListCount() ?? 0
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        if presenter?.interactor?.isSearching == false {
+            return presenter?.getCountryListCount() ?? 0
+        } else {
+            return presenter?.interactor?.filteredCountries?.count ?? 0
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
-        let countries = presenter?.getAllCountries()
-        cell.configure(model: countries![indexPath.row])
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
+                                                            for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
+        if presenter?.interactor?.isSearching == false {
+            if let allCountries = presenter?.getAllCountries() {
+                cell.configure(model: allCountries[indexPath.row])
+            }
+        } else {
+            if let searchedCountries = presenter?.interactor?.filteredCountries {
+                cell.configure(model: searchedCountries[indexPath.row])
+            }
+        }
         return cell
     }
-    
     
 }
 
