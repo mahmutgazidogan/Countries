@@ -17,16 +17,24 @@ class HomePresenter: HomeViewToPresenterProtocol {
         interactor?.fetchAllCountries()
     }
     
-    func getAllCountries() -> [Country]? {
-        return interactor?.countryList
+    func getFilteredByContinents() -> [Country]? {
+        return interactor?.filterByContinents()
     }
-
-    func getCountryListCount() -> Int? {
-        return interactor?.countryList?.count
+    
+    func getCountOfFilteredByContinents() -> Int? {
+        return interactor?.countOfFilteredByContinents()
     }
     
     func getFilteredCountries(searchText: String) {
         interactor?.filteredCountries(searchText: searchText)
+    }
+    
+    func getCountOfFilteredCountries() -> Int? {
+        return interactor?.countOfFilteredCountries()
+    }
+    
+    func getSegmentIndex() -> Int? {
+        return interactor?.findSegmentIndex()
     }
     
 }

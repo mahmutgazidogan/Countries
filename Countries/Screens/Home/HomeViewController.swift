@@ -11,6 +11,7 @@ import SnapKit
 class HomeViewController: UIViewController {
     
     var presenter: HomeViewToPresenterProtocol?
+//    var selectedContinent: Continent = .africa
     
     private lazy var searchBar: UISearchBar = {
         let search = UISearchBar()
@@ -38,17 +39,29 @@ class HomeViewController: UIViewController {
         return cv
     }()
     
+    private lazy var segmented: UISegmentedControl = {
+        let segment = UISegmentedControl()
+        segment.backgroundColor = .white
+        segment.selectedSegmentTintColor = .systemRed
+        segment.selectedSegmentIndex = 0
+        segment.apportionsSegmentWidthsByContent = true
+        segment.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 8)], for: .normal)
+        segment.addTarget(self, action: #selector(segmentedValueChanged), for: .valueChanged)
+        return segment
+    }()
+    
     private lazy var indicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
         ind.color = .black
         ind.style = .large
         return ind
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
+        titleForSegmentedControl()
         getDatas()
     }
     
@@ -63,6 +76,28 @@ class HomeViewController: UIViewController {
         searchBar.layer.borderWidth = 0.5
     }
     
+    @objc private func segmentedValueChanged(sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+        guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
+              let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
+        presenter?.interactor?.selectedContinent = selectedContinent
+        
+        let desiredOffset = CGPoint(x: 0, y: 0)
+        collectionView.setContentOffset(desiredOffset, animated: true)
+        
+        showCountries()
+    }
+    
+    private func titleForSegmentedControl() {
+        UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
+        let allContinents = Continent.allCases.map {
+            $0.rawValue
+        }
+        for (index, title) in allContinents.enumerated() {
+            segmented.insertSegment(withTitle: title, at: index, animated: true)
+        }
+    }
+    
     private func getDatas() {
         presenter?.updateUI()
     }
@@ -74,6 +109,7 @@ class HomeViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         view.addSubviews(searchBar,
                          titleLabel,
+                         segmented,
                          collectionView,
                          indicator)
         
@@ -94,8 +130,15 @@ class HomeViewController: UIViewController {
             make.leading.equalToSuperview().offset(20)
         }
         
+        segmented.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.height.equalTo(30)
+        }
+        
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom)
+            make.top.equalTo(segmented.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
@@ -126,18 +169,30 @@ extension HomeViewController: HomePresenterToViewProtocol {
 }
 
 extension HomeViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
         if searchText == "" {
             presenter?.interactor?.isSearching = false
         } else {
             presenter?.interactor?.isSearching = true
             presenter?.getFilteredCountries(searchText: searchText)
+            guard let segmentIndex = presenter?.getSegmentIndex() else { return }
+            segmented.selectedSegmentIndex = segmentIndex
+            segmentedValueChanged(sender: segmented)
             showCountries()
         }
     }
     
-
-    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchText == "" {
+//            presenter?.interactor?.isSearching = false
+//        } else {
+//            presenter?.interactor?.isSearching = true
+//            presenter?.getFilteredCountries(searchText: searchText)
+//            showCountries()
+//        }
+//    }
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
@@ -154,10 +209,12 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         if presenter?.interactor?.isSearching == false {
-            return presenter?.getCountryListCount() ?? 0
+            return presenter?.getCountOfFilteredByContinents() ?? 0
         } else {
-            return presenter?.interactor?.filteredCountries?.count ?? 0
+            return presenter?.getCountOfFilteredCountries() ?? 0
         }
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -165,12 +222,11 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
                                                             for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         if presenter?.interactor?.isSearching == false {
-            if let allCountries = presenter?.getAllCountries() {
-                cell.configure(model: allCountries[indexPath.row])
-            }
+            guard let filteredByContinents = presenter?.getFilteredByContinents() else { return UICollectionViewCell() }
+            cell.configure(model: filteredByContinents[indexPath.item])
         } else {
             if let searchedCountries = presenter?.interactor?.filteredCountries {
-                cell.configure(model: searchedCountries[indexPath.row])
+                cell.configure(model: searchedCountries[indexPath.item])
             }
         }
         return cell

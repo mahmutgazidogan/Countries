@@ -14,6 +14,7 @@ protocol HomePresenterToViewProtocol: AnyObject {
     func showCountries()
     func startAnimating()
     func stopAnimating()
+    
 }
 
 protocol HomeViewToPresenterProtocol: AnyObject {
@@ -22,25 +23,33 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     var router: HomePresenterToRouterProtocol? { get set }
     
     func updateUI()
-    func getAllCountries() -> [Country]?
-    func getCountryListCount() -> Int?
+    func getFilteredByContinents() -> [Country]?
+    func getCountOfFilteredByContinents() -> Int?
     func getFilteredCountries(searchText: String)
+    func getCountOfFilteredCountries() -> Int?
+    func getSegmentIndex() -> Int?
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
     var presenter: HomeInteractorToPresenterProtocol? { get set }
     var countryList: Countries? { get }
+    var selectedContinent: Continent { get set }
     var filteredCountries: Countries? { get }
     var isSearching: Bool { get set }
-    
+        
     func fetchAllCountries()
+    func filterByContinents() -> [Country]?
+    func countOfFilteredByContinents() -> Int?
     func filteredCountries(searchText: String)
+    func countOfFilteredCountries() -> Int?
+    func findSegmentIndex() -> Int?
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    
     func successfullyFetched()
     func startAnimating()
     func stopAnimating()
+    
 }
 
 protocol HomePresenterToRouterProtocol {

@@ -67,7 +67,7 @@ struct CoatOfArms: Codable {
     let svg: String?
 }
 
-enum Continent: String, Codable {
+enum Continent: String, Codable, CaseIterable {
     case africa = "Africa"
     case antarctica = "Antarctica"
     case asia = "Asia"
