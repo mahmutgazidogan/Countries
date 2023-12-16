@@ -11,12 +11,14 @@ import SnapKit
 class HomeViewController: UIViewController {
     
     var presenter: HomeViewToPresenterProtocol?
-//    var selectedContinent: Continent = .africa
     
-    private lazy var searchBar: UISearchBar = {
-        let search = UISearchBar()
-        search.placeholder = "Search any country..."
+    private lazy var searchController: UISearchController = {
+        let search = UISearchController(searchResultsController: nil)
+        search.searchBar.placeholder = "Search any country..."
+        search.searchResultsUpdater = self
         search.delegate = self
+        search.searchBar.tintColor = .black
+        search.searchBar.searchTextField.backgroundColor = .white
         return search
     }()
     
@@ -65,17 +67,6 @@ class HomeViewController: UIViewController {
         getDatas()
     }
     
-    override func viewDidLayoutSubviews() {
-        searchBar.layer.cornerRadius = 20
-        searchBar.layer.maskedCorners = [.layerMaxXMaxYCorner,
-                                         .layerMaxXMinYCorner,
-                                         .layerMinXMaxYCorner,
-                                         .layerMinXMinYCorner]
-        searchBar.layer.masksToBounds = true
-        searchBar.layer.borderColor = UIColor.gray.cgColor
-        searchBar.layer.borderWidth = 0.5
-    }
-    
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
         let selectedIndex = sender.selectedSegmentIndex
         guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
@@ -89,7 +80,6 @@ class HomeViewController: UIViewController {
     }
     
     private func titleForSegmentedControl() {
-        UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
         let allContinents = Continent.allCases.map {
             $0.rawValue
         }
@@ -104,11 +94,10 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = .systemYellow
-        searchBar.searchTextField.backgroundColor = .white
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         collectionView.backgroundColor = .systemYellow
-        navigationController?.isNavigationBarHidden = true
-        view.addSubviews(searchBar,
-                         titleLabel,
+        view.addSubviews(titleLabel,
                          segmented,
                          collectionView,
                          indicator)
@@ -118,15 +107,8 @@ class HomeViewController: UIViewController {
     
     private func setupLayouts() {
         
-        searchBar.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
-        }
-        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.equalToSuperview().offset(20)
         }
         
@@ -168,31 +150,20 @@ extension HomeViewController: HomePresenterToViewProtocol {
     
 }
 
-extension HomeViewController: UISearchBarDelegate {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else { return }
-        if searchText == "" {
-            presenter?.interactor?.isSearching = false
-        } else {
+extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        if !searchText.isEmpty {
             presenter?.interactor?.isSearching = true
             presenter?.getFilteredCountries(searchText: searchText)
             guard let segmentIndex = presenter?.getSegmentIndex() else { return }
             segmented.selectedSegmentIndex = segmentIndex
             segmentedValueChanged(sender: segmented)
             showCountries()
+        } else {
+            getDatas()
         }
     }
-    
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText == "" {
-//            presenter?.interactor?.isSearching = false
-//        } else {
-//            presenter?.interactor?.isSearching = true
-//            presenter?.getFilteredCountries(searchText: searchText)
-//            showCountries()
-//        }
-//    }
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
@@ -208,7 +179,8 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        if presenter?.interactor?.isSearching == false {
+        guard let searchText = searchController.searchBar.text else { return 0 }
+        if searchText.isEmpty {
             return presenter?.getCountOfFilteredByContinents() ?? 0
         } else {
             return presenter?.getCountOfFilteredCountries() ?? 0
@@ -221,13 +193,13 @@ extension HomeViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
                                                             for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
-        if presenter?.interactor?.isSearching == false {
+        guard let searchText = searchController.searchBar.text else { return UICollectionViewCell() }
+        if searchText.isEmpty {
             guard let filteredByContinents = presenter?.getFilteredByContinents() else { return UICollectionViewCell() }
             cell.configure(model: filteredByContinents[indexPath.item])
         } else {
-            if let searchedCountries = presenter?.interactor?.filteredCountries {
+            guard let searchedCountries = presenter?.interactor?.filteredCountries else { return UICollectionViewCell() }
                 cell.configure(model: searchedCountries[indexPath.item])
-            }
         }
         return cell
     }

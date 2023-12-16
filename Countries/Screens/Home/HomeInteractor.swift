@@ -53,19 +53,11 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     }
     
     func filteredCountries(searchText: String) {
-//        guard let searchedCountries = filterByContinents() else { return }
         filteredCountries = countryList?.filter({ country in
-            country.name?.common?.lowercased().contains(searchText.lowercased()) ?? false
+            guard let countryName = country.name?.common else { return false }
+            return countryName.lowercased().contains(searchText.lowercased())
         })
         self.presenter?.successfullyFetched()
-        
-        
-//        let filterByContinents = filterByContinents()
-//        filteredCountries = filterByContinents?.filter({ country in
-//            country.name?.common?.lowercased().contains(searchText.lowercased()) ?? false
-//        })
-//        presenter?.successfullyFetched()
-        
     }
     
     func countOfFilteredCountries() -> Int? {
@@ -73,13 +65,14 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     }
     
     func findSegmentIndex() -> Int? {
-        var segmentIndex: Int?
         guard let firstResult = filteredCountries?.first,
               let continents = firstResult.continents else { return nil }
-        for continent in continents {
-            segmentIndex = Continent.allCases.lastIndex(of: continent)
+        for (_, continent) in continents.enumerated() {
+            if let segmentIndex = Continent.allCases.firstIndex(of: continent) {
+                return segmentIndex
+            }
         }
-        return segmentIndex
+        return nil
     }
     
 }

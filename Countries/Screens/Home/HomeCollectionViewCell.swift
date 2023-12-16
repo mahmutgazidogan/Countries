@@ -15,7 +15,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleToFill
         iv.clipsToBounds = true
         return iv
     }()
