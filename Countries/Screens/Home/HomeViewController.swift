@@ -45,7 +45,6 @@ class HomeViewController: UIViewController {
         let segment = UISegmentedControl()
         segment.backgroundColor = .white
         segment.selectedSegmentTintColor = .systemRed
-        segment.selectedSegmentIndex = 0
         segment.apportionsSegmentWidthsByContent = true
         segment.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 8)], for: .normal)
         segment.addTarget(self, action: #selector(segmentedValueChanged), for: .valueChanged)
@@ -63,7 +62,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        titleForSegmentedControl()
         getDatas()
     }
     
@@ -71,12 +69,15 @@ class HomeViewController: UIViewController {
         let selectedIndex = sender.selectedSegmentIndex
         guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
               let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
+        searchController.searchBar.text?.removeAll()
         presenter?.interactor?.selectedContinent = selectedContinent
-        
+        backToTop()
+        showCountries()
+    }
+    
+    private func backToTop() {
         let desiredOffset = CGPoint(x: 0, y: 0)
         collectionView.setContentOffset(desiredOffset, animated: true)
-        
-        showCountries()
     }
     
     private func titleForSegmentedControl() {
@@ -93,29 +94,24 @@ class HomeViewController: UIViewController {
     }
     
     private func setupViews() {
+        title = "Countries"
         view.backgroundColor = .systemYellow
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
         collectionView.backgroundColor = .systemYellow
-        view.addSubviews(titleLabel,
-                         segmented,
+        navigationItem.searchController = searchController
+        view.addSubviews(segmented,
                          collectionView,
                          indicator)
         
         setupLayouts()
+        titleForSegmentedControl()
+        segmented.selectedSegmentIndex = 0
     }
     
     private func setupLayouts() {
-        
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalToSuperview().offset(20)
-        }
-        
         segmented.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(5)
+            make.leading.equalToSuperview().offset(5)
+            make.trailing.equalToSuperview().offset(-5)
             make.height.equalTo(30)
         }
         
@@ -127,13 +123,10 @@ class HomeViewController: UIViewController {
         indicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
-        
     }
-    
 }
 
 extension HomeViewController: HomePresenterToViewProtocol {
-    
     func showCountries() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -147,22 +140,28 @@ extension HomeViewController: HomePresenterToViewProtocol {
     func stopAnimating() {
         indicator.stopAnimating()
     }
-    
 }
 
 extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        if !searchText.isEmpty {
-            presenter?.interactor?.isSearching = true
-            presenter?.getFilteredCountries(searchText: searchText)
-            guard let segmentIndex = presenter?.getSegmentIndex() else { return }
-            segmented.selectedSegmentIndex = segmentIndex
-            segmentedValueChanged(sender: segmented)
+        if searchText.isEmpty {
+            presenter?.interactor?.selectedContinent = .all
             showCountries()
         } else {
-            getDatas()
+            segmented.selectedSegmentIndex = 0
+            presenter?.getFilteredCountries(searchText: searchText)
+//            guard let segmentIndex = presenter?.getSegmentIndex() else { return }
+//            segmented.selectedSegmentIndex = segmentIndex
+//            segmentedValueChanged(sender: segmented)
+            showCountries()
         }
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        segmented.selectedSegmentIndex = 0
+        presenter?.interactor?.selectedContinent = .all
+        showCountries()
     }
 }
 
@@ -185,8 +184,6 @@ extension HomeViewController: UICollectionViewDataSource {
         } else {
             return presenter?.getCountOfFilteredCountries() ?? 0
         }
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView,

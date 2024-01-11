@@ -32,10 +32,9 @@ protocol HomeViewToPresenterProtocol: AnyObject {
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
     var presenter: HomeInteractorToPresenterProtocol? { get set }
-    var countryList: Countries? { get }
-    var selectedContinent: Continent { get set }
-    var filteredCountries: Countries? { get }
-    var isSearching: Bool { get set }
+    var countryList: Countries? { get set }
+    var selectedContinent: Continent? { get set }
+    var filteredCountries: Countries? { get set }
         
     func fetchAllCountries()
     func filterByContinents() -> [Country]?

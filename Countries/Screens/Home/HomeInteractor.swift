@@ -11,18 +11,15 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     
     var presenter: HomeInteractorToPresenterProtocol?
     var countryList: Countries? = []
-    var selectedContinent: Continent = .africa
     var filteredCountries: Countries? = []
-    var isSearching: Bool = false
-    
+    var selectedContinent: Continent? = .all
     
     func fetchAllCountries() {
         presenter?.startAnimating()
         NetworkingManager.shared.routerRequest(request: Router.allCountries) { (result: Result<Countries, Error>) in
             switch result {
             case .success(let data):
-                self.countryList = data
-                self.countryList = self.countryList?.sorted {
+                self.countryList = data.sorted {
                     $0.name?.common?.lowercased() ?? "" < $1.name?.common?.lowercased() ?? ""
                 }
                 self.presenter?.successfullyFetched()
@@ -33,18 +30,21 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
         }
     }
     
-    
     func filterByContinents() -> [Country]? {
         guard let countryList = self.countryList else { return [] }
-        let filteredByContinents = countryList.filter({ item in
-            if let continents = item.continents {
-                for continent in continents {
-                    return continent == selectedContinent
+        if selectedContinent == .all {
+            return countryList
+        } else {
+            let filteredByContinents = countryList.filter({ item in
+                if let continents = item.continents {
+                    for continent in continents {
+                        return continent == selectedContinent
+                    }
                 }
-            }
-            return true
-        })
-        return filteredByContinents
+                return true
+            })
+            return filteredByContinents
+        }
     }
     
     func countOfFilteredByContinents() -> Int? {
@@ -53,10 +53,15 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     }
     
     func filteredCountries(searchText: String) {
-        filteredCountries = countryList?.filter({ country in
-            guard let countryName = country.name?.common else { return false }
-            return countryName.lowercased().contains(searchText.lowercased())
-        })
+        if searchText == "" {
+            filteredCountries = countryList
+            self.presenter?.successfullyFetched()
+        } else {
+            filteredCountries = countryList?.filter({ country in
+                guard let countryName = country.name?.common else { return false }
+                return countryName.lowercased().hasPrefix(searchText.lowercased())
+            })
+        }
         self.presenter?.successfullyFetched()
     }
     
@@ -65,13 +70,13 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     }
     
     func findSegmentIndex() -> Int? {
-        guard let firstResult = filteredCountries?.first,
-              let continents = firstResult.continents else { return nil }
-        for (_, continent) in continents.enumerated() {
-            if let segmentIndex = Continent.allCases.firstIndex(of: continent) {
-                return segmentIndex
-            }
-        }
+//        guard let firstResult = filteredCountries?.first,
+//              let continents = firstResult.continents else { return nil }
+//        for (_, continent) in continents.enumerated() {
+//            if let segmentIndex = Continent.allCases.firstIndex(of: continent) {
+//                return segmentIndex
+//            }
+//        }
         return nil
     }
     

@@ -68,6 +68,7 @@ struct CoatOfArms: Codable {
 }
 
 enum Continent: String, Codable, CaseIterable {
+    case all = "All"
     case africa = "Africa"
     case antarctica = "Antarctica"
     case asia = "Asia"
