@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0AED6DE2B5AF17E00CC5D03 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */; };
+		C0AED6E02B5AF18B00CC5D03 /* DetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */; };
+		C0AED6E22B5AF1B100CC5D03 /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6E12B5AF1B100CC5D03 /* DetailsPresenter.swift */; };
+		C0AED6E42B5AF1BF00CC5D03 /* DetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6E32B5AF1BF00CC5D03 /* DetailsRouter.swift */; };
+		C0AED6E62B5AF24F00CC5D03 /* DetailsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6E52B5AF24F00CC5D03 /* DetailsProtocols.swift */; };
 		C0BDAF602AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BDAF5F2AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift */; };
 		C0BEDF042B39B3270036AC40 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C0BEDF032B39B3270036AC40 /* Alamofire */; };
 		C0BEDF072B39B3340036AC40 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C0BEDF062B39B3340036AC40 /* SnapKit */; };
@@ -20,13 +25,18 @@
 		C0D0B5272AF6635D0050DE2C /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B5262AF6635D0050DE2C /* HomePresenter.swift */; };
 		C0D0B5292AF6636B0050DE2C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B5282AF6636B0050DE2C /* HomeRouter.swift */; };
 		C0D0B52B2AF663850050DE2C /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B52A2AF663850050DE2C /* Entity.swift */; };
-		C0D0B5352AF664600050DE2C /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B5342AF664600050DE2C /* Protocols.swift */; };
+		C0D0B5352AF664600050DE2C /* HomeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B5342AF664600050DE2C /* HomeProtocols.swift */; };
 		C0D0B5382AF686030050DE2C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B5372AF686030050DE2C /* Extensions.swift */; };
 		C0D0B53B2AF687300050DE2C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B53A2AF687300050DE2C /* Router.swift */; };
 		C0D0B53D2AF6882E0050DE2C /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B53C2AF6882E0050DE2C /* NetworkingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInteractor.swift; sourceTree = "<group>"; };
+		C0AED6E12B5AF1B100CC5D03 /* DetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPresenter.swift; sourceTree = "<group>"; };
+		C0AED6E32B5AF1BF00CC5D03 /* DetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRouter.swift; sourceTree = "<group>"; };
+		C0AED6E52B5AF24F00CC5D03 /* DetailsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsProtocols.swift; sourceTree = "<group>"; };
 		C0BDAF5F2AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		C0D0B5072AF65C530050DE2C /* Countries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Countries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D0B50A2AF65C530050DE2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +49,7 @@
 		C0D0B5262AF6635D0050DE2C /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		C0D0B5282AF6636B0050DE2C /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		C0D0B52A2AF663850050DE2C /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
-		C0D0B5342AF664600050DE2C /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		C0D0B5342AF664600050DE2C /* HomeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocols.swift; sourceTree = "<group>"; };
 		C0D0B5372AF686030050DE2C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C0D0B53A2AF687300050DE2C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C0D0B53C2AF6882E0050DE2C /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
@@ -111,6 +121,7 @@
 		C0D0B5202AF662180050DE2C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C0D0B5342AF664600050DE2C /* HomeProtocols.swift */,
 				C0D0B5222AF662870050DE2C /* HomeViewController.swift */,
 				C0D0B5242AF663510050DE2C /* HomeInteractor.swift */,
 				C0D0B5262AF6635D0050DE2C /* HomePresenter.swift */,
@@ -124,6 +135,11 @@
 		C0D0B5212AF6621C0050DE2C /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				C0AED6E52B5AF24F00CC5D03 /* DetailsProtocols.swift */,
+				C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */,
+				C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */,
+				C0AED6E12B5AF1B100CC5D03 /* DetailsPresenter.swift */,
+				C0AED6E32B5AF1BF00CC5D03 /* DetailsRouter.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -131,7 +147,6 @@
 		C0D0B5332AF664510050DE2C /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				C0D0B5342AF664600050DE2C /* Protocols.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -234,16 +249,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0D0B50B2AF65C530050DE2C /* AppDelegate.swift in Sources */,
+				C0AED6E02B5AF18B00CC5D03 /* DetailsInteractor.swift in Sources */,
+				C0AED6E22B5AF1B100CC5D03 /* DetailsPresenter.swift in Sources */,
 				C0D0B5382AF686030050DE2C /* Extensions.swift in Sources */,
 				C0D0B53B2AF687300050DE2C /* Router.swift in Sources */,
+				C0AED6E42B5AF1BF00CC5D03 /* DetailsRouter.swift in Sources */,
 				C0D0B5292AF6636B0050DE2C /* HomeRouter.swift in Sources */,
 				C0D0B52B2AF663850050DE2C /* Entity.swift in Sources */,
+				C0AED6E62B5AF24F00CC5D03 /* DetailsProtocols.swift in Sources */,
 				C0D0B50D2AF65C530050DE2C /* SceneDelegate.swift in Sources */,
 				C0D0B5232AF662870050DE2C /* HomeViewController.swift in Sources */,
 				C0D0B53D2AF6882E0050DE2C /* NetworkingManager.swift in Sources */,
 				C0D0B5272AF6635D0050DE2C /* HomePresenter.swift in Sources */,
 				C0D0B5252AF663510050DE2C /* HomeInteractor.swift in Sources */,
-				C0D0B5352AF664600050DE2C /* Protocols.swift in Sources */,
+				C0D0B5352AF664600050DE2C /* HomeProtocols.swift in Sources */,
+				C0AED6DE2B5AF17E00CC5D03 /* DetailsViewController.swift in Sources */,
 				C0BDAF602AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

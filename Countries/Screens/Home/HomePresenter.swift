@@ -36,6 +36,15 @@ class HomePresenter: HomeViewToPresenterProtocol {
     func changeContinent(continent: Continent) {
         interactor?.changeContinent(continent: continent)
     }
+    
+    // MARK: - Presenter to Router - Navigation
+    
+    func didSelectItemAt(indexPath: IndexPath) {
+        if let country = interactor?.countryList?[indexPath.item] {
+            router?.navigateToDetails(selectedCountryDetails: country)
+        }
+        
+    }
 }
 
 extension HomePresenter: HomeInteractorToPresenterProtocol {

@@ -162,6 +162,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: collectionView.frame.width / 2.4 , height: 150)
         return size
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.didSelectItemAt(indexPath: indexPath)
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource {

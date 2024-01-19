@@ -27,6 +27,7 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     func getFilteredCountries(searchText: String)
     func getCountOfFilteredCountries() -> Int?
     func changeContinent(continent: Continent)
+    func didSelectItemAt(indexPath: IndexPath)
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
@@ -49,8 +50,9 @@ protocol HomeInteractorToPresenterProtocol: AnyObject {
     func stopAnimating()
 }
 
-protocol HomePresenterToRouterProtocol {
+protocol HomePresenterToRouterProtocol: AnyObject {
     var viewController: UIViewController? { get set }
     
     static func createModule() -> UIViewController
+    func navigateToDetails(selectedCountryDetails details: Country)
 }
