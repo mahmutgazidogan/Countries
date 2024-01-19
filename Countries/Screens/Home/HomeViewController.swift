@@ -22,13 +22,6 @@ class HomeViewController: UIViewController {
         return search
     }()
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Countries"
-        label.font = UIFont(name: "AvenirNext-Bold", size: 32)
-        return label
-    }()
-    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -70,12 +63,12 @@ class HomeViewController: UIViewController {
         guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
               let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
         searchController.searchBar.text?.removeAll()
-        presenter?.interactor?.selectedContinent = selectedContinent
-        backToTop()
+        presenter?.changeContinent(continent: selectedContinent)
+        backToTopWhenSegmentChanged()
         showCountries()
     }
     
-    private func backToTop() {
+    private func backToTopWhenSegmentChanged() {
         let desiredOffset = CGPoint(x: 0, y: 0)
         collectionView.setContentOffset(desiredOffset, animated: true)
     }
@@ -146,21 +139,18 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         if searchText.isEmpty {
-            presenter?.interactor?.selectedContinent = .all
+            presenter?.changeContinent(continent: .all)
             showCountries()
         } else {
             segmented.selectedSegmentIndex = 0
             presenter?.getFilteredCountries(searchText: searchText)
-//            guard let segmentIndex = presenter?.getSegmentIndex() else { return }
-//            segmented.selectedSegmentIndex = segmentIndex
-//            segmentedValueChanged(sender: segmented)
             showCountries()
         }
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
         segmented.selectedSegmentIndex = 0
-        presenter?.interactor?.selectedContinent = .all
+        presenter?.changeContinent(continent: .all)
         showCountries()
     }
 }
@@ -175,7 +165,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeViewController: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         guard let searchText = searchController.searchBar.text else { return 0 }
@@ -196,10 +185,9 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.configure(model: filteredByContinents[indexPath.item])
         } else {
             guard let searchedCountries = presenter?.interactor?.filteredCountries else { return UICollectionViewCell() }
-                cell.configure(model: searchedCountries[indexPath.item])
+            cell.configure(model: searchedCountries[indexPath.item])
         }
         return cell
     }
-    
 }
 

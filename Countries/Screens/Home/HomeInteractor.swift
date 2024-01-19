@@ -69,16 +69,8 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
         return filteredCountries?.count
     }
     
-    func findSegmentIndex() -> Int? {
-//        guard let firstResult = filteredCountries?.first,
-//              let continents = firstResult.continents else { return nil }
-//        for (_, continent) in continents.enumerated() {
-//            if let segmentIndex = Continent.allCases.firstIndex(of: continent) {
-//                return segmentIndex
-//            }
-//        }
-        return nil
+    func changeContinent(continent: Continent) {
+        selectedContinent = continent
     }
-    
 }
 

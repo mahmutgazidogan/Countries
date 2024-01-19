@@ -14,7 +14,6 @@ protocol HomePresenterToViewProtocol: AnyObject {
     func showCountries()
     func startAnimating()
     func stopAnimating()
-    
 }
 
 protocol HomeViewToPresenterProtocol: AnyObject {
@@ -27,7 +26,7 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     func getCountOfFilteredByContinents() -> Int?
     func getFilteredCountries(searchText: String)
     func getCountOfFilteredCountries() -> Int?
-    func getSegmentIndex() -> Int?
+    func changeContinent(continent: Continent)
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
@@ -41,14 +40,13 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     func countOfFilteredByContinents() -> Int?
     func filteredCountries(searchText: String)
     func countOfFilteredCountries() -> Int?
-    func findSegmentIndex() -> Int?
+    func changeContinent(continent: Continent)
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    
     func successfullyFetched()
     func startAnimating()
     func stopAnimating()
-    
 }
 
 protocol HomePresenterToRouterProtocol {

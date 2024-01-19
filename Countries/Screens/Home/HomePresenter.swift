@@ -8,7 +8,7 @@
 import Foundation
 
 class HomePresenter: HomeViewToPresenterProtocol {
-    
+
     var view: HomePresenterToViewProtocol?
     var interactor: HomePresenterToInteractorProtocol?
     var router: HomePresenterToRouterProtocol?
@@ -33,14 +33,12 @@ class HomePresenter: HomeViewToPresenterProtocol {
         return interactor?.countOfFilteredCountries()
     }
     
-    func getSegmentIndex() -> Int? {
-        return interactor?.findSegmentIndex()
+    func changeContinent(continent: Continent) {
+        interactor?.changeContinent(continent: continent)
     }
-    
 }
 
 extension HomePresenter: HomeInteractorToPresenterProtocol {
-    
     func successfullyFetched() {
         view?.showCountries()
     }
@@ -52,5 +50,4 @@ extension HomePresenter: HomeInteractorToPresenterProtocol {
     func stopAnimating() {
         view?.stopAnimating()
     }
-    
 }
