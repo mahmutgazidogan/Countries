@@ -64,6 +64,19 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    private lazy var populationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var startOfWeekLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +103,8 @@ class DetailsViewController: UIViewController {
         view.backgroundColor = .white
         mapView.backgroundColor = .clear
         view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
-                         independencyLabel, checkboxImageView, areaLabel)
+                         independencyLabel, checkboxImageView, areaLabel,
+                         populationLabel, startOfWeekLabel)
         
         setupLayouts()
     }
@@ -135,6 +149,18 @@ class DetailsViewController: UIViewController {
             make.height.equalTo(20)
         }
         
+        populationLabel.snp.makeConstraints { make in
+            make.top.equalTo(areaLabel.snp.bottom)
+            make.leading.equalTo(areaLabel.snp.leading)
+            make.height.equalTo(20)
+        }
+        
+        startOfWeekLabel.snp.makeConstraints { make in
+            make.top.equalTo(populationLabel.snp.bottom)
+            make.leading.equalTo(populationLabel.snp.leading)
+            make.height.equalTo(20)
+        }
+        
     }
     
 }
@@ -147,12 +173,12 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
      +++++++++name -> nativeName
      +++++++++independent
      +++++++++area
+     +++++++++population
      
      capital & capitalInfo - latlng
      languages
      latlng
      flag? & flags - alt?
-     population
      car - signs - side ???
      timezones
      continents
@@ -164,12 +190,17 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
         guard let details = presenter?.getDetails(),
               let independent = details.independent,
               let area = details.area,
-              let areaValue = presenter?.numberFormatter(number: area) else { return }
+              let areaValue = presenter?.numberFormatter(number: area),
+              let population = details.population,
+              let numberOfPopulation = presenter?.numberFormatter(number: Double(population)),
+              let startOfWeek = details.startOfWeek?.rawValue.capitalized else { return }
         DispatchQueue.main.async {
             self.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
             self.nameLabel.text = details.name?.official?.uppercased()
             self.capitalLabel.text = details.capital?.first
             self.areaLabel.text = "Area: \(areaValue) km²"
+            self.populationLabel.text = "Population: \(numberOfPopulation)"
+            self.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
             if independent {
                 self.checkboxImageView.image = UIImage(named: "tick")
             } else {
