@@ -162,8 +162,18 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: collectionView.frame.width / 2.4 , height: 150)
         return size
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.didSelectItemAt(indexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        guard let searchText = searchController.searchBar.text else { return }
+        if searchText.isEmpty {
+            guard let filteredByContinents = presenter?.getFilteredByContinents() else { return }
+            let country = filteredByContinents[indexPath.item]
+            presenter?.didSelectItemAt(country: country)
+        } else {
+            guard let searchedCountries = presenter?.interactor?.filteredCountries else { return }
+            let country = searchedCountries[indexPath.item]
+            presenter?.didSelectItemAt(country: country)
+        }
     }
 }
 

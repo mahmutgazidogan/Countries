@@ -39,11 +39,11 @@ class HomePresenter: HomeViewToPresenterProtocol {
     
     // MARK: - Presenter to Router - Navigation
     
-    func didSelectItemAt(indexPath: IndexPath) {
-        if let country = interactor?.countryList?[indexPath.item] {
+    func didSelectItemAt(country: Country?) {
+//        if let country = interactor?.countryList?[indexPath.item] {
+        guard let country else { return }
             router?.navigateToDetails(selectedCountryDetails: country)
-        }
-        
+//        }
     }
 }
 

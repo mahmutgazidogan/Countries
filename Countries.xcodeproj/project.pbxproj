@@ -91,7 +91,6 @@
 				C0D0B51E2AF661BF0050DE2C /* Supporting Files */,
 				C0D0B5362AF685EB0050DE2C /* Extensions */,
 				C0D0B5392AF687250050DE2C /* Networking */,
-				C0D0B5332AF664510050DE2C /* Protocols */,
 				C0D0B51F2AF661E00050DE2C /* Screens */,
 				C0D0B5182AF65C570050DE2C /* Info.plist */,
 			);
@@ -142,13 +141,6 @@
 				C0AED6E32B5AF1BF00CC5D03 /* DetailsRouter.swift */,
 			);
 			path = Details;
-			sourceTree = "<group>";
-		};
-		C0D0B5332AF664510050DE2C /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		C0D0B5362AF685EB0050DE2C /* Extensions */ = {

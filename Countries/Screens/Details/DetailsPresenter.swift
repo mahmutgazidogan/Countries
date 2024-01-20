@@ -16,6 +16,14 @@ class DetailsPresenter: DetailsViewToPresenterProtocol {
     func getCountryDetails(countryDetails: Country?) {
         interactor?.getCountryDetails(countryDetails: countryDetails)
     }
+    
+    func getDetails() -> Country? {
+        return interactor?.giveDetails()
+    }
+    
+    func numberFormatter(number: Double) -> String? {
+        interactor?.numberFormatter(number: number)
+    }
 }
 
 extension DetailsPresenter: DetailsInteractorToPresenterProtocol {

@@ -11,7 +11,7 @@ import UIKit
 protocol DetailsPresenterToViewProtocol: AnyObject {
     var presenter: DetailsViewToPresenterProtocol? { get set }
     
-    
+    func showDetails()
 }
 
 protocol DetailsViewToPresenterProtocol: AnyObject {
@@ -20,6 +20,8 @@ protocol DetailsViewToPresenterProtocol: AnyObject {
     var router: DetailsPresenterToRouterProtocol? { get set }
     
     func getCountryDetails(countryDetails: Country?)
+    func getDetails() -> Country?
+    func numberFormatter(number: Double) -> String?
 }
 
 protocol DetailsPresenterToInteractorProtocol: AnyObject {
@@ -27,6 +29,8 @@ protocol DetailsPresenterToInteractorProtocol: AnyObject {
     var details: Country? { get set }
     
     func getCountryDetails(countryDetails: Country?)
+    func giveDetails() -> Country?
+    func numberFormatter(number: Double) -> String?
 }
 
 protocol DetailsInteractorToPresenterProtocol: AnyObject {

@@ -13,36 +13,27 @@ typealias Countries = [Country]
 struct Country: Codable {
     let name: Name?
     let tld: [String]?
-    let cca2, ccn3, cca3: String?
     let independent: Bool?
     let status: Status?
-    let unMember: Bool?
     let currencies: Currencies?
     let idd: Idd?
-    let capital, altSpellings: [String]?
+    let capital: [String]?
     let region: Region?
     let subregion: String?
     let languages: [String: String]?
-    let translations: [String: Translation]?
     let latlng: [Double]?
-    let landlocked: Bool?
     let area: Double?
-    let demonyms: Demonyms?
     let flag: String?
     let maps: Maps?
     let population: Int?
-    let fifa: String?
     let car: Car?
     let timezones: [String]?
     let continents: [Continent]?
-    let flags: Flags?
+    var flags: Flags?
     let coatOfArms: CoatOfArms?
     let startOfWeek: StartOfWeek?
     let capitalInfo: CapitalInfo?
-    let postalCode: PostalCode?
-    let cioc: String?
     let borders: [String]?
-    let gini: [String: Double]?
 }
 
 // MARK: - CapitalInfo
@@ -64,7 +55,6 @@ enum Side: String, Codable {
 // MARK: - CoatOfArms
 struct CoatOfArms: Codable {
     let png: String?
-    let svg: String?
 }
 
 enum Continent: String, Codable, CaseIterable {
@@ -80,214 +70,34 @@ enum Continent: String, Codable, CaseIterable {
 
 // MARK: - Currencies
 struct Currencies: Codable {
-    let usd, ngn, dzd, mad: Aed?
-    let mru, twd, crc, xof: Aed?
-    let hnl, aud, eur, uzs: Aed?
-    let bob, mnt, sgd, scr: Aed?
-    let nok, htg, pgk, mzn: Aed?
-    let pkr, ugx, bwp, xcd: Aed?
-    let sar, gbp, gtq, aoa: Aed?
-    let byn, isk, ils, omr: Aed?
-    let ckd, nzd, mkd, cdf: Aed?
-    let lbp, lrd, kid, szl: Aed?
-    let zar, btn, inr, idr: Aed?
-    let egp, jod, kpw, iqd: Aed?
-    let thb, zwl, wst, ttd: Aed?
-    let dop, tzs, bgn, etb: Aed?
-    let ron, mga, vuv, xaf: Aed?
-    let ang, currenciesTRY, xpf, yer: Aed?
-    let npr, dkk, fok, php: Aed?
-    let irr, mvr, cuc, cup: Aed?
-    let lyd, mxn, tmt, mmk: Aed?
-    let chf, rub: Aed?
+    let usd, ngn, dzd, mad, mru, twd, crc, xof, hnl, aud, eur, uzs, bob, mnt, sgd, scr, nok, htg, pgk, mzn, pkr, ugx, bwp, xcd,
+        sar, gbp, gtq, aoa, byn, isk, ils, omr, ckd, nzd, mkd, cdf, lbp, lrd, kid, szl, zar, btn, inr, idr, egp, jod, kpw, iqd,
+        thb, zwl, wst, ttd, dop, tzs, bgn, etb, ron, mga, vuv, xaf, ang, currenciesTRY, xpf, yer, npr, dkk, fok, php, irr, mvr,
+        cuc, cup, lyd, mxn, tmt, mmk, chf, rub: Aed?
     let bam: BAM?
-    let kwd, imp, kgs, lsl: Aed?
-    let rwf, sll, ghs, kyd: Aed?
-    let tnd, tjs, clp, srd: Aed?
-    let ars: Aed?
+    let kwd, imp, kgs, lsl, rwf, sll, ghs, kyd, tnd, tjs, clp, srd, ars: Aed?
     let sdg: BAM?
-    let azn, uah, fkp, bzd: Aed?
-    let lak, pen, amd, jpy: Aed?
-    let afn, qar, bdt, bmd: Aed?
-    let cad, bsd, vnd, mop: Aed?
-    let sbd, zmw, ern, khr: Aed?
-    let brl, ssp, kzt, pyg: Aed?
-    let mur, pln, mdl, cny: Aed?
-    let fjd, stn, shp, gyd: Aed?
-    let bbd, sek, bhd, sos: Aed?
-    let top, hkd, bnd, all: Aed?
-    let mwk, awg, kes, tvd: Aed?
-    let ves, gip, bif, myr: Aed?
-    let gmd, gnf, jmd, aed: Aed?
-    let jep, ggp, cve, syp: Aed?
-    let djf, rsd, nad, kmf: Aed?
-    let pab, gel, huf, czk: Aed?
-    let krw, uyu, cop, lkr: Aed?
-    let nio: Aed?
+    let azn, uah, fkp, bzd, lak, pen, amd, jpy, afn, qar, bdt, bmd, cad, bsd, vnd, mop, sbd, zmw, ern, khr, brl, ssp, kzt, pyg,
+        mur, pln, mdl, cny, fjd, stn, shp, gyd, bbd, sek, bhd, sos, top, hkd, bnd, all, mwk, awg, kes, tvd, ves, gip, bif, myr,
+        gmd, gnf, jmd, aed, jep, ggp, cve, syp, djf, rsd, nad, kmf, pab, gel, huf, czk, krw, uyu, cop, lkr, nio: Aed?
 
     enum CodingKeys: String, CodingKey {
-        case usd = "USD"
-        case ngn = "NGN"
-        case dzd = "DZD"
-        case mad = "MAD"
-        case mru = "MRU"
-        case twd = "TWD"
-        case crc = "CRC"
-        case xof = "XOF"
-        case hnl = "HNL"
-        case aud = "AUD"
-        case eur = "EUR"
-        case uzs = "UZS"
-        case bob = "BOB"
-        case mnt = "MNT"
-        case sgd = "SGD"
-        case scr = "SCR"
-        case nok = "NOK"
-        case htg = "HTG"
-        case pgk = "PGK"
-        case mzn = "MZN"
-        case pkr = "PKR"
-        case ugx = "UGX"
-        case bwp = "BWP"
-        case xcd = "XCD"
-        case sar = "SAR"
-        case gbp = "GBP"
-        case gtq = "GTQ"
-        case aoa = "AOA"
-        case byn = "BYN"
-        case isk = "ISK"
-        case ils = "ILS"
-        case omr = "OMR"
-        case ckd = "CKD"
-        case nzd = "NZD"
-        case mkd = "MKD"
-        case cdf = "CDF"
-        case lbp = "LBP"
-        case lrd = "LRD"
-        case kid = "KID"
-        case szl = "SZL"
-        case zar = "ZAR"
-        case btn = "BTN"
-        case inr = "INR"
-        case idr = "IDR"
-        case egp = "EGP"
-        case jod = "JOD"
-        case kpw = "KPW"
-        case iqd = "IQD"
-        case thb = "THB"
-        case zwl = "ZWL"
-        case wst = "WST"
-        case ttd = "TTD"
-        case dop = "DOP"
-        case tzs = "TZS"
-        case bgn = "BGN"
-        case etb = "ETB"
-        case ron = "RON"
-        case mga = "MGA"
-        case vuv = "VUV"
-        case xaf = "XAF"
-        case ang = "ANG"
-        case currenciesTRY = "TRY"
-        case xpf = "XPF"
-        case yer = "YER"
-        case npr = "NPR"
-        case dkk = "DKK"
-        case fok = "FOK"
-        case php = "PHP"
-        case irr = "IRR"
-        case mvr = "MVR"
-        case cuc = "CUC"
-        case cup = "CUP"
-        case lyd = "LYD"
-        case mxn = "MXN"
-        case tmt = "TMT"
-        case mmk = "MMK"
-        case chf = "CHF"
-        case rub = "RUB"
-        case bam = "BAM"
-        case kwd = "KWD"
-        case imp = "IMP"
-        case kgs = "KGS"
-        case lsl = "LSL"
-        case rwf = "RWF"
-        case sll = "SLL"
-        case ghs = "GHS"
-        case kyd = "KYD"
-        case tnd = "TND"
-        case tjs = "TJS"
-        case clp = "CLP"
-        case srd = "SRD"
-        case ars = "ARS"
-        case sdg = "SDG"
-        case azn = "AZN"
-        case uah = "UAH"
-        case fkp = "FKP"
-        case bzd = "BZD"
-        case lak = "LAK"
-        case pen = "PEN"
-        case amd = "AMD"
-        case jpy = "JPY"
-        case afn = "AFN"
-        case qar = "QAR"
-        case bdt = "BDT"
-        case bmd = "BMD"
-        case cad = "CAD"
-        case bsd = "BSD"
-        case vnd = "VND"
-        case mop = "MOP"
-        case sbd = "SBD"
-        case zmw = "ZMW"
-        case ern = "ERN"
-        case khr = "KHR"
-        case brl = "BRL"
-        case ssp = "SSP"
-        case kzt = "KZT"
-        case pyg = "PYG"
-        case mur = "MUR"
-        case pln = "PLN"
-        case mdl = "MDL"
-        case cny = "CNY"
-        case fjd = "FJD"
-        case stn = "STN"
-        case shp = "SHP"
-        case gyd = "GYD"
-        case bbd = "BBD"
-        case sek = "SEK"
-        case bhd = "BHD"
-        case sos = "SOS"
-        case top = "TOP"
-        case hkd = "HKD"
-        case bnd = "BND"
-        case all = "ALL"
-        case mwk = "MWK"
-        case awg = "AWG"
-        case kes = "KES"
-        case tvd = "TVD"
-        case ves = "VES"
-        case gip = "GIP"
-        case bif = "BIF"
-        case myr = "MYR"
-        case gmd = "GMD"
-        case gnf = "GNF"
-        case jmd = "JMD"
-        case aed = "AED"
-        case jep = "JEP"
-        case ggp = "GGP"
-        case cve = "CVE"
-        case syp = "SYP"
-        case djf = "DJF"
-        case rsd = "RSD"
-        case nad = "NAD"
-        case kmf = "KMF"
-        case pab = "PAB"
-        case gel = "GEL"
-        case huf = "HUF"
-        case czk = "CZK"
-        case krw = "KRW"
-        case uyu = "UYU"
-        case cop = "COP"
-        case lkr = "LKR"
-        case nio = "NIO"
+        case usd = "USD", ngn = "NGN", dzd = "DZD", mad = "MAD", mru = "MRU", twd = "TWD", crc = "CRC",
+        xof = "XOF", hnl = "HNL", aud = "AUD", eur = "EUR", uzs = "UZS", bob = "BOB", mnt = "MNT", sgd = "SGD", scr = "SCR", nok = "NOK", htg = "HTG",
+        pgk = "PGK", mzn = "MZN", pkr = "PKR", ugx = "UGX", bwp = "BWP", xcd = "XCD", sar = "SAR", gbp = "GBP", gtq = "GTQ", aoa = "AOA", byn = "BYN",
+        isk = "ISK", ils = "ILS", omr = "OMR", ckd = "CKD", nzd = "NZD", mkd = "MKD", cdf = "CDF", lbp = "LBP", lrd = "LRD", kid = "KID", szl = "SZL",
+        zar = "ZAR", btn = "BTN", inr = "INR", idr = "IDR", egp = "EGP", jod = "JOD", kpw = "KPW", iqd = "IQD", thb = "THB", zwl = "ZWL", wst = "WST",
+        ttd = "TTD", dop = "DOP", tzs = "TZS", bgn = "BGN", etb = "ETB", ron = "RON", mga = "MGA", vuv = "VUV", xaf = "XAF", ang = "ANG",
+        currenciesTRY = "TRY", xpf = "XPF", yer = "YER", npr = "NPR", dkk = "DKK", fok = "FOK", php = "PHP", irr = "IRR", mvr = "MVR", cuc = "CUC",
+        cup = "CUP", lyd = "LYD", mxn = "MXN", tmt = "TMT", mmk = "MMK", chf = "CHF", rub = "RUB", bam = "BAM", kwd = "KWD", imp = "IMP", kgs = "KGS",
+        lsl = "LSL", rwf = "RWF", sll = "SLL", ghs = "GHS", kyd = "KYD", tnd = "TND", tjs = "TJS", clp = "CLP", srd = "SRD", ars = "ARS", sdg = "SDG",
+        azn = "AZN", uah = "UAH", fkp = "FKP", bzd = "BZD", lak = "LAK", pen = "PEN", amd = "AMD", jpy = "JPY", afn = "AFN", qar = "QAR", bdt = "BDT",
+        bmd = "BMD", cad = "CAD", bsd = "BSD", vnd = "VND", mop = "MOP", sbd = "SBD", zmw = "ZMW", ern = "ERN", khr = "KHR", brl = "BRL", ssp = "SSP",
+        kzt = "KZT", pyg = "PYG", mur = "MUR", pln = "PLN", mdl = "MDL", cny = "CNY", fjd = "FJD", stn = "STN", shp = "SHP", gyd = "GYD", bbd = "BBD",
+        sek = "SEK", bhd = "BHD", sos = "SOS", top = "TOP", hkd = "HKD", bnd = "BND", all = "ALL", mwk = "MWK", awg = "AWG", kes = "KES", tvd = "TVD",
+        ves = "VES", gip = "GIP", bif = "BIF", myr = "MYR", gmd = "GMD", gnf = "GNF", jmd = "JMD", aed = "AED", jep = "JEP", ggp = "GGP", cve = "CVE",
+        syp = "SYP", djf = "DJF", rsd = "RSD", nad = "NAD", kmf = "KMF", pab = "PAB", gel = "GEL", huf = "HUF", czk = "CZK", krw = "KRW", uyu = "UYU",
+        cop = "COP", lkr = "LKR", nio = "NIO"
     }
 }
 
@@ -301,20 +111,9 @@ struct BAM: Codable {
     let name: String?
 }
 
-// MARK: - Demonyms
-struct Demonyms: Codable {
-    let eng, fra: Eng?
-}
-
-// MARK: - Eng
-struct Eng: Codable {
-    let f, m: String?
-}
-
 // MARK: - Flags
 struct Flags: Codable {
-    let png: String?
-    let svg: String?
+    var png: String?
     let alt: String?
 }
 
@@ -332,17 +131,6 @@ struct Maps: Codable {
 // MARK: - Name
 struct Name: Codable {
     let common, official: String?
-    let nativeName: [String: Translation]?
-}
-
-// MARK: - Translation
-struct Translation: Codable {
-    let official, common: String?
-}
-
-// MARK: - PostalCode
-struct PostalCode: Codable {
-    let format, regex: String?
 }
 
 enum Region: String, Codable {

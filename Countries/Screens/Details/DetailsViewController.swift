@@ -7,17 +7,12 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 import MapKit
 
 class DetailsViewController: UIViewController {
     
     var presenter: DetailsViewToPresenterProtocol?
-    
-    private lazy var backgroundImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -26,57 +21,120 @@ class DetailsViewController: UIViewController {
         return mapView
     }()
     
+    private lazy var backgroundImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        return iv
+    }()
+    
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var independencyLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        label.text = "Independent:"
+        return label
+    }()
+    
+    private lazy var capitalLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var checkboxImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        return iv
+    }()
+    
+    private lazy var areaLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
+        showDetails()
     }
     
     override func viewDidLayoutSubviews() {
-        mapView.layer.cornerRadius = 20
-        mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner]
-        mapView.layer.masksToBounds = true
+        checkboxImageView.layer.cornerRadius = 5
+        checkboxImageView.layer.maskedCorners = [.layerMaxXMaxYCorner,
+                                                 .layerMaxXMinYCorner,
+                                                 .layerMinXMaxYCorner,
+                                                 .layerMinXMinYCorner]
+        checkboxImageView.layer.masksToBounds = true
         
-        backgroundImageView.alpha = 0.1
+        backgroundImageView.alpha = 0.25
     }
     
-    /*
-     name -> nativeName
-     independent
-     currencies
-     capital
-     languages
-     latlng
-     area
-     flag?
-     population
-     car - signs - side ???
-     timezones
-     continents
-     flags - alt?
-     coatOfArms
-     startOfWeek
-     capitalInfo - latlng
-     */
+    
     
     private func setupViews() {
-        view.backgroundColor = .systemYellow
+        self.navigationController?.navigationBar.tintColor = .black
+        view.backgroundColor = .white
         mapView.backgroundColor = .clear
-        view.addSubviews(backgroundImageView, mapView)
+        view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
+                         independencyLabel, checkboxImageView, areaLabel)
         
         setupLayouts()
     }
     
     private func setupLayouts() {
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         mapView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalToSuperview().offset(30)
-            make.trailing.equalToSuperview().offset(-30)
+            make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(300)
         }
+        
+        backgroundImageView.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(300)
+        }
+        
+        capitalLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
+        independencyLabel.snp.makeConstraints { make in
+            make.top.equalTo(capitalLabel.snp.bottom).offset(5)
+            make.leading.equalToSuperview().offset(20)
+            make.height.equalTo(20)
+        }
+        
+        checkboxImageView.snp.makeConstraints { make in
+            make.leading.equalTo(independencyLabel.snp.trailing).offset(10)
+            make.width.height.equalTo(independencyLabel.snp.height)
+            make.centerY.equalTo(independencyLabel.snp.centerY)
+        }
+        
+        areaLabel.snp.makeConstraints { make in
+            make.top.equalTo(independencyLabel.snp.bottom)
+            make.leading.equalTo(independencyLabel.snp.leading)
+            make.height.equalTo(20)
+        }
+        
     }
     
 }
@@ -85,4 +143,40 @@ extension DetailsViewController: MKMapViewDelegate { }
 
 extension DetailsViewController: DetailsPresenterToViewProtocol {
     
+    /*
+     +++++++++name -> nativeName
+     +++++++++independent
+     +++++++++area
+     
+     capital & capitalInfo - latlng
+     languages
+     latlng
+     flag? & flags - alt?
+     population
+     car - signs - side ???
+     timezones
+     continents
+     coatOfArms
+     startOfWeek
+     */
+    
+    func showDetails() {
+        guard let details = presenter?.getDetails(),
+              let independent = details.independent,
+              let area = details.area,
+              let areaValue = presenter?.numberFormatter(number: area) else { return }
+        DispatchQueue.main.async {
+            self.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
+            self.nameLabel.text = details.name?.official?.uppercased()
+            self.capitalLabel.text = details.capital?.first
+            self.areaLabel.text = "Area: \(areaValue) km²"
+            if independent {
+                self.checkboxImageView.image = UIImage(named: "tick")
+            } else {
+                self.checkboxImageView.image = UIImage(named: "cross")
+            }
+        }
+    }
 }
+
+
