@@ -22,6 +22,7 @@ protocol DetailsViewToPresenterProtocol: AnyObject {
     func getCountryDetails(countryDetails: Country?)
     func getDetails() -> Country?
     func numberFormatter(number: Double) -> String?
+    func getCurrency() -> String?
 }
 
 protocol DetailsPresenterToInteractorProtocol: AnyObject {
@@ -31,6 +32,7 @@ protocol DetailsPresenterToInteractorProtocol: AnyObject {
     func getCountryDetails(countryDetails: Country?)
     func giveDetails() -> Country?
     func numberFormatter(number: Double) -> String?
+    func giveCurrency() -> String?
 }
 
 protocol DetailsInteractorToPresenterProtocol: AnyObject {

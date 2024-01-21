@@ -78,6 +78,17 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    private lazy var currencyLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 1.0
+        label.backgroundColor = .systemYellow
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,7 +115,7 @@ class DetailsViewController: UIViewController {
         mapView.backgroundColor = .clear
         view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
                          independencyLabel, checkboxImageView, areaLabel,
-                         populationLabel, startOfWeekLabel)
+                         populationLabel, startOfWeekLabel, currencyLabel)
         
         setupLayouts()
     }
@@ -138,8 +149,8 @@ class DetailsViewController: UIViewController {
         }
         
         checkboxImageView.snp.makeConstraints { make in
-            make.leading.equalTo(independencyLabel.snp.trailing).offset(10)
-            make.width.height.equalTo(independencyLabel.snp.height)
+            make.leading.equalTo(independencyLabel.snp.trailing).offset(5)
+            make.width.height.equalTo(15)
             make.centerY.equalTo(independencyLabel.snp.centerY)
         }
         
@@ -161,6 +172,12 @@ class DetailsViewController: UIViewController {
             make.height.equalTo(20)
         }
         
+        currencyLabel.snp.makeConstraints { make in
+            make.top.equalTo(startOfWeekLabel.snp.bottom)
+            make.leading.equalTo(startOfWeekLabel.snp.leading)
+            make.height.equalTo(20)
+        }
+        
     }
     
 }
@@ -174,7 +191,7 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
      +++++++++independent
      +++++++++area
      +++++++++population
-     
+     +++++++++currency
      capital & capitalInfo - latlng
      languages
      latlng
@@ -193,7 +210,9 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
               let areaValue = presenter?.numberFormatter(number: area),
               let population = details.population,
               let numberOfPopulation = presenter?.numberFormatter(number: Double(population)),
-              let startOfWeek = details.startOfWeek?.rawValue.capitalized else { return }
+              let startOfWeek = details.startOfWeek?.rawValue.capitalized,
+              let currency = presenter?.getCurrency()?.capitalized else { return }
+
         DispatchQueue.main.async {
             self.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
             self.nameLabel.text = details.name?.official?.uppercased()
@@ -201,6 +220,8 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
             self.areaLabel.text = "Area: \(areaValue) km²"
             self.populationLabel.text = "Population: \(numberOfPopulation)"
             self.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
+            self.currencyLabel.text = "Currency: \(currency)"
+            
             if independent {
                 self.checkboxImageView.image = UIImage(named: "tick")
             } else {

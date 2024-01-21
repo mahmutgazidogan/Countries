@@ -24,6 +24,9 @@ class DetailsPresenter: DetailsViewToPresenterProtocol {
     func numberFormatter(number: Double) -> String? {
         interactor?.numberFormatter(number: number)
     }
+    func getCurrency() -> String? {
+        return interactor?.giveCurrency()
+    }
 }
 
 extension DetailsPresenter: DetailsInteractorToPresenterProtocol {
