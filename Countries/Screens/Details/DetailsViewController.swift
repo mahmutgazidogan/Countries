@@ -187,11 +187,13 @@ extension DetailsViewController: MKMapViewDelegate { }
 extension DetailsViewController: DetailsPresenterToViewProtocol {
     
     /*
-     +++++++++name -> nativeName
-     +++++++++independent
-     +++++++++area
-     +++++++++population
-     +++++++++currency
+     +++++++++ name -> nativeName
+     +++++++++ independent
+     +++++++++ area
+     +++++++++ population
+     +++++++++ currency
+     +++++++++ startOfWeek
+     
      capital & capitalInfo - latlng
      languages
      latlng
@@ -200,7 +202,7 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
      timezones
      continents
      coatOfArms
-     startOfWeek
+     
      */
     
     func showDetails() {

@@ -69,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0B205D52B5DBB28003993DD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C0BDAF5F2AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C0D0B4FE2AF65C530050DE2C = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +100,7 @@
 				C0D0B5362AF685EB0050DE2C /* Extensions */,
 				C0D0B5392AF687250050DE2C /* Networking */,
 				C0D0B51F2AF661E00050DE2C /* Screens */,
+				C0B205D52B5DBB28003993DD /* Views */,
 				C0D0B5182AF65C570050DE2C /* Info.plist */,
 			);
 			path = Countries;
@@ -126,7 +135,6 @@
 				C0D0B5262AF6635D0050DE2C /* HomePresenter.swift */,
 				C0D0B5282AF6636B0050DE2C /* HomeRouter.swift */,
 				C0D0B52A2AF663850050DE2C /* Entity.swift */,
-				C0BDAF5F2AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";

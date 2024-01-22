@@ -11,10 +11,6 @@ class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     var presenter: DetailsInteractorToPresenterProtocol?
     var details: Country?
     
-    func getCountryDetails(countryDetails: Country?) {
-        details = countryDetails
-    }
-    
     func giveDetails() -> Country? {
         if let png = details?.flags?.png?.replacingOccurrences(of: "w320", with: "w1280") {
             details?.flags?.png = png
@@ -33,6 +29,7 @@ class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         return formatter.string(from: NSNumber(value: intValue))
     }
     
+    // MARK: Currency Functions
     func getAllCurrencyInfo(from currencies: Currencies) -> [(name: String, symbol: String)] {
         var currencyInfo: [(name: String, symbol: String)] = []
         let mirror = Mirror(reflecting: currencies)

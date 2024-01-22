@@ -77,6 +77,8 @@ class HomeViewController: UIViewController {
         let allContinents = Continent.allCases.map {
             $0.rawValue
         }
+        
+        // TODO: Interactor'e taşı
         for (index, title) in allContinents.enumerated() {
             segmented.insertSegment(withTitle: title, at: index, animated: true)
         }
@@ -87,6 +89,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupViews() {
+        // TODO: fileprivate enum yazıp sabitleri orada tut
         title = "Countries"
         view.backgroundColor = .systemYellow
         collectionView.backgroundColor = .systemYellow
@@ -180,6 +183,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
+        
+        // TODO: presenter'lara optional binding yap
+        
         guard let searchText = searchController.searchBar.text else { return 0 }
         if searchText.isEmpty {
             return presenter?.getCountOfFilteredByContinents() ?? 0

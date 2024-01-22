@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-public enum Router: URLRequestConvertible {
+enum Router: URLRequestConvertible {
     
     case allCountries
     
@@ -47,7 +47,7 @@ public enum Router: URLRequestConvertible {
         }
     }
     
-    public func asURLRequest() throws -> URLRequest {
+    func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL()
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue

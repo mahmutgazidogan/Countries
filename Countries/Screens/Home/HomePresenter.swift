@@ -17,6 +17,8 @@ class HomePresenter: HomeViewToPresenterProtocol {
         interactor?.fetchAllCountries()
     }
     
+    // TODO: Recursive fonksiyonlarla data taşıma
+    
     func getFilteredByContinents() -> [Country]? {
         return interactor?.filterByContinents()
     }
@@ -40,10 +42,8 @@ class HomePresenter: HomeViewToPresenterProtocol {
     // MARK: - Presenter to Router - Navigation
     
     func didSelectItemAt(country: Country?) {
-//        if let country = interactor?.countryList?[indexPath.item] {
         guard let country else { return }
             router?.navigateToDetails(selectedCountryDetails: country)
-//        }
     }
 }
 
@@ -59,4 +59,8 @@ extension HomePresenter: HomeInteractorToPresenterProtocol {
     func stopAnimating() {
         view?.stopAnimating()
     }
+    
+
+    
+    
 }

@@ -13,10 +13,6 @@ class DetailsPresenter: DetailsViewToPresenterProtocol {
     var interactor: DetailsPresenterToInteractorProtocol?
     var router: DetailsPresenterToRouterProtocol?
     
-    func getCountryDetails(countryDetails: Country?) {
-        interactor?.getCountryDetails(countryDetails: countryDetails)
-    }
-    
     func getDetails() -> Country? {
         return interactor?.giveDetails()
     }

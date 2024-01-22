@@ -32,10 +32,8 @@ class HomeRouter: HomePresenterToRouterProtocol {
     }
     
     func navigateToDetails(selectedCountryDetails details: Country?) {
-        let detailsViewController = DetailsRouter.createModule()
+        let detailsViewController = DetailsRouter.createModule(selectedCountryDetails: details)
         viewController?.navigationController?.pushViewController(detailsViewController, animated: true)
-        guard let presenter = detailsViewController.presenter else { return }
-        presenter.getCountryDetails(countryDetails: details)
     }
     
 }

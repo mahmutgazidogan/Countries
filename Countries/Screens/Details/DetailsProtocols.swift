@@ -19,7 +19,6 @@ protocol DetailsViewToPresenterProtocol: AnyObject {
     var interactor: DetailsPresenterToInteractorProtocol? { get set }
     var router: DetailsPresenterToRouterProtocol? { get set }
     
-    func getCountryDetails(countryDetails: Country?)
     func getDetails() -> Country?
     func numberFormatter(number: Double) -> String?
     func getCurrency() -> String?
@@ -29,7 +28,6 @@ protocol DetailsPresenterToInteractorProtocol: AnyObject {
     var presenter: DetailsInteractorToPresenterProtocol? { get set }
     var details: Country? { get set }
     
-    func getCountryDetails(countryDetails: Country?)
     func giveDetails() -> Country?
     func numberFormatter(number: Double) -> String?
     func giveCurrency() -> String?
@@ -40,5 +38,5 @@ protocol DetailsInteractorToPresenterProtocol: AnyObject {
 }
 
 protocol DetailsPresenterToRouterProtocol: AnyObject {
-    static func createModule() -> DetailsViewController
+    static func createModule(selectedCountryDetails details: Country?) -> DetailsViewController
 }

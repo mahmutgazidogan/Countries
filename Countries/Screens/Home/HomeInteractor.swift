@@ -16,15 +16,19 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     
     func fetchAllCountries() {
         presenter?.startAnimating()
-        NetworkingManager.shared.routerRequest(request: Router.allCountries) { (result: Result<Countries, Error>) in
+        
+        // TODO: closure'da [weak self] yapman gerekiyor
+        
+        NetworkingManager.shared.routerRequest(request: Router.allCountries) { [weak self] (result: Result<Countries, Error>) in
             switch result {
             case .success(let data):
-                self.countryList = data.sorted {
+                self?.countryList = data.sorted {
                     $0.name?.common?.lowercased() ?? "" < $1.name?.common?.lowercased() ?? ""
                 }
-                self.presenter?.successfullyFetched()
-                self.presenter?.stopAnimating()
+                self?.presenter?.successfullyFetched()
+                self?.presenter?.stopAnimating()
             case .failure(let error):
+                // TODO: Alert view'da çıkacak ama interactor karar verecek
                 print(String(describing: error))
             }
         }
