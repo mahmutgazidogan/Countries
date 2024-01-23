@@ -31,12 +31,18 @@ class HomePresenter: HomeViewToPresenterProtocol {
         interactor?.filteredCountries(searchText: searchText)
     }
     
-    func getCountOfFilteredCountries() -> Int? {
-        return interactor?.countOfFilteredCountries()
-    }
+    
     
     func changeContinent(continent: Continent) {
         interactor?.changeContinent(continent: continent)
+    }
+    
+//    func getfilterCountriesFor(searchText: String) -> [Country]? {
+//        return interactor?.filterCountriesFor(searchText: searchText)
+//    }
+    
+    func getCountOfFilteredCountries() -> Int? {
+        return interactor?.countOfFilteredCountries()
     }
     
     // MARK: - Presenter to Router - Navigation

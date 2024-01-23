@@ -16,26 +16,26 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     
     func fetchAllCountries() {
         presenter?.startAnimating()
-        
-        // TODO: closure'da [weak self] yapman gerekiyor
-        
         NetworkingManager.shared.routerRequest(request: Router.allCountries) { [weak self] (result: Result<Countries, Error>) in
             switch result {
             case .success(let data):
                 self?.countryList = data.sorted {
                     $0.name?.common?.lowercased() ?? "" < $1.name?.common?.lowercased() ?? ""
                 }
+                
                 self?.presenter?.successfullyFetched()
                 self?.presenter?.stopAnimating()
             case .failure(let error):
+                
                 // TODO: Alert view'da çıkacak ama interactor karar verecek
+                
                 print(String(describing: error))
             }
         }
     }
     
     func filterByContinents() -> [Country]? {
-        guard let countryList = self.countryList else { return [] }
+        guard let countryList else { return [] }
         if selectedContinent == .all {
             return countryList
         } else {
@@ -57,7 +57,7 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
     }
     
     func filteredCountries(searchText: String) {
-        if searchText == "" {
+        if searchText.isEmpty {
             filteredCountries = countryList
             self.presenter?.successfullyFetched()
         } else {
@@ -67,6 +67,43 @@ class HomeInteractor: HomePresenterToInteractorProtocol {
             })
         }
         self.presenter?.successfullyFetched()
+    }
+    
+    
+    
+    func filterCountriesFor(searchText: String = "") -> [Country]? {
+        guard let countryList = countryList else { return [] }
+        if searchText == "" {
+            
+            
+            if selectedContinent == .all {
+                filteredCountries = countryList
+//                presenter?.successfullyFetched()
+                return filteredCountries
+                
+            } else {
+                filteredCountries = countryList.filter({ item in
+                    if let continents = item.continents {
+                        for continent in continents {
+                            return continent == selectedContinent
+                        }
+                    }
+                    return true
+                })
+//                presenter?.successfullyFetched()
+                return filteredCountries
+                
+            }
+            
+        } else {
+            filteredCountries = countryList.filter({ country in
+                guard let countryName = country.name?.common else { return false }
+                return countryName.lowercased().hasPrefix(searchText.lowercased())
+            })
+        }
+//        presenter?.successfullyFetched()
+        return filteredCountries
+        
     }
     
     func countOfFilteredCountries() -> Int? {
