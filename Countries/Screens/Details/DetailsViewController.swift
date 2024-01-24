@@ -89,6 +89,13 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    private lazy var timezoneLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.textAlignment = .center
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,7 +122,7 @@ class DetailsViewController: UIViewController {
         mapView.backgroundColor = .clear
         view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
                          independencyLabel, checkboxImageView, areaLabel,
-                         populationLabel, startOfWeekLabel, currencyLabel)
+                         populationLabel, startOfWeekLabel, currencyLabel, timezoneLabel)
         
         setupLayouts()
     }
@@ -178,6 +185,12 @@ class DetailsViewController: UIViewController {
             make.height.equalTo(20)
         }
         
+        timezoneLabel.snp.makeConstraints { make in
+            make.top.equalTo(currencyLabel.snp.bottom)
+            make.leading.equalTo(currencyLabel.snp.leading)
+            make.height.equalTo(20)
+        }
+        
     }
     
 }
@@ -213,7 +226,7 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
               let population = details.population,
               let numberOfPopulation = presenter?.numberFormatter(number: Double(population)),
               let startOfWeek = details.startOfWeek?.rawValue.capitalized,
-              let currency = presenter?.getCurrency()?.capitalized else { return }
+              let currency = presenter?.getCurrency()?.capitalized, let timezones = details.timezones else { return }
 
         DispatchQueue.main.async {
             self.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
@@ -223,6 +236,10 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
             self.populationLabel.text = "Population: \(numberOfPopulation)"
             self.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
             self.currencyLabel.text = "Currency: \(currency)"
+            
+            for timezone in timezones {
+                self.timezoneLabel.text = "Timezone: \(timezone)"
+            }
             
             if independent {
                 self.checkboxImageView.image = UIImage(named: "tick")
