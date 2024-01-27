@@ -7,12 +7,12 @@
 
 import Foundation
 
-class DetailsInteractor: DetailsPresenterToInteractorProtocol {
+final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     var presenter: DetailsInteractorToPresenterProtocol?
     var details: Country?
     
     func giveDetails() -> Country? {
-        if let png = details?.flags?.png?.replacingOccurrences(of: "w320", with: "w1280") {
+        if let png = details?.flags?.png?.replacingOccurrences(of: "w320", with: "w320") {
             details?.flags?.png = png
         }
         return details
@@ -34,10 +34,13 @@ class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         var currencyInfo: [(name: String, symbol: String)] = []
         let mirror = Mirror(reflecting: currencies)
         for child in mirror.children {
-            if let currency = child.value as? Aed, let name = currency.name, let symbol = currency.symbol {
+            if let currency = child.value as? Aed,
+               let name = currency.name,
+               let symbol = currency.symbol {
                 let info = (name: name, symbol: symbol)
                 currencyInfo.append(info)
-            } else if let bamCurrency = child.value as? BAM, let name = bamCurrency.name {
+            } else if let bamCurrency = child.value as? BAM,
+                      let name = bamCurrency.name {
                 let info = (name: name, symbol: "")
                 currencyInfo.append(info)
             }
@@ -49,8 +52,11 @@ class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         var string = ""
         if let details, let currencies = details.currencies {
             let allCurrencies = getAllCurrencyInfo(from: currencies)
-            for currency in allCurrencies {
-                string = "\(currency.name) (\(currency.symbol))"
+            for (index, currency) in allCurrencies.enumerated() {
+                string += "\(currency.name) (\(currency.symbol))"
+                if index < allCurrencies.count - 1 {
+                    string += ", "
+                }
             }
         }
         return string

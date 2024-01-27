@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomeInteractor: HomePresenterToInteractorProtocol {
+final class HomeInteractor: HomePresenterToInteractorProtocol {
     
     var presenter: HomeInteractorToPresenterProtocol?
     var countryList: Countries? = []

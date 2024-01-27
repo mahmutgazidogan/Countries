@@ -81,7 +81,7 @@ class DetailsViewController: UIViewController {
     private lazy var currencyLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.numberOfLines = 0
         label.layer.borderColor = UIColor.black.cgColor
         label.layer.borderWidth = 1.0
@@ -89,10 +89,19 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
-    private lazy var timezoneLabel: UILabel = {
+    private lazy var timezonesLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var languagesLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.numberOfLines = 0
+        label.textAlignment = .left
         return label
     }()
     
@@ -122,7 +131,7 @@ class DetailsViewController: UIViewController {
         mapView.backgroundColor = .clear
         view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
                          independencyLabel, checkboxImageView, areaLabel,
-                         populationLabel, startOfWeekLabel, currencyLabel, timezoneLabel)
+                         populationLabel, startOfWeekLabel, currencyLabel, timezonesLabel, languagesLabel)
         
         setupLayouts()
     }
@@ -182,18 +191,26 @@ class DetailsViewController: UIViewController {
         currencyLabel.snp.makeConstraints { make in
             make.top.equalTo(startOfWeekLabel.snp.bottom)
             make.leading.equalTo(startOfWeekLabel.snp.leading)
-            make.height.equalTo(20)
+            make.trailing.equalToSuperview().offset(-20)
         }
         
-        timezoneLabel.snp.makeConstraints { make in
+        timezonesLabel.snp.makeConstraints { make in
             make.top.equalTo(currencyLabel.snp.bottom)
             make.leading.equalTo(currencyLabel.snp.leading)
-            make.height.equalTo(20)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        languagesLabel.snp.makeConstraints { make in
+            make.top.equalTo(timezonesLabel.snp.bottom)
+            make.leading.equalTo(timezonesLabel.snp.leading)
+            make.trailing.equalToSuperview().offset(-20)
         }
         
     }
     
 }
+
+extension DetailsViewController: UITextViewDelegate { }
 
 extension DetailsViewController: MKMapViewDelegate { }
 
@@ -206,13 +223,13 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
      +++++++++ population
      +++++++++ currency
      +++++++++ startOfWeek
+     +++++++++ timezones
      
      capital & capitalInfo - latlng
      languages
      latlng
      flag? & flags - alt?
      car - signs - side ???
-     timezones
      continents
      coatOfArms
      
@@ -226,25 +243,29 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
               let population = details.population,
               let numberOfPopulation = presenter?.numberFormatter(number: Double(population)),
               let startOfWeek = details.startOfWeek?.rawValue.capitalized,
-              let currency = presenter?.getCurrency()?.capitalized, let timezones = details.timezones else { return }
+              let currency = presenter?.getCurrency()?.capitalized,
+              let timezones = details.timezones,
+              let languages = details.languages else { return }
 
-        DispatchQueue.main.async {
-            self.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
-            self.nameLabel.text = details.name?.official?.uppercased()
-            self.capitalLabel.text = details.capital?.first
-            self.areaLabel.text = "Area: \(areaValue) km²"
-            self.populationLabel.text = "Population: \(numberOfPopulation)"
-            self.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
-            self.currencyLabel.text = "Currency: \(currency)"
+        DispatchQueue.main.async { [weak self] in
+            self?.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
+            self?.nameLabel.text = details.name?.official?.uppercased()
+            self?.capitalLabel.text = details.capital?.first
+            self?.areaLabel.text = "Area: \(areaValue) km²"
+            self?.populationLabel.text = "Population: \(numberOfPopulation)"
+            self?.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
+            self?.currencyLabel.text = "Currency: \(currency)"
+            self?.timezonesLabel.text = "Timezones: \(timezones.joined(separator: ", "))"
             
-            for timezone in timezones {
-                self.timezoneLabel.text = "Timezone: \(timezone)"
-            }
+            let languageNames = languages.map { (_, language) in
+                language
+            }.joined(separator: ", ")
+            self?.languagesLabel.text = "Languages: \(languageNames)"
             
             if independent {
-                self.checkboxImageView.image = UIImage(named: "tick")
+                self?.checkboxImageView.image = UIImage(named: "tick")
             } else {
-                self.checkboxImageView.image = UIImage(named: "cross")
+                self?.checkboxImageView.image = UIImage(named: "cross")
             }
         }
     }

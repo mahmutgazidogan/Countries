@@ -124,8 +124,8 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: HomePresenterToViewProtocol {
     func showCountries() {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
         }
     }
     

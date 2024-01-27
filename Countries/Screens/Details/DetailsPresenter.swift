@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DetailsPresenter: DetailsViewToPresenterProtocol {
+final class DetailsPresenter: DetailsViewToPresenterProtocol {
     
     var view: DetailsPresenterToViewProtocol?
     var interactor: DetailsPresenterToInteractorProtocol?
