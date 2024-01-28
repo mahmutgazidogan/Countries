@@ -31,8 +31,8 @@ final class HomePresenter: HomeViewToPresenterProtocol {
         return interactor?.countOfFilteredByContinents()
     }
     
-    func getFilteredCountries(searchText: String) {
-        interactor?.filteredCountries(searchText: searchText)
+    func getSearchedCountries(searchText: String) {
+        interactor?.searchedCountries(searchText: searchText)
     }
     
     func changeContinent(continent: Continent) {
@@ -43,8 +43,8 @@ final class HomePresenter: HomeViewToPresenterProtocol {
 //        return interactor?.filterCountriesFor(searchText: searchText)
 //    }
     
-    func getCountOfFilteredCountries() -> Int? {
-        return interactor?.countOfFilteredCountries()
+    func getCountOfSearchedCountries() -> Int? {
+        return interactor?.countOfSearchedCountries()
     }
     
     // MARK: - Presenter to Router - Navigation
@@ -56,15 +56,15 @@ final class HomePresenter: HomeViewToPresenterProtocol {
 }
 
 extension HomePresenter: HomeInteractorToPresenterProtocol {
-    func successfullyFetched() {
-        view?.showCountries()
+    func reloadData() {
+        view?.reloadData()
     }
     
-    func startAnimating() {
-        view?.startAnimating()
+    func showLoadingIndicator() {
+        view?.showLoadingIndicator()
     }
     
-    func stopAnimating() {
-        view?.stopAnimating()
+    func hideLoadingIndicator() {
+        view?.hideLoadingIndicator()
     }
 }

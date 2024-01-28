@@ -11,9 +11,9 @@ import UIKit
 protocol HomePresenterToViewProtocol: AnyObject {
     var presenter: HomeViewToPresenterProtocol? { get set }
     
-    func showCountries()
-    func startAnimating()
-    func stopAnimating()
+    func reloadData()
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
 }
 
 protocol HomeViewToPresenterProtocol: AnyObject {
@@ -25,8 +25,8 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     func getTitleForSegmentedControl(segmented: UISegmentedControl)
     func getFilteredByContinents() -> [Country]?
     func getCountOfFilteredByContinents() -> Int?
-    func getFilteredCountries(searchText: String)
-    func getCountOfFilteredCountries() -> Int?
+    func getSearchedCountries(searchText: String)
+    func getCountOfSearchedCountries() -> Int?
     func changeContinent(continent: Continent)
     func didSelectItemAt(country: Country?)
     
@@ -37,14 +37,14 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     var presenter: HomeInteractorToPresenterProtocol? { get set }
     var countryList: Countries? { get set }
     var selectedContinent: Continent? { get set }
-    var filteredCountries: Countries? { get set }
+    var searchedCountries: Countries? { get set }
         
     func fetchAllCountries()
     func titleForSegmentedControl(segmented: UISegmentedControl)
     func filterByContinents() -> [Country]?
     func countOfFilteredByContinents() -> Int?
-    func filteredCountries(searchText: String)
-    func countOfFilteredCountries() -> Int?
+    func searchedCountries(searchText: String)
+    func countOfSearchedCountries() -> Int?
     
     func changeContinent(continent: Continent)
     
@@ -52,9 +52,9 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    
-    func successfullyFetched()
-    func startAnimating()
-    func stopAnimating()
+    func reloadData()
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
 }
 
 protocol HomePresenterToRouterProtocol: AnyObject {

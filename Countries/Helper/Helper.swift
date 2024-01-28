@@ -12,6 +12,7 @@ enum AppColor {
     case blackTint
     case whiteBackground
     case selectedSegmentedTint
+    case clearBackground
     
     func colorValue() -> UIColor {
         switch self {
@@ -23,6 +24,8 @@ enum AppColor {
             return UIColor.white
         case .selectedSegmentedTint:
             return UIColor.systemRed
+        case .clearBackground:
+            return UIColor.clear
         }
     }
 }

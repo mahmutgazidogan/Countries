@@ -17,6 +17,7 @@ class DetailsViewController: UIViewController {
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.mapType = .standard
         mapView.delegate = self
         return mapView
     }()
@@ -126,9 +127,9 @@ class DetailsViewController: UIViewController {
     
     
     private func setupViews() {
-        self.navigationController?.navigationBar.tintColor = .black
-        view.backgroundColor = .white
-        mapView.backgroundColor = .clear
+        self.navigationController?.navigationBar.tintColor = AppColor.blackTint.colorValue()
+        view.backgroundColor = AppColor.whiteBackground.colorValue()
+        mapView.backgroundColor = AppColor.clearBackground.colorValue()
         view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
                          independencyLabel, checkboxImageView, areaLabel,
                          populationLabel, startOfWeekLabel, currencyLabel, timezonesLabel, languagesLabel)
@@ -230,13 +231,12 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
      latlng
      flag? & flags - alt?
      car - signs - side ???
-     continents
      coatOfArms
-     
      */
     
     func showDetails() {
         guard let details = presenter?.getDetails(),
+              let flag = details.flags?.png,
               let independent = details.independent,
               let area = details.area,
               let areaValue = presenter?.numberFormatter(number: area),
@@ -248,7 +248,7 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
               let languages = details.languages else { return }
 
         DispatchQueue.main.async { [weak self] in
-            self?.backgroundImageView.kf.setImage(with: URL(string: details.flags?.png ?? ""))
+            self?.backgroundImageView.kf.setImage(with: URL(string: flag))
             self?.nameLabel.text = details.name?.official?.uppercased()
             self?.capitalLabel.text = details.capital?.first
             self?.areaLabel.text = "Area: \(areaValue) km²"

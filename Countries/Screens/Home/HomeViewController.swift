@@ -65,7 +65,7 @@ class HomeViewController: UIViewController {
         searchController.searchBar.text?.removeAll()
         presenter?.changeContinent(continent: selectedContinent)
         backToTopWhenSegmentChanged()
-        showCountries()
+        reloadData()
     }
     
     private func backToTopWhenSegmentChanged() {
@@ -111,38 +111,40 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: HomePresenterToViewProtocol {
-    func showCountries() {
+    func reloadData() {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
     }
     
-    func startAnimating() {
+    func showLoadingIndicator() {
         indicator.startAnimating()
     }
     
-    func stopAnimating() {
+    func hideLoadingIndicator() {
         indicator.stopAnimating()
     }
 }
 
 extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
+        guard let searchText = searchController.searchBar.text,
+              let presenter else { return }
         if searchText.isEmpty {
-            presenter?.changeContinent(continent: .all)
-            showCountries()
+            presenter.changeContinent(continent: .all)
+            reloadData()
         } else {
             segmented.selectedSegmentIndex = 0
-            presenter?.getFilteredCountries(searchText: searchText)
-            showCountries()
+            presenter.getSearchedCountries(searchText: searchText)
+            reloadData()
         }
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
+        guard let presenter else { return }
         segmented.selectedSegmentIndex = 0
-        presenter?.changeContinent(continent: .all)
-        showCountries()
+        presenter.changeContinent(continent: .all)
+        reloadData()
     }
 }
 
@@ -156,9 +158,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         guard let searchText = searchController.searchBar.text,
-              let presenter = presenter,
+              let presenter,
               let filteredByContinents = presenter.getFilteredByContinents(),
-              let searchedCountries = presenter.interactor?.filteredCountries else { return }
+              let searchedCountries = presenter.interactor?.searchedCountries else { return }
         if searchText.isEmpty {
             let country = filteredByContinents[indexPath.item]
             presenter.didSelectItemAt(country: country)
@@ -173,9 +175,9 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         guard let searchText = searchController.searchBar.text,
-              let presenter = presenter,
+              let presenter,
               let countOfFilteredByContinents = presenter.getCountOfFilteredByContinents(),
-              let countOfFilteredCountries = presenter.getCountOfFilteredCountries() else { return 0 }
+              let countOfFilteredCountries = presenter.getCountOfSearchedCountries() else { return 0 }
         if searchText.isEmpty {
             return countOfFilteredByContinents
         } else {
@@ -190,7 +192,7 @@ extension HomeViewController: UICollectionViewDataSource {
               let searchText = searchController.searchBar.text,
               let presenter = presenter,
               let filteredByContinents = presenter.getFilteredByContinents(),
-              let searchedCountries = presenter.interactor?.filteredCountries else { return UICollectionViewCell() }
+              let searchedCountries = presenter.interactor?.searchedCountries else { return UICollectionViewCell() }
         if searchText.isEmpty {
             cell.configure(model: filteredByContinents[indexPath.item])
         } else {
