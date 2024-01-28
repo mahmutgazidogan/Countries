@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0AA61282B66DD16008599EF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AA61272B66DD16008599EF /* Helper.swift */; };
 		C0AED6DE2B5AF17E00CC5D03 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */; };
 		C0AED6E02B5AF18B00CC5D03 /* DetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */; };
 		C0AED6E22B5AF1B100CC5D03 /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6E12B5AF1B100CC5D03 /* DetailsPresenter.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C0AA61272B66DD16008599EF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInteractor.swift; sourceTree = "<group>"; };
 		C0AED6E12B5AF1B100CC5D03 /* DetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPresenter.swift; sourceTree = "<group>"; };
@@ -69,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0AA61262B66DCFE008599EF /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				C0AA61272B66DD16008599EF /* Helper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		C0B205D52B5DBB28003993DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				C0D0B51E2AF661BF0050DE2C /* Supporting Files */,
+				C0AA61262B66DCFE008599EF /* Helper */,
 				C0D0B5362AF685EB0050DE2C /* Extensions */,
 				C0D0B5392AF687250050DE2C /* Networking */,
 				C0D0B51F2AF661E00050DE2C /* Screens */,
@@ -253,6 +264,7 @@
 				C0AED6E22B5AF1B100CC5D03 /* DetailsPresenter.swift in Sources */,
 				C0D0B5382AF686030050DE2C /* Extensions.swift in Sources */,
 				C0D0B53B2AF687300050DE2C /* Router.swift in Sources */,
+				C0AA61282B66DD16008599EF /* Helper.swift in Sources */,
 				C0AED6E42B5AF1BF00CC5D03 /* DetailsRouter.swift in Sources */,
 				C0D0B5292AF6636B0050DE2C /* HomeRouter.swift in Sources */,
 				C0D0B52B2AF663850050DE2C /* Entity.swift in Sources */,

@@ -52,12 +52,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(model: Country) {
-        imageView.kf.setImage(with: URL(string: model.flags?.png ?? ""))
+        imageView.kf.setImage(with: URL(string: model.flags?.png ?? AppConstants.emptyString.rawValue))
         nameLabel.text = model.name?.common
     }
     
     private func setupViews() {
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = AppColor.whiteBackground.colorValue()
         contentView.addSubviews(imageView,
                                 nameLabel)
         

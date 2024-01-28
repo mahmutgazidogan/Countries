@@ -5,7 +5,7 @@
 //  Created by Mahmut Gazi Doğan on 4.11.2023.
 //
 
-import Foundation
+import UIKit
 
 final class HomePresenter: HomeViewToPresenterProtocol {
 
@@ -15,6 +15,10 @@ final class HomePresenter: HomeViewToPresenterProtocol {
     
     func updateUI() {
         interactor?.fetchAllCountries()
+    }
+    
+    func getTitleForSegmentedControl(segmented: UISegmentedControl) {
+        interactor?.titleForSegmentedControl(segmented: segmented)
     }
     
     // TODO: Recursive fonksiyonlarla data taşıma
@@ -30,8 +34,6 @@ final class HomePresenter: HomeViewToPresenterProtocol {
     func getFilteredCountries(searchText: String) {
         interactor?.filteredCountries(searchText: searchText)
     }
-    
-    
     
     func changeContinent(continent: Continent) {
         interactor?.changeContinent(continent: continent)
@@ -65,8 +67,4 @@ extension HomePresenter: HomeInteractorToPresenterProtocol {
     func stopAnimating() {
         view?.stopAnimating()
     }
-    
-
-    
-    
 }

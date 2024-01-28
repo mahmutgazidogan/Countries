@@ -14,11 +14,11 @@ class HomeViewController: UIViewController {
     
     private lazy var searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
-        search.searchBar.placeholder = "Search any country..."
+        search.searchBar.placeholder = AppConstants.searchBarPlaceholder.rawValue
         search.searchResultsUpdater = self
         search.delegate = self
-        search.searchBar.tintColor = .black
-        search.searchBar.searchTextField.backgroundColor = .white
+        search.searchBar.tintColor = AppColor.blackTint.colorValue()
+        search.searchBar.searchTextField.backgroundColor = AppColor.whiteBackground.colorValue()
         return search
     }()
     
@@ -36,8 +36,8 @@ class HomeViewController: UIViewController {
     
     private lazy var segmented: UISegmentedControl = {
         let segment = UISegmentedControl()
-        segment.backgroundColor = .white
-        segment.selectedSegmentTintColor = .systemRed
+        segment.backgroundColor = AppColor.whiteBackground.colorValue()
+        segment.selectedSegmentTintColor = AppColor.selectedSegmentedTint.colorValue()
         segment.apportionsSegmentWidthsByContent = true
         segment.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 8)], for: .normal)
         segment.addTarget(self, action: #selector(segmentedValueChanged), for: .valueChanged)
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     
     private lazy var indicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
-        ind.color = .black
+        ind.color = AppColor.blackTint.colorValue()
         ind.style = .large
         return ind
     }()
@@ -73,33 +73,21 @@ class HomeViewController: UIViewController {
         collectionView.setContentOffset(desiredOffset, animated: true)
     }
     
-    private func titleForSegmentedControl() {
-        let allContinents = Continent.allCases.map {
-            $0.rawValue
-        }
-        
-        // TODO: Interactor'e taşı
-        for (index, title) in allContinents.enumerated() {
-            segmented.insertSegment(withTitle: title, at: index, animated: true)
-        }
-    }
-    
     private func getDatas() {
         presenter?.updateUI()
     }
     
     private func setupViews() {
-        // TODO: fileprivate enum yazıp sabitleri orada tut
-        title = "Countries"
-        view.backgroundColor = .systemYellow
-        collectionView.backgroundColor = .systemYellow
+        title = AppConstants.countries.rawValue
+        view.backgroundColor = AppColor.yellowBackground.colorValue()
+        collectionView.backgroundColor = AppColor.yellowBackground.colorValue()
         navigationItem.searchController = searchController
         view.addSubviews(segmented,
                          collectionView,
                          indicator)
         
         setupLayouts()
-        titleForSegmentedControl()
+        presenter?.getTitleForSegmentedControl(segmented: segmented)
         segmented.selectedSegmentIndex = 0
     }
     
@@ -167,15 +155,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        guard let searchText = searchController.searchBar.text else { return }
+        guard let searchText = searchController.searchBar.text,
+              let presenter = presenter,
+              let filteredByContinents = presenter.getFilteredByContinents(),
+              let searchedCountries = presenter.interactor?.filteredCountries else { return }
         if searchText.isEmpty {
-            guard let filteredByContinents = presenter?.getFilteredByContinents() else { return }
             let country = filteredByContinents[indexPath.item]
-            presenter?.didSelectItemAt(country: country)
+            presenter.didSelectItemAt(country: country)
         } else {
-            guard let searchedCountries = presenter?.interactor?.filteredCountries else { return }
             let country = searchedCountries[indexPath.item]
-            presenter?.didSelectItemAt(country: country)
+            presenter.didSelectItemAt(country: country)
         }
     }
 }
@@ -183,27 +172,28 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        
-        // TODO: presenter'lara optional binding yap
-        
-        guard let searchText = searchController.searchBar.text else { return 0 }
+        guard let searchText = searchController.searchBar.text,
+              let presenter = presenter,
+              let countOfFilteredByContinents = presenter.getCountOfFilteredByContinents(),
+              let countOfFilteredCountries = presenter.getCountOfFilteredCountries() else { return 0 }
         if searchText.isEmpty {
-            return presenter?.getCountOfFilteredByContinents() ?? 0
+            return countOfFilteredByContinents
         } else {
-            return presenter?.getCountOfFilteredCountries() ?? 0
+            return countOfFilteredCountries
         }
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
-                                                            for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
-        guard let searchText = searchController.searchBar.text else { return UICollectionViewCell() }
+                                                            for: indexPath) as? HomeCollectionViewCell,
+              let searchText = searchController.searchBar.text,
+              let presenter = presenter,
+              let filteredByContinents = presenter.getFilteredByContinents(),
+              let searchedCountries = presenter.interactor?.filteredCountries else { return UICollectionViewCell() }
         if searchText.isEmpty {
-            guard let filteredByContinents = presenter?.getFilteredByContinents() else { return UICollectionViewCell() }
             cell.configure(model: filteredByContinents[indexPath.item])
         } else {
-            guard let searchedCountries = presenter?.interactor?.filteredCountries else { return UICollectionViewCell() }
             cell.configure(model: searchedCountries[indexPath.item])
         }
         return cell

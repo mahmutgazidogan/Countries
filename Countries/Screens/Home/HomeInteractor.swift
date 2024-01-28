@@ -5,7 +5,7 @@
 //  Created by Mahmut Gazi Doğan on 4.11.2023.
 //
 
-import Foundation
+import UIKit
 
 final class HomeInteractor: HomePresenterToInteractorProtocol {
     
@@ -31,6 +31,15 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
                 
                 print(String(describing: error))
             }
+        }
+    }
+    
+    func titleForSegmentedControl(segmented: UISegmentedControl) {
+        let allContinents = Continent.allCases.map {
+            $0.rawValue
+        }
+        for (index, title) in allContinents.enumerated() {
+            segmented.insertSegment(withTitle: title, at: index, animated: true)
         }
     }
     

@@ -22,6 +22,7 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     var router: HomePresenterToRouterProtocol? { get set }
     
     func updateUI()
+    func getTitleForSegmentedControl(segmented: UISegmentedControl)
     func getFilteredByContinents() -> [Country]?
     func getCountOfFilteredByContinents() -> Int?
     func getFilteredCountries(searchText: String)
@@ -39,6 +40,7 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     var filteredCountries: Countries? { get set }
         
     func fetchAllCountries()
+    func titleForSegmentedControl(segmented: UISegmentedControl)
     func filterByContinents() -> [Country]?
     func countOfFilteredByContinents() -> Int?
     func filteredCountries(searchText: String)
