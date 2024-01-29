@@ -77,4 +77,8 @@ extension HomePresenter: HomeInteractorToPresenterProtocol {
     func hideLoadingIndicator() {
         view.hideLoadingIndicator()
     }
+    
+    func showAlert(title: String, message: String) {
+        view.showAlert(title: title, message: message)
+    }
 }

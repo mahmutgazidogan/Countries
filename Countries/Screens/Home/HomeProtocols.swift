@@ -14,6 +14,7 @@ protocol HomePresenterToViewProtocol: AnyObject {
     func reloadData()
     func showLoadingIndicator()
     func hideLoadingIndicator()
+    func showAlert(title: String, message: String)
 }
 
 protocol HomeViewToPresenterProtocol: AnyObject {
@@ -55,6 +56,7 @@ protocol HomeInteractorToPresenterProtocol: AnyObject {
     func reloadData()
     func showLoadingIndicator()
     func hideLoadingIndicator()
+    func showAlert(title: String, message: String)
 }
 
 protocol HomePresenterToRouterProtocol: AnyObject {

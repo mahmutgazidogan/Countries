@@ -20,7 +20,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
             switch result {
             case .success(let data):
                 self?.countryList = data.sorted {
-                    $0.name?.common?.lowercased() ?? AppConstants.emptyString.rawValue < $1.name?.common?.lowercased() ?? AppConstants.emptyString.rawValue
+                    $0.name?.common?.lowercased() ?? AppConstants.emptyString.text < $1.name?.common?.lowercased() ?? AppConstants.emptyString.text
                 }
                 self?.presenter?.reloadData()
                 self?.presenter?.hideLoadingIndicator()
@@ -28,7 +28,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
                 
                 // TODO: Alert view'da çıkacak ama interactor karar verecek
                 
-                print(String(describing: error))
+                self?.presenter?.showAlert(title: "Hata!", message: "Ülkeler listesi getirilirken bir hata oluştu!")
             }
         }
     }

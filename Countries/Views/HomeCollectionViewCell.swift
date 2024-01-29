@@ -52,7 +52,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(model: Country) {
-        imageView.kf.setImage(with: URL(string: model.flags?.png ?? AppConstants.emptyString.rawValue))
+        imageView.kf.setImage(with: URL(string: model.flags?.png ?? AppConstants.emptyString.text))
         nameLabel.text = model.name?.common
     }
     

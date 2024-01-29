@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     
     private lazy var searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
-        search.searchBar.placeholder = AppConstants.searchBarPlaceholder.rawValue
+        search.searchBar.placeholder = AppConstants.searchBarPlaceholder.text
         search.searchResultsUpdater = self
         search.delegate = self
         search.searchBar.tintColor = AppColor.blackTint.color
@@ -78,7 +78,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupViews() {
-        title = AppConstants.countries.rawValue
+        title = AppConstants.countries.text
         view.backgroundColor = AppColor.yellowBackground.color
         collectionView.backgroundColor = AppColor.yellowBackground.color
         navigationItem.searchController = searchController
@@ -123,6 +123,10 @@ extension HomeViewController: HomePresenterToViewProtocol {
     
     func hideLoadingIndicator() {
         indicator.stopAnimating()
+    }
+    
+    func showAlert(title: String, message: String) {
+        showAlert(title: title, message: message, handler: nil)
     }
 }
 
@@ -190,7 +194,7 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
                                                             for: indexPath) as? HomeCollectionViewCell,
               let searchText = searchController.searchBar.text,
-              let presenter = presenter,
+              let presenter,
               let filteredByContinents = presenter.getFilteredByContinents(),
               let searchedCountries = presenter.interactor.searchedCountries else { return UICollectionViewCell() }
         if searchText.isEmpty {

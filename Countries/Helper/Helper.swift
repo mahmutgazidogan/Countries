@@ -33,10 +33,21 @@ enum AppColor {
     }
 }
 
-enum AppConstants: String  {
-    case countries = "Countries"
-    case searchBarPlaceholder = "Search any country..."
-    case emptyString = ""
+enum AppConstants  {
+    case countries
+    case searchBarPlaceholder
+    case emptyString
+    
+    var text: String {
+        switch self {
+        case .countries:
+            return "Countries"
+        case .searchBarPlaceholder:
+            return "Search any country..."
+        case .emptyString:
+            return ""
+        }
+    }
 }
 
 
