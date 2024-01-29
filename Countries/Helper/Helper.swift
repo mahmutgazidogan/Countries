@@ -13,8 +13,9 @@ enum AppColor {
     case whiteBackground
     case selectedSegmentedTint
     case clearBackground
+    case grayBorder
     
-    func colorValue() -> UIColor {
+    var color: UIColor {
         switch self {
         case .yellowBackground:
             return UIColor.systemYellow
@@ -26,6 +27,8 @@ enum AppColor {
             return UIColor.systemRed
         case .clearBackground:
             return UIColor.clear
+        case .grayBorder:
+            return UIColor.gray
         }
     }
 }

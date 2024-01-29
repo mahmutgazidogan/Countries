@@ -9,19 +9,27 @@ import Foundation
 
 final class DetailsPresenter: DetailsViewToPresenterProtocol {
     
-    var view: DetailsPresenterToViewProtocol?
-    var interactor: DetailsPresenterToInteractorProtocol?
-    var router: DetailsPresenterToRouterProtocol?
+    var view: DetailsPresenterToViewProtocol
+    var interactor: DetailsPresenterToInteractorProtocol
+    var router: DetailsPresenterToRouterProtocol
+    
+    init(view: DetailsPresenterToViewProtocol,
+         interactor: DetailsPresenterToInteractorProtocol,
+         router: DetailsPresenterToRouterProtocol) {
+        self.view = view
+        self.interactor = interactor
+        self.router = router
+    }
     
     func getDetails() -> Country? {
-        return interactor?.giveDetails()
+        return interactor.giveDetails()
     }
     
     func numberFormatter(number: Double) -> String? {
-        interactor?.numberFormatter(number: number)
+        interactor.numberFormatter(number: number)
     }
     func getCurrency() -> String? {
-        return interactor?.giveCurrency()
+        return interactor.giveCurrency()
     }
 }
 

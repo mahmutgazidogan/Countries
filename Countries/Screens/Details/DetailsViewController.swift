@@ -127,12 +127,12 @@ class DetailsViewController: UIViewController {
     
     
     private func setupViews() {
-        self.navigationController?.navigationBar.tintColor = AppColor.blackTint.colorValue()
-        view.backgroundColor = AppColor.whiteBackground.colorValue()
-        mapView.backgroundColor = AppColor.clearBackground.colorValue()
+        self.navigationController?.navigationBar.tintColor = AppColor.blackTint.color
+        view.backgroundColor = AppColor.whiteBackground.color
+//        mapView.backgroundColor = AppColor.clearBackground.color
         view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
-                         independencyLabel, checkboxImageView, areaLabel,
-                         populationLabel, startOfWeekLabel, currencyLabel, timezonesLabel, languagesLabel)
+                         independencyLabel, checkboxImageView, areaLabel, populationLabel,
+                         startOfWeekLabel, currencyLabel, timezonesLabel, languagesLabel)
         
         setupLayouts()
     }

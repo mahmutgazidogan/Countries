@@ -17,9 +17,9 @@ protocol HomePresenterToViewProtocol: AnyObject {
 }
 
 protocol HomeViewToPresenterProtocol: AnyObject {
-    var view: HomePresenterToViewProtocol? { get set }
-    var interactor: HomePresenterToInteractorProtocol? { get set }
-    var router: HomePresenterToRouterProtocol? { get set }
+    var view: HomePresenterToViewProtocol { get set }
+    var interactor: HomePresenterToInteractorProtocol { get set }
+    var router: HomePresenterToRouterProtocol { get set }
     
     func updateUI()
     func getTitleForSegmentedControl(segmented: UISegmentedControl)

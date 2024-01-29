@@ -41,13 +41,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
-        contentView.layer.borderColor = UIColor.gray.cgColor
+        contentView.layer.borderColor = AppColor.grayBorder.color.cgColor
         contentView.layer.borderWidth = 0.5
         
         imageView.layer.cornerRadius = 20
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         imageView.layer.masksToBounds = true
-        imageView.layer.borderColor = UIColor.gray.cgColor
+        imageView.layer.borderColor = AppColor.grayBorder.color.cgColor
         imageView.layer.borderWidth = 0.5
     }
     
@@ -57,7 +57,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        contentView.backgroundColor = AppColor.whiteBackground.colorValue()
+        contentView.backgroundColor = AppColor.whiteBackground.color
         contentView.addSubviews(imageView,
                                 nameLabel)
         

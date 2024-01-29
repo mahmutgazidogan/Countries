@@ -12,13 +12,15 @@ class DetailsRouter: DetailsPresenterToRouterProtocol {
     static func createModule(selectedCountryDetails details: Country?) -> DetailsViewController {
         let view = DetailsViewController()
         let interactor: DetailsPresenterToInteractorProtocol = DetailsInteractor()
-        let presenter: DetailsInteractorToPresenterProtocol & DetailsViewToPresenterProtocol = DetailsPresenter()
         let router: DetailsPresenterToRouterProtocol = DetailsRouter()
+        let presenter: DetailsInteractorToPresenterProtocol & DetailsViewToPresenterProtocol = DetailsPresenter(view: view,
+                                                                                                                interactor: interactor,
+                                                                                                                router: router)
         
         view.presenter = presenter
-        presenter.view = view
-        presenter.interactor = interactor
-        presenter.router = router
+//        presenter.view = view
+//        presenter.interactor = interactor
+//        presenter.router = router
         interactor.presenter = presenter
         interactor.details = details
         

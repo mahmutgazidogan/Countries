@@ -9,34 +9,42 @@ import UIKit
 
 final class HomePresenter: HomeViewToPresenterProtocol {
 
-    var view: HomePresenterToViewProtocol?
-    var interactor: HomePresenterToInteractorProtocol?
-    var router: HomePresenterToRouterProtocol?
+    var view: HomePresenterToViewProtocol
+    var interactor: HomePresenterToInteractorProtocol
+    var router: HomePresenterToRouterProtocol
+    
+    init(view: HomePresenterToViewProtocol,
+         interactor: HomePresenterToInteractorProtocol,
+         router: HomePresenterToRouterProtocol) {
+        self.view = view
+        self.interactor = interactor
+        self.router = router
+    }
     
     func updateUI() {
-        interactor?.fetchAllCountries()
+        interactor.fetchAllCountries()
     }
     
     func getTitleForSegmentedControl(segmented: UISegmentedControl) {
-        interactor?.titleForSegmentedControl(segmented: segmented)
+        interactor.titleForSegmentedControl(segmented: segmented)
     }
     
     // TODO: Recursive fonksiyonlarla data taşıma
     
     func getFilteredByContinents() -> [Country]? {
-        return interactor?.filterByContinents()
+        return interactor.filterByContinents()
     }
     
     func getCountOfFilteredByContinents() -> Int? {
-        return interactor?.countOfFilteredByContinents()
+        return interactor.countOfFilteredByContinents()
     }
     
     func getSearchedCountries(searchText: String) {
-        interactor?.searchedCountries(searchText: searchText)
+        interactor.searchedCountries(searchText: searchText)
     }
     
     func changeContinent(continent: Continent) {
-        interactor?.changeContinent(continent: continent)
+        interactor.changeContinent(continent: continent)
     }
     
 //    func getfilterCountriesFor(searchText: String) -> [Country]? {
@@ -44,27 +52,29 @@ final class HomePresenter: HomeViewToPresenterProtocol {
 //    }
     
     func getCountOfSearchedCountries() -> Int? {
-        return interactor?.countOfSearchedCountries()
+        return interactor.countOfSearchedCountries()
     }
     
     // MARK: - Presenter to Router - Navigation
     
     func didSelectItemAt(country: Country?) {
         guard let country else { return }
-            router?.navigateToDetails(selectedCountryDetails: country)
+            router.navigateToDetails(selectedCountryDetails: country)
     }
 }
 
+// MARK: Interactor to Presenter
+
 extension HomePresenter: HomeInteractorToPresenterProtocol {
     func reloadData() {
-        view?.reloadData()
+        view.reloadData()
     }
     
     func showLoadingIndicator() {
-        view?.showLoadingIndicator()
+        view.showLoadingIndicator()
     }
     
     func hideLoadingIndicator() {
-        view?.hideLoadingIndicator()
+        view.hideLoadingIndicator()
     }
 }

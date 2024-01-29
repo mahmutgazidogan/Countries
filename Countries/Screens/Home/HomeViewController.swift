@@ -17,8 +17,8 @@ class HomeViewController: UIViewController {
         search.searchBar.placeholder = AppConstants.searchBarPlaceholder.rawValue
         search.searchResultsUpdater = self
         search.delegate = self
-        search.searchBar.tintColor = AppColor.blackTint.colorValue()
-        search.searchBar.searchTextField.backgroundColor = AppColor.whiteBackground.colorValue()
+        search.searchBar.tintColor = AppColor.blackTint.color
+        search.searchBar.searchTextField.backgroundColor = AppColor.whiteBackground.color
         return search
     }()
     
@@ -36,8 +36,8 @@ class HomeViewController: UIViewController {
     
     private lazy var segmented: UISegmentedControl = {
         let segment = UISegmentedControl()
-        segment.backgroundColor = AppColor.whiteBackground.colorValue()
-        segment.selectedSegmentTintColor = AppColor.selectedSegmentedTint.colorValue()
+        segment.backgroundColor = AppColor.whiteBackground.color
+        segment.selectedSegmentTintColor = AppColor.selectedSegmentedTint.color
         segment.apportionsSegmentWidthsByContent = true
         segment.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 8)], for: .normal)
         segment.addTarget(self, action: #selector(segmentedValueChanged), for: .valueChanged)
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     
     private lazy var indicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
-        ind.color = AppColor.blackTint.colorValue()
+        ind.color = AppColor.blackTint.color
         ind.style = .large
         return ind
     }()
@@ -79,8 +79,8 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         title = AppConstants.countries.rawValue
-        view.backgroundColor = AppColor.yellowBackground.colorValue()
-        collectionView.backgroundColor = AppColor.yellowBackground.colorValue()
+        view.backgroundColor = AppColor.yellowBackground.color
+        collectionView.backgroundColor = AppColor.yellowBackground.color
         navigationItem.searchController = searchController
         view.addSubviews(segmented,
                          collectionView,
@@ -160,7 +160,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         guard let searchText = searchController.searchBar.text,
               let presenter,
               let filteredByContinents = presenter.getFilteredByContinents(),
-              let searchedCountries = presenter.interactor?.searchedCountries else { return }
+              let searchedCountries = presenter.interactor.searchedCountries else { return }
         if searchText.isEmpty {
             let country = filteredByContinents[indexPath.item]
             presenter.didSelectItemAt(country: country)
@@ -192,7 +192,7 @@ extension HomeViewController: UICollectionViewDataSource {
               let searchText = searchController.searchBar.text,
               let presenter = presenter,
               let filteredByContinents = presenter.getFilteredByContinents(),
-              let searchedCountries = presenter.interactor?.searchedCountries else { return UICollectionViewCell() }
+              let searchedCountries = presenter.interactor.searchedCountries else { return UICollectionViewCell() }
         if searchText.isEmpty {
             cell.configure(model: filteredByContinents[indexPath.item])
         } else {

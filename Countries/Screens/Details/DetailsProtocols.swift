@@ -15,9 +15,9 @@ protocol DetailsPresenterToViewProtocol: AnyObject {
 }
 
 protocol DetailsViewToPresenterProtocol: AnyObject {
-    var view: DetailsPresenterToViewProtocol? { get set }
-    var interactor: DetailsPresenterToInteractorProtocol? { get set }
-    var router: DetailsPresenterToRouterProtocol? { get set }
+    var view: DetailsPresenterToViewProtocol { get set }
+    var interactor: DetailsPresenterToInteractorProtocol { get set }
+    var router: DetailsPresenterToRouterProtocol { get set }
     
     func getDetails() -> Country?
     func numberFormatter(number: Double) -> String?
