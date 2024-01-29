@@ -16,15 +16,17 @@ final class HomeRouter: HomePresenterToRouterProtocol {
         
         let view = HomeViewController()
         let interactor: HomePresenterToInteractorProtocol = HomeInteractor()
-        let presenter: HomeInteractorToPresenterProtocol & HomeViewToPresenterProtocol = HomePresenter()
         let router: HomePresenterToRouterProtocol = HomeRouter()
+        let presenter: HomeInteractorToPresenterProtocol & HomeViewToPresenterProtocol = HomePresenter(view: view,
+                                                                                                       interactor: interactor,
+                                                                                                       router: router)
         
         let navigation = UINavigationController(rootViewController: view)
         
         view.presenter = presenter
-        presenter.view = view
-        presenter.interactor = interactor
-        presenter.router = router
+//        presenter.view = view
+//        presenter.interactor = interactor
+//        presenter.router = router
         interactor.presenter = presenter
         router.viewController = view
         
