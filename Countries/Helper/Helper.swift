@@ -50,4 +50,13 @@ enum AppConstants  {
     }
 }
 
+enum Icons: String {
+    case tick = "tick"
+    case cross = "cross"
+    
+    var image: UIImage? {
+        return UIImage(named: self.rawValue)
+    }
+}
+
 

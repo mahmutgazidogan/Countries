@@ -25,10 +25,8 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
                 self?.presenter?.reloadData()
                 self?.presenter?.hideLoadingIndicator()
             case .failure(let error):
-                
-                // TODO: Alert view'da çıkacak ama interactor karar verecek
-                
-                self?.presenter?.showAlert(title: "Hata!", message: "Ülkeler listesi getirilirken bir hata oluştu!")
+                self?.presenter?.showAlert(title: "Hata!",
+                                           message: "Ülkeler listesi getirilirken bir hata oluştu!\n Hata İçeriği: \(error.localizedDescription)")
             }
         }
     }
@@ -75,43 +73,6 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
             })
         }
         self.presenter?.reloadData()
-    }
-    
-    
-    
-    func filterCountriesFor(searchText: String = "") -> [Country]? {
-        guard let countryList = countryList else { return [] }
-        if searchText == "" {
-            
-            
-            if selectedContinent == .all {
-                searchedCountries = countryList
-//                presenter?.successfullyFetched()
-                return searchedCountries
-                
-            } else {
-                searchedCountries = countryList.filter({ item in
-                    if let continents = item.continents {
-                        for continent in continents {
-                            return continent == selectedContinent
-                        }
-                    }
-                    return true
-                })
-//                presenter?.successfullyFetched()
-                return searchedCountries
-                
-            }
-            
-        } else {
-            searchedCountries = countryList.filter({ country in
-                guard let countryName = country.name?.common else { return false }
-                return countryName.lowercased().hasPrefix(searchText.lowercased())
-            })
-        }
-//        presenter?.successfullyFetched()
-        return searchedCountries
-        
     }
     
     func countOfSearchedCountries() -> Int? {

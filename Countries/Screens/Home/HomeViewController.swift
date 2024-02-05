@@ -82,9 +82,7 @@ class HomeViewController: UIViewController {
         view.backgroundColor = AppColor.yellowBackground.color
         collectionView.backgroundColor = AppColor.yellowBackground.color
         navigationItem.searchController = searchController
-        view.addSubviews(segmented,
-                         collectionView,
-                         indicator)
+        view.addSubviews(segmented, collectionView, indicator)
         
         setupLayouts()
         presenter?.getTitleForSegmentedControl(segmented: segmented)

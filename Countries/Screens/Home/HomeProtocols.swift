@@ -30,8 +30,6 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     func getCountOfSearchedCountries() -> Int?
     func changeContinent(continent: Continent)
     func didSelectItemAt(country: Country?)
-    
-//    func getfilterCountriesFor(searchText: String) -> [Country]?
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
@@ -48,8 +46,6 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     func countOfSearchedCountries() -> Int?
     
     func changeContinent(continent: Continent)
-    
-//    func filterCountriesFor(searchText: String) -> [Country]?
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    

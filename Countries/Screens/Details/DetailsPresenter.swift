@@ -5,7 +5,7 @@
 //  Created by Mahmut Gazi Doğan on 19.01.2024.
 //
 
-import Foundation
+import UIKit
 
 final class DetailsPresenter: DetailsViewToPresenterProtocol {
     
@@ -21,18 +21,24 @@ final class DetailsPresenter: DetailsViewToPresenterProtocol {
         self.router = router
     }
     
-    func getDetails() -> Country? {
-        return interactor.giveDetails()
+    func updateUI() {
+        interactor.giveDetails()
     }
     
-    func numberFormatter(number: Double) -> String? {
-        interactor.numberFormatter(number: number)
-    }
-    func getCurrency() -> String? {
-        return interactor.giveCurrency()
-    }
 }
 
 extension DetailsPresenter: DetailsInteractorToPresenterProtocol {
-    
+    func getDetails(name: String, capital: String, area: String,
+                    population: String, startOfWeek: String,
+                    currency: String, timezones: String,
+                    flag: String, flagDescription: String,
+                    languages: String, carDetails: String,
+                    independency: UIImage?) {
+        view.showDetails(name: name, capital: capital, area: area,
+                         population: population, startOfWeek: startOfWeek,
+                         currency: currency, timezones: timezones,
+                         flag: flag, flagDescription: flagDescription,
+                         languages: languages, carDetails: carDetails,
+                         independency: independency)
+    }
 }

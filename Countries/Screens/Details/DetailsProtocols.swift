@@ -11,7 +11,12 @@ import UIKit
 protocol DetailsPresenterToViewProtocol: AnyObject {
     var presenter: DetailsViewToPresenterProtocol? { get set }
     
-    func showDetails()
+    func showDetails(name: String, capital: String, area: String,
+                     population: String, startOfWeek: String,
+                     currency: String, timezones: String,
+                     flag: String, flagDescription: String,
+                     languages: String, carDetails: String,
+                     independency: UIImage?)
 }
 
 protocol DetailsViewToPresenterProtocol: AnyObject {
@@ -19,22 +24,23 @@ protocol DetailsViewToPresenterProtocol: AnyObject {
     var interactor: DetailsPresenterToInteractorProtocol { get set }
     var router: DetailsPresenterToRouterProtocol { get set }
     
-    func getDetails() -> Country?
-    func numberFormatter(number: Double) -> String?
-    func getCurrency() -> String?
+    func updateUI()
 }
 
 protocol DetailsPresenterToInteractorProtocol: AnyObject {
     var presenter: DetailsInteractorToPresenterProtocol? { get set }
     var details: Country? { get set }
     
-    func giveDetails() -> Country?
-    func numberFormatter(number: Double) -> String?
-    func giveCurrency() -> String?
+    func giveDetails()
 }
 
 protocol DetailsInteractorToPresenterProtocol: AnyObject {
-    
+    func getDetails(name: String, capital: String, area: String,
+                    population: String, startOfWeek: String,
+                    currency: String, timezones: String,
+                    flag: String, flagDescription: String,
+                    languages: String, carDetails: String,
+                    independency: UIImage?)
 }
 
 protocol DetailsPresenterToRouterProtocol: AnyObject {

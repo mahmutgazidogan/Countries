@@ -12,14 +12,10 @@ typealias Countries = [Country]
 // MARK: - Country
 struct Country: Codable {
     let name: Name?
-    let tld: [String]?
     let independent: Bool?
-    let status: Status?
     let currencies: Currencies?
     let idd: Idd?
     let capital: [String]?
-    let region: Region?
-    let subregion: String?
     let languages: [String: String]?
     let latlng: [Double]?
     let area: Double?
@@ -33,7 +29,6 @@ struct Country: Codable {
     let coatOfArms: CoatOfArms?
     let startOfWeek: StartOfWeek?
     let capitalInfo: CapitalInfo?
-    let borders: [String]?
 }
 
 // MARK: - CapitalInfo
@@ -327,11 +322,3 @@ enum StartOfWeek: String, Codable {
     case saturday = "saturday"
     case sunday = "sunday"
 }
-
-enum Status: String, Codable {
-    case officiallyAssigned = "officially-assigned"
-    case userAssigned = "user-assigned"
-}
-
-
-

@@ -22,10 +22,11 @@ class DetailsViewController: UIViewController {
         return mapView
     }()
     
-    private lazy var backgroundImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleToFill
-        return iv
+    private lazy var indicator: UIActivityIndicatorView = {
+        let ind = UIActivityIndicatorView()
+        ind.color = AppColor.blackTint.color
+        ind.style = .large
+        return ind
     }()
     
     private lazy var nameLabel: UILabel = {
@@ -106,11 +107,32 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
+    private lazy var carDatasLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial-Bold", size: 30)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var flagImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        return iv
+    }()
+    
+    private lazy var flagDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Arial", size: 10)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        showDetails()
+        updateUI()
     }
     
     override func viewDidLayoutSubviews() {
@@ -121,18 +143,29 @@ class DetailsViewController: UIViewController {
                                                  .layerMinXMinYCorner]
         checkboxImageView.layer.masksToBounds = true
         
-        backgroundImageView.alpha = 0.25
+        flagImageView.layer.borderWidth = 0.4
+        flagImageView.layer.borderColor = AppColor.grayBorder.color.cgColor
     }
     
+    private func updateUI() {
+        presenter?.updateUI()
+    }
     
+    private func showLoadingIndicator() {
+        indicator.startAnimating()
+    }
+    
+    private func hideLoadingIndicator() {
+        indicator.stopAnimating()
+    }
     
     private func setupViews() {
         self.navigationController?.navigationBar.tintColor = AppColor.blackTint.color
         view.backgroundColor = AppColor.whiteBackground.color
-//        mapView.backgroundColor = AppColor.clearBackground.color
-        view.addSubviews(mapView, backgroundImageView, nameLabel, capitalLabel,
-                         independencyLabel, checkboxImageView, areaLabel, populationLabel,
-                         startOfWeekLabel, currencyLabel, timezonesLabel, languagesLabel)
+        view.addSubviews(mapView, indicator, nameLabel, capitalLabel, independencyLabel,
+                         checkboxImageView, areaLabel, populationLabel, startOfWeekLabel,
+                         currencyLabel, timezonesLabel, languagesLabel, carDatasLabel,
+                         flagImageView, flagDescriptionLabel)
         
         setupLayouts()
     }
@@ -143,9 +176,9 @@ class DetailsViewController: UIViewController {
             make.height.equalTo(300)
         }
         
-        backgroundImageView.snp.makeConstraints { make in
-            make.top.equalTo(mapView.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+        indicator.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+//            make.centerY.equalTo(view.safeAreaLayoutGuide.snp.bottom - mapView.snp.bottom)
         }
         
         nameLabel.snp.makeConstraints { make in
@@ -207,6 +240,26 @@ class DetailsViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-20)
         }
         
+        carDatasLabel.snp.makeConstraints { make in
+            make.top.equalTo(languagesLabel.snp.bottom)
+            make.leading.equalTo(languagesLabel.snp.leading)
+            make.trailing.equalToSuperview().offset(-20)
+        }
+        
+        flagImageView.snp.makeConstraints { make in
+            make.top.equalTo(carDatasLabel.snp.bottom)
+            make.leading.equalTo(carDatasLabel.snp.leading)
+            make.height.equalTo(60)
+            make.width.equalTo(100)
+        }
+        
+        flagDescriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(carDatasLabel.snp.bottom)
+            make.leading.equalTo(flagImageView.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(flagImageView.snp.height)
+        }
+        
     }
     
 }
@@ -225,48 +278,35 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
      +++++++++ currency
      +++++++++ startOfWeek
      +++++++++ timezones
+     +++++++++ languages
+     +++++++++ car - signs - side ???
+     +++++++++ flag? & flags - alt?
      
-     capital & capitalInfo - latlng
-     languages
+     capital & capitalInfo - latlng (capitalInfo boşsa ülkenin kendi lokasyonunu al (latlng))
      latlng
-     flag? & flags - alt?
-     car - signs - side ???
      coatOfArms
      */
     
-    func showDetails() {
-        guard let details = presenter?.getDetails(),
-              let flag = details.flags?.png,
-              let independent = details.independent,
-              let area = details.area,
-              let areaValue = presenter?.numberFormatter(number: area),
-              let population = details.population,
-              let numberOfPopulation = presenter?.numberFormatter(number: Double(population)),
-              let startOfWeek = details.startOfWeek?.rawValue.capitalized,
-              let currency = presenter?.getCurrency()?.capitalized,
-              let timezones = details.timezones,
-              let languages = details.languages else { return }
-
+    func showDetails(name: String, capital: String, area: String,
+                     population: String, startOfWeek: String,
+                     currency: String, timezones: String,
+                     flag: String, flagDescription: String,
+                     languages: String, carDetails: String, independency: UIImage?) {
+        showLoadingIndicator()
         DispatchQueue.main.async { [weak self] in
-            self?.backgroundImageView.kf.setImage(with: URL(string: flag))
-            self?.nameLabel.text = details.name?.official?.uppercased()
-            self?.capitalLabel.text = details.capital?.first
-            self?.areaLabel.text = "Area: \(areaValue) km²"
-            self?.populationLabel.text = "Population: \(numberOfPopulation)"
+            self?.nameLabel.text = name
+            self?.capitalLabel.text = capital
+            self?.checkboxImageView.image = independency
+            self?.areaLabel.text = "Area: \(area) km²"
+            self?.populationLabel.text = "Population: \(population)"
             self?.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
             self?.currencyLabel.text = "Currency: \(currency)"
-            self?.timezonesLabel.text = "Timezones: \(timezones.joined(separator: ", "))"
-            
-            let languageNames = languages.map { (_, language) in
-                language
-            }.joined(separator: ", ")
-            self?.languagesLabel.text = "Languages: \(languageNames)"
-            
-            if independent {
-                self?.checkboxImageView.image = UIImage(named: "tick")
-            } else {
-                self?.checkboxImageView.image = UIImage(named: "cross")
-            }
+            self?.timezonesLabel.text = "Timezones: \(timezones)"
+            self?.carDatasLabel.text = carDetails
+            self?.flagImageView.kf.setImage(with: URL(string: flag))
+            self?.flagDescriptionLabel.text = flagDescription
+            self?.languagesLabel.text = languages
+            self?.hideLoadingIndicator()
         }
     }
 }

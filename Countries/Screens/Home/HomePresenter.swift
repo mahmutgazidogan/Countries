@@ -47,10 +47,6 @@ final class HomePresenter: HomeViewToPresenterProtocol {
         interactor.changeContinent(continent: continent)
     }
     
-//    func getfilterCountriesFor(searchText: String) -> [Country]? {
-//        return interactor?.filterCountriesFor(searchText: searchText)
-//    }
-    
     func getCountOfSearchedCountries() -> Int? {
         return interactor.countOfSearchedCountries()
     }
