@@ -58,6 +58,12 @@ class HomeViewController: UIViewController {
         getDatas()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.backgroundColor = AppColor.yellowBackground.color
+    }
+    
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
         let selectedIndex = sender.selectedSegmentIndex
         guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
@@ -79,7 +85,6 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         title = AppConstants.countries.text
-        view.backgroundColor = AppColor.yellowBackground.color
         collectionView.backgroundColor = AppColor.yellowBackground.color
         navigationItem.searchController = searchController
         view.addSubviews(segmented, collectionView, indicator)

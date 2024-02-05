@@ -135,6 +135,12 @@ class DetailsViewController: UIViewController {
         updateUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.backgroundColor = nil
+    }
+    
     override func viewDidLayoutSubviews() {
         checkboxImageView.layer.cornerRadius = 5
         checkboxImageView.layer.maskedCorners = [.layerMaxXMaxYCorner,
@@ -156,9 +162,7 @@ class DetailsViewController: UIViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinates
         annotation.title = title
-        
         mapView.addAnnotation(annotation)
-        
         mapView.setRegion(MKCoordinateRegion(center: coordinates,
                                              span: MKCoordinateSpan(latitudeDelta: 10.0,
                                                                     longitudeDelta: 10.0)),
@@ -174,7 +178,8 @@ class DetailsViewController: UIViewController {
     }
     
     private func setupViews() {
-        self.navigationController?.navigationBar.tintColor = AppColor.blackTint.color
+        navigationController?.navigationBar.tintColor = AppColor.blackTint.color
+        navigationController?.navigationBar.backgroundColor = AppColor.lightTextBackground.color
         view.backgroundColor = AppColor.whiteBackground.color
         view.addSubviews(mapView, indicator, nameLabel, capitalLabel, independencyLabel,
                          checkboxImageView, areaLabel, populationLabel, startOfWeekLabel,
@@ -260,17 +265,16 @@ class DetailsViewController: UIViewController {
         }
         
         flagImageView.snp.makeConstraints { make in
-            make.top.equalTo(carDatasLabel.snp.bottom)
-            make.leading.equalTo(carDatasLabel.snp.leading)
-            make.height.equalTo(60)
-            make.width.equalTo(100)
+            make.top.equalTo(carDatasLabel.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(90)
+            make.width.equalTo(150)
         }
         
         flagDescriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(carDatasLabel.snp.bottom)
-            make.leading.equalTo(flagImageView.snp.trailing).offset(10)
+            make.top.equalTo(flagImageView.snp.bottom).offset(20)
+            make.leading.equalTo(carDatasLabel.snp.leading)
             make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(flagImageView.snp.height)
         }
         
     }
@@ -279,27 +283,24 @@ class DetailsViewController: UIViewController {
 
 extension DetailsViewController: UITextViewDelegate { }
 
-extension DetailsViewController: MKMapViewDelegate { }
+extension DetailsViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "customAnnotation"
+        var annotationView: MKAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) {
+            dequeuedView.annotation = annotation
+            annotationView = dequeuedView
+        } else {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView.canShowCallout = true
+            annotationView.image = UIImage(named: "location")
+        }
+        return annotationView
+    }
+}
 
 extension DetailsViewController: DetailsPresenterToViewProtocol {
-    
-    /*
-     +++++++++ name -> nativeName
-     +++++++++ independent
-     +++++++++ area
-     +++++++++ population
-     +++++++++ currency
-     +++++++++ startOfWeek
-     +++++++++ timezones
-     +++++++++ languages
-     +++++++++ car - signs - side ???
-     +++++++++ flag? & flags - alt?
-     
-     capital & capitalInfo - latlng (capitalInfo boşsa ülkenin kendi lokasyonunu al (latlng))
-     latlng
-     coatOfArms
-     */
-    
     func showDetails(name: String, capital: String, area: String,
                      population: String, startOfWeek: String,
                      currency: String, timezones: String,

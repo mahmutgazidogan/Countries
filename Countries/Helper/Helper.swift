@@ -14,6 +14,7 @@ enum AppColor {
     case selectedSegmentedTint
     case clearBackground
     case grayBorder
+    case lightTextBackground
     
     var color: UIColor {
         switch self {
@@ -29,6 +30,8 @@ enum AppColor {
             return UIColor.clear
         case .grayBorder:
             return UIColor.gray
+        case .lightTextBackground:
+            return UIColor.lightText
         }
     }
 }
