@@ -151,6 +151,20 @@ class DetailsViewController: UIViewController {
         presenter?.updateUI()
     }
     
+    private func showCountryOnMap(latitude: Double, longitude: Double, title: String) {
+        let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinates
+        annotation.title = title
+        
+        mapView.addAnnotation(annotation)
+        
+        mapView.setRegion(MKCoordinateRegion(center: coordinates,
+                                             span: MKCoordinateSpan(latitudeDelta: 10.0,
+                                                                    longitudeDelta: 10.0)),
+                          animated: true)
+    }
+    
     private func showLoadingIndicator() {
         indicator.startAnimating()
     }
@@ -178,7 +192,6 @@ class DetailsViewController: UIViewController {
         
         indicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
-//            make.centerY.equalTo(view.safeAreaLayoutGuide.snp.bottom - mapView.snp.bottom)
         }
         
         nameLabel.snp.makeConstraints { make in
@@ -291,7 +304,8 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
                      population: String, startOfWeek: String,
                      currency: String, timezones: String,
                      flag: String, flagDescription: String,
-                     languages: String, carDetails: String, independency: UIImage?) {
+                     languages: String, carDetails: String,
+                     independency: UIImage?, latitude: Double, longitude: Double) {
         showLoadingIndicator()
         DispatchQueue.main.async { [weak self] in
             self?.nameLabel.text = name
@@ -306,6 +320,7 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
             self?.flagImageView.kf.setImage(with: URL(string: flag))
             self?.flagDescriptionLabel.text = flagDescription
             self?.languagesLabel.text = languages
+            self?.showCountryOnMap(latitude: latitude, longitude: longitude, title: capital)
             self?.hideLoadingIndicator()
         }
     }

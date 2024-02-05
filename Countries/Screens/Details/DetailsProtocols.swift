@@ -16,7 +16,7 @@ protocol DetailsPresenterToViewProtocol: AnyObject {
                      currency: String, timezones: String,
                      flag: String, flagDescription: String,
                      languages: String, carDetails: String,
-                     independency: UIImage?)
+                     independency: UIImage?, latitude: Double, longitude: Double)
 }
 
 protocol DetailsViewToPresenterProtocol: AnyObject {
@@ -40,7 +40,7 @@ protocol DetailsInteractorToPresenterProtocol: AnyObject {
                     currency: String, timezones: String,
                     flag: String, flagDescription: String,
                     languages: String, carDetails: String,
-                    independency: UIImage?)
+                    independency: UIImage?, latitude: Double, longitude: Double)
 }
 
 protocol DetailsPresenterToRouterProtocol: AnyObject {

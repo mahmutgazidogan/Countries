@@ -33,12 +33,12 @@ extension DetailsPresenter: DetailsInteractorToPresenterProtocol {
                     currency: String, timezones: String,
                     flag: String, flagDescription: String,
                     languages: String, carDetails: String,
-                    independency: UIImage?) {
+                    independency: UIImage?, latitude: Double, longitude: Double) {
         view.showDetails(name: name, capital: capital, area: area,
                          population: population, startOfWeek: startOfWeek,
                          currency: currency, timezones: timezones,
                          flag: flag, flagDescription: flagDescription,
                          languages: languages, carDetails: carDetails,
-                         independency: independency)
+                         independency: independency, latitude: latitude, longitude: longitude)
     }
 }

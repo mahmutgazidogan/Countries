@@ -20,7 +20,6 @@ struct Country: Codable {
     let latlng: [Double]?
     let area: Double?
     let flag: String?
-    let maps: Maps?
     let population: Int?
     let car: Car?
     let timezones: [String]?
@@ -296,11 +295,6 @@ struct Flags: Codable {
 struct Idd: Codable {
     let root: String?
     let suffixes: [String]?
-}
-
-// MARK: - Maps
-struct Maps: Codable {
-    let googleMaps, openStreetMaps: String?
 }
 
 // MARK: - Name

@@ -32,11 +32,16 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         let timezone = returnTimezones(timezones: timezones)
         let independency = returnIndependencyImage(details: details)
         
+        let coordinates = returnCoordinates(details: details)
+        let latitude = coordinates.latitude
+        let longitude = coordinates.longitude
+        
         presenter.getDetails(name: name, capital: capital, area: areaValue,
-                          population: numberOfPopulation, startOfWeek: startOfWeek,
-                          currency: currency, timezones: timezone,
-                          flag: flag, flagDescription: flagDescription,
-                          languages: languages, carDetails: carDetails, independency: independency)
+                             population: numberOfPopulation, startOfWeek: startOfWeek,
+                             currency: currency, timezones: timezone,
+                             flag: flag, flagDescription: flagDescription,
+                             languages: languages, carDetails: carDetails,
+                             independency: independency, latitude: latitude, longitude: longitude)
     }
     
     private func returnCapital(details: Country) -> String {
@@ -95,18 +100,30 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     }
     
     private func numberFormatter(number: Double) -> String? {
-        let minimumFractionDigits = 0
-        let maximumFractionDigits = 0
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = minimumFractionDigits
-        formatter.maximumFractionDigits = maximumFractionDigits
         let intValue = Int(number)
         return formatter.string(from: NSNumber(value: intValue))
     }
     
+    private func returnCoordinates(details: Country) -> (latitude: Double, longitude: Double) {
+        guard let capitalInfo = details.capitalInfo,
+              let latitude = capitalInfo.latlng?.first,
+              let longitude = capitalInfo.latlng?.last else {
+            guard let latitude = details.latlng?.first,
+                  let longitude = details.latlng?.last else { return (0, 0)}
+            return (latitude, longitude)
+        }
+            return (latitude, longitude)
+//         else {
+//            guard let latitude = details.latlng?.first,
+//                  let longitude = details.latlng?.last else { return (0, 0)}
+//            return (latitude, longitude)
+//        }
+    }
+    
     // MARK: Currency Functions
-    func getAllCurrencyInfo(from currencies: Currencies) -> [(name: String, symbol: String)] {
+    private func getAllCurrencyInfo(from currencies: Currencies) -> [(name: String, symbol: String)] {
         var currencyInfo: [(name: String, symbol: String)] = []
         let mirror = Mirror(reflecting: currencies)
         for child in mirror.children {
