@@ -17,7 +17,7 @@ class DetailsViewController: UIViewController {
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.mapType = .standard
+        mapView.mapType = .hybridFlyover
         mapView.delegate = self
         return mapView
     }()
@@ -160,7 +160,7 @@ class DetailsViewController: UIViewController {
     private func showCountryOnMap(latitude: Double, longitude: Double, title: String) {
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
-        let span = MKCoordinateSpan(latitudeDelta: 10.0, longitudeDelta: 10.0)
+        let span = MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
         let region = MKCoordinateRegion(center: coordinates, span: span)
         annotation.coordinate = coordinates
         annotation.subtitle = title

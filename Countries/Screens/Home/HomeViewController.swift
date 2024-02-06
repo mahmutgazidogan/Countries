@@ -30,7 +30,11 @@ class HomeViewController: UIViewController {
         cv.delegate = self
         cv.dataSource = self
         cv.showsVerticalScrollIndicator = false
-        cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        cv.register(HomeCollectionViewCell.self,
+                    forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        cv.register(SectionHeaderView.self,
+                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         return cv
     }()
     
@@ -139,7 +143,9 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
         guard let searchText = searchController.searchBar.text,
               let presenter else { return }
         if searchText.isEmpty {
-            presenter.changeContinent(continent: .all)
+            if !searchController.isActive {
+                presenter.changeContinent(continent: .all)
+            }
             reloadData()
         } else {
             segmented.selectedSegmentIndex = 0
@@ -157,12 +163,39 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        let count = collectionView.numberOfItems(inSection: indexPath.section)
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                   withReuseIdentifier: SectionHeaderView.reuseIdentifier,
+                                                                                   for: indexPath) as? SectionHeaderView
+            else {
+                fatalError("Could not dequeue header view")
+            }
+            headerView.titleLabel.text = "\(count) countries listed."
+            return headerView
+        default:
+            fatalError("Unexpected element kind")
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 30)
+    }
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: collectionView.frame.width / 2.4 , height: 150)
         return size
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         guard let searchText = searchController.searchBar.text,

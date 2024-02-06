@@ -109,17 +109,14 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     private func returnCoordinates(details: Country) -> (latitude: Double, longitude: Double) {
         guard let capitalInfo = details.capitalInfo,
               let latitude = capitalInfo.latlng?.first,
-              let longitude = capitalInfo.latlng?.last else {
+              let longitude = capitalInfo.latlng?.last
+        else {
             guard let latitude = details.latlng?.first,
-                  let longitude = details.latlng?.last else { return (0, 0)}
+                  let longitude = details.latlng?.last
+            else { return (0, 0)}
             return (latitude, longitude)
         }
-            return (latitude, longitude)
-//         else {
-//            guard let latitude = details.latlng?.first,
-//                  let longitude = details.latlng?.last else { return (0, 0)}
-//            return (latitude, longitude)
-//        }
+        return (latitude, longitude)
     }
     
     // MARK: Currency Functions
