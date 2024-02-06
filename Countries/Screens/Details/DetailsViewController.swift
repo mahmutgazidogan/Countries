@@ -160,13 +160,13 @@ class DetailsViewController: UIViewController {
     private func showCountryOnMap(latitude: Double, longitude: Double, title: String) {
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
+        let span = MKCoordinateSpan(latitudeDelta: 10.0, longitudeDelta: 10.0)
+        let region = MKCoordinateRegion(center: coordinates, span: span)
         annotation.coordinate = coordinates
-        annotation.title = title
+        annotation.subtitle = title
+        annotation.title = AppConstants.capital.text
         mapView.addAnnotation(annotation)
-        mapView.setRegion(MKCoordinateRegion(center: coordinates,
-                                             span: MKCoordinateSpan(latitudeDelta: 10.0,
-                                                                    longitudeDelta: 10.0)),
-                          animated: true)
+        mapView.setRegion(region, animated: true)
     }
     
     private func showLoadingIndicator() {

@@ -62,6 +62,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         view.backgroundColor = AppColor.yellowBackground.color
+        segmentedValueChanged(sender: segmented)
     }
     
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {

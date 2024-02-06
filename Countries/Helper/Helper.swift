@@ -38,6 +38,7 @@ enum AppColor {
 
 enum AppConstants  {
     case countries
+    case capital
     case searchBarPlaceholder
     case emptyString
     
@@ -45,6 +46,8 @@ enum AppConstants  {
         switch self {
         case .countries:
             return "Countries"
+        case .capital:
+            return "Capital"
         case .searchBarPlaceholder:
             return "Search any country..."
         case .emptyString:
