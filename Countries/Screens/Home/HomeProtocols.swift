@@ -28,7 +28,7 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     func getCountOfFilteredByContinents() -> Int?
     func getSearchedCountries(searchText: String)
     func getCountOfSearchedCountries() -> Int?
-    func changeContinent(continent: Continent)
+    func changeContinent(segmented: UISegmentedControl)
     func didSelectItemAt(country: Country?)
 }
 
@@ -45,7 +45,7 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     func searchedCountries(searchText: String)
     func countOfSearchedCountries() -> Int?
     
-    func changeContinent(continent: Continent)
+    func changeContinent(segmented: UISegmentedControl)
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    

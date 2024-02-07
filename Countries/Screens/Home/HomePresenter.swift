@@ -43,8 +43,8 @@ final class HomePresenter: HomeViewToPresenterProtocol {
         interactor.searchedCountries(searchText: searchText)
     }
     
-    func changeContinent(continent: Continent) {
-        interactor.changeContinent(continent: continent)
+    func changeContinent(segmented: UISegmentedControl) {
+        interactor.changeContinent(segmented: segmented)
     }
     
     func getCountOfSearchedCountries() -> Int? {

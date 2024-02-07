@@ -70,11 +70,11 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
-        let selectedIndex = sender.selectedSegmentIndex
-        guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
-              let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
+//        let selectedIndex = sender.selectedSegmentIndex
+//        guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
+//              let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
         searchController.searchBar.text?.removeAll()
-        presenter?.changeContinent(continent: selectedContinent)
+        presenter?.changeContinent(segmented: sender)
         backToTopWhenSegmentChanged()
         reloadData()
     }
@@ -144,7 +144,7 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
               let presenter else { return }
         if searchText.isEmpty {
             if !searchController.isActive {
-                presenter.changeContinent(continent: .all)
+                presenter.changeContinent(segmented: segmented)
             }
             reloadData()
         } else {
@@ -157,7 +157,7 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
     func willDismissSearchController(_ searchController: UISearchController) {
         guard let presenter else { return }
         segmented.selectedSegmentIndex = 0
-        presenter.changeContinent(continent: .all)
+        presenter.changeContinent(segmented: segmented)
         reloadData()
     }
 }

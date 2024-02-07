@@ -79,8 +79,15 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         return searchedCountries?.count
     }
     
-    func changeContinent(continent: Continent) {
-        selectedContinent = continent
+    func changeContinent(segmented: UISegmentedControl) {
+        let selectedIndex = segmented.selectedSegmentIndex
+        guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
+              let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
+        if selectedIndex != 0 {
+            self.selectedContinent = selectedContinent
+        } else {
+            self.selectedContinent = .all
+        }
     }
 }
 
