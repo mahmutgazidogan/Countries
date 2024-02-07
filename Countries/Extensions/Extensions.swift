@@ -11,9 +11,14 @@ import SnapKit
 class SectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "SectionHeaderView"
     
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
+    lazy var titleLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 18)
+        label.contentMode = .center
+        label.animation = "fadeOutIn"
+        label.curve = "linear"
+        label.duration = 1.9
+        label.animate()
         return label
     }()
     
@@ -25,7 +30,7 @@ class SectionHeaderView: UICollectionReusableView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
-            make.leading.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
         }
     }
     

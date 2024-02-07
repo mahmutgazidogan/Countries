@@ -29,102 +29,148 @@ class DetailsViewController: UIViewController {
         return ind
     }()
     
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
+    private lazy var mapIndicator: UIActivityIndicatorView = {
+        let ind = UIActivityIndicatorView()
+        ind.color = AppColor.blackTint.color
+        ind.style = .large
+        return ind
+    }()
+    
+    private lazy var nameLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var independencyLabel: UILabel = {
-        let label = UILabel()
+    private lazy var independencyLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .center
         label.text = "Independent:"
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var capitalLabel: UILabel = {
-        let label = UILabel()
+    private lazy var capitalLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var checkboxImageView: UIImageView = {
-        let iv = UIImageView()
+    private lazy var checkboxImageView: SpringImageView = {
+        let iv = SpringImageView()
         iv.contentMode = .scaleToFill
+        iv.animation = "slideUp"
+        iv.duration = 2
+        iv.animate()
         return iv
     }()
     
-    private lazy var areaLabel: UILabel = {
-        let label = UILabel()
+    private lazy var areaLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .center
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var populationLabel: UILabel = {
-        let label = UILabel()
+    private lazy var populationLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .center
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var startOfWeekLabel: UILabel = {
-        let label = UILabel()
+    private lazy var startOfWeekLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .center
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var currencyLabel: UILabel = {
-        let label = UILabel()
+    private lazy var currencyLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.textAlignment = .left
         label.numberOfLines = 0
         label.layer.borderColor = UIColor.black.cgColor
         label.layer.borderWidth = 1.0
         label.backgroundColor = .systemYellow
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var timezonesLabel: UILabel = {
-        let label = UILabel()
+    private lazy var timezonesLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.numberOfLines = 0
         label.textAlignment = .left
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var languagesLabel: UILabel = {
-        let label = UILabel()
+    private lazy var languagesLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.numberOfLines = 0
         label.textAlignment = .left
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var carDatasLabel: UILabel = {
-        let label = UILabel()
+    private lazy var carDatasLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial-Bold", size: 30)
         label.numberOfLines = 0
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
-    private lazy var flagImageView: UIImageView = {
-        let iv = UIImageView()
+    private lazy var flagImageView: SpringImageView = {
+        let iv = SpringImageView()
         iv.contentMode = .scaleToFill
+        iv.animation = "slideUp"
+        iv.duration = 2
+        iv.animate()
         return iv
     }()
     
-    private lazy var flagDescriptionLabel: UILabel = {
-        let label = UILabel()
+    private lazy var flagDescriptionLabel: SpringLabel = {
+        let label = SpringLabel()
         label.font = UIFont(name: "Arial", size: 10)
         label.numberOfLines = 0
         label.textAlignment = .left
+        label.animation = "slideUp"
+        label.duration = 2
+        label.animate()
         return label
     }()
     
@@ -185,6 +231,7 @@ class DetailsViewController: UIViewController {
                          checkboxImageView, areaLabel, populationLabel, startOfWeekLabel,
                          currencyLabel, timezonesLabel, languagesLabel, carDatasLabel,
                          flagImageView, flagDescriptionLabel)
+        mapView.addSubview(mapIndicator)
         
         setupLayouts()
     }
@@ -193,6 +240,10 @@ class DetailsViewController: UIViewController {
         mapView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(300)
+        }
+        
+        mapIndicator.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
         }
         
         indicator.snp.makeConstraints { make in
@@ -298,6 +349,12 @@ extension DetailsViewController: MKMapViewDelegate {
         }
         return annotationView
     }
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+        mapIndicator.startAnimating()
+    }
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        mapIndicator.stopAnimating()
+    }
 }
 
 extension DetailsViewController: DetailsPresenterToViewProtocol {
@@ -307,7 +364,6 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
                      flag: String, flagDescription: String,
                      languages: String, carDetails: String,
                      independency: UIImage?, latitude: Double, longitude: Double) {
-        showLoadingIndicator()
         DispatchQueue.main.async { [weak self] in
             self?.nameLabel.text = name
             self?.capitalLabel.text = capital
@@ -322,7 +378,6 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
             self?.flagDescriptionLabel.text = flagDescription
             self?.languagesLabel.text = languages
             self?.showCountryOnMap(latitude: latitude, longitude: longitude, title: capital)
-            self?.hideLoadingIndicator()
         }
     }
 }
