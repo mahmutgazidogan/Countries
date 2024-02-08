@@ -51,12 +51,40 @@ final class HomePresenter: HomeViewToPresenterProtocol {
         return interactor.countOfSearchedCountries()
     }
     
-    // MARK: - Presenter to Router - Navigation
+    // MARK: CollectionView Functions
     
-    func didSelectItemAt(country: Country?) {
-        guard let country else { return }
-            router.navigateToDetails(selectedCountryDetails: country)
+    func getNumberOfItems(_ collectionView: UICollectionView,
+                          numberOfItemsInSection section: Int,
+                          searchController: UISearchController) -> Int {
+        return interactor.collectionView(collectionView,
+                                         numberOfItemsInSection: section,
+                                         searchController: searchController)
     }
+    
+    func getCell(_ collectionView: UICollectionView,
+                 cellForItemAt indexPath: IndexPath,
+                 searchController: UISearchController) -> UICollectionViewCell {
+    return interactor.collectionView(collectionView,
+                                        cellForItemAt: indexPath,
+                                        searchController: searchController)
+}
+
+//    // MARK: - Presenter to Router - Navigation
+    
+    func getSelectedItem(_ collectionView: UICollectionView,
+                         didSelectItemAt indexPath: IndexPath,
+                         searchController: UISearchController) {
+        interactor.collectionView(collectionView,
+                                  didSelectItemAt: indexPath,
+                                  searchController: searchController)
+    }
+//
+//    func didSelectItemAt(country: Country?) {
+//        guard let country else { return }
+//            router.navigateToDetails(selectedCountryDetails: country)
+//    }
+    
+    
 }
 
 // MARK: Interactor to Presenter
@@ -76,5 +104,12 @@ extension HomePresenter: HomeInteractorToPresenterProtocol {
     
     func showAlert(title: String, message: String) {
         view.showAlert(title: title, message: message)
+    }
+    
+    // MARK: - Presenter to Router - Navigation
+    
+    func didSelectItemAt(country: Country?) {
+        guard let country else { return }
+            router.navigateToDetails(selectedCountryDetails: country)
     }
 }

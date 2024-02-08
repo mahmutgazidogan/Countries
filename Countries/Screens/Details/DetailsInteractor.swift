@@ -13,7 +13,6 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     
     // MARK: Detail Datas Functions
     func giveDetails() {
-        
         guard let presenter,
               let details,
               let name = details.name?.official?.uppercased(),
@@ -43,7 +42,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
                              languages: languages, carDetails: carDetails,
                              independency: independency, latitude: latitude, longitude: longitude)
     }
-    
+
     private func returnCapital(details: Country) -> String {
         if let capital = details.capital?.first {
             return capital
@@ -51,7 +50,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             return "No capital data found!"
         }
     }
-    
+
     private func returnIndependencyImage(details: Country) -> UIImage? {
         if let independent = details.independent {
             if independent {
@@ -63,7 +62,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             return Icons.tick.image
         }
     }
-    
+
     private func returnCarDetails(details: Country) -> String {
         if let sign = details.car?.signs?.first,
            let side = details.car?.side?.rawValue.capitalized {
@@ -75,7 +74,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         }
         return "No car data found!"
     }
-    
+
     private func returnFlagDescription(details: Country) -> String {
         if let description = details.flags?.alt {
             return description
@@ -83,7 +82,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             return "No flag description found!"
         }
     }
-    
+
     private func returnLanguages(details: Country) -> String {
         if let languages = details.languages {
             let languageNames = languages.map({ (_, language) in
@@ -94,18 +93,18 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             return "Languages: No languages data found!"
         }
     }
-    
+
     private func returnTimezones(timezones: [String]) -> String {
         return timezones.joined(separator: ", ")
     }
-    
+
     private func numberFormatter(number: Double) -> String? {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         let intValue = Int(number)
         return formatter.string(from: NSNumber(value: intValue))
     }
-    
+
     private func returnCoordinates(details: Country) -> (latitude: Double, longitude: Double) {
         guard let capitalInfo = details.capitalInfo,
               let latitude = capitalInfo.latlng?.first,
@@ -118,7 +117,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         }
         return (latitude, longitude)
     }
-    
+
     // MARK: Currency Functions
     private func getAllCurrencyInfo(from currencies: Currencies) -> [(name: String, symbol: String)] {
         var currencyInfo: [(name: String, symbol: String)] = []
@@ -137,7 +136,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         }
         return currencyInfo
     }
-    
+
     private func giveCurrency() -> String? {
         var string = ""
         if let details,
@@ -154,6 +153,5 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         }
         return string
     }
-    
+        
 }
-

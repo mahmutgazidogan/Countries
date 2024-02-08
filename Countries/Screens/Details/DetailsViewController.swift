@@ -332,8 +332,6 @@ class DetailsViewController: UIViewController {
     
 }
 
-extension DetailsViewController: UITextViewDelegate { }
-
 extension DetailsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "customAnnotation"

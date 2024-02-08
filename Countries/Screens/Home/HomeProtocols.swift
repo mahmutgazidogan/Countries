@@ -29,7 +29,19 @@ protocol HomeViewToPresenterProtocol: AnyObject {
     func getSearchedCountries(searchText: String)
     func getCountOfSearchedCountries() -> Int?
     func changeContinent(segmented: UISegmentedControl)
-    func didSelectItemAt(country: Country?)
+//    func didSelectItemAt(country: Country?)
+    
+    func getNumberOfItems(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int,
+                        searchController: UISearchController) -> Int
+    
+    func getCell(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath,
+                        searchController: UISearchController) -> UICollectionViewCell
+    
+    func getSelectedItem(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath,
+                        searchController: UISearchController)
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
@@ -44,8 +56,19 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
     func countOfFilteredByContinents() -> Int?
     func searchedCountries(searchText: String)
     func countOfSearchedCountries() -> Int?
-    
     func changeContinent(segmented: UISegmentedControl)
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int,
+                        searchController: UISearchController) -> Int
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath,
+                        searchController: UISearchController) -> UICollectionViewCell
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath,
+                        searchController: UISearchController)
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    
@@ -53,6 +76,8 @@ protocol HomeInteractorToPresenterProtocol: AnyObject {
     func showLoadingIndicator()
     func hideLoadingIndicator()
     func showAlert(title: String, message: String)
+    
+    func didSelectItemAt(country: Country?)
 }
 
 protocol HomePresenterToRouterProtocol: AnyObject {

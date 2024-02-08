@@ -70,9 +70,6 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
-//        let selectedIndex = sender.selectedSegmentIndex
-//        guard let selectedContinentTitle = segmented.titleForSegment(at: selectedIndex),
-//              let selectedContinent = Continent(rawValue: selectedContinentTitle) else { return }
         searchController.searchBar.text?.removeAll()
         presenter?.changeContinent(segmented: sender)
         backToTopWhenSegmentChanged()
@@ -198,47 +195,60 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        guard let searchText = searchController.searchBar.text,
-              let presenter,
-              let filteredByContinents = presenter.getFilteredByContinents(),
-              let searchedCountries = presenter.interactor.searchedCountries else { return }
-        if searchText.isEmpty {
-            let country = filteredByContinents[indexPath.item]
-            presenter.didSelectItemAt(country: country)
-        } else {
-            let country = searchedCountries[indexPath.item]
-            presenter.didSelectItemAt(country: country)
-        }
+//        guard let searchText = searchController.searchBar.text,
+//              let presenter,
+//              let filteredByContinents = presenter.getFilteredByContinents(),
+//              let searchedCountries = presenter.interactor.searchedCountries else { return }
+//        if searchText.isEmpty {
+//            let country = filteredByContinents[indexPath.item]
+//            presenter.didSelectItemAt(country: country)
+//        } else {
+//            let country = searchedCountries[indexPath.item]
+//            presenter.didSelectItemAt(country: country)
+//        }
+        presenter?.getSelectedItem(collectionView,
+                                   didSelectItemAt: indexPath,
+                                   searchController: searchController)
     }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        guard let searchText = searchController.searchBar.text,
-              let presenter,
-              let countOfFilteredByContinents = presenter.getCountOfFilteredByContinents(),
-              let countOfFilteredCountries = presenter.getCountOfSearchedCountries() else { return 0 }
-        if searchText.isEmpty {
-            return countOfFilteredByContinents
-        } else {
-            return countOfFilteredCountries
-        }
+//        guard let searchText = searchController.searchBar.text,
+//              let presenter,
+//              let countOfFilteredByContinents = presenter.getCountOfFilteredByContinents(),
+//              let countOfFilteredCountries = presenter.getCountOfSearchedCountries() else { return 0 }
+//        if searchText.isEmpty {
+//            return countOfFilteredByContinents
+//        } else {
+//            return countOfFilteredCountries
+//        }
+        
+        guard let numberOfItems = presenter?.getNumberOfItems(collectionView,
+                                                numberOfItemsInSection: section,
+                                                searchController: searchController) else { return 0 }
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
-                                                            for: indexPath) as? HomeCollectionViewCell,
-              let searchText = searchController.searchBar.text,
-              let presenter,
-              let filteredByContinents = presenter.getFilteredByContinents(),
-              let searchedCountries = presenter.interactor.searchedCountries else { return UICollectionViewCell() }
-        if searchText.isEmpty {
-            cell.configure(model: filteredByContinents[indexPath.item])
-        } else {
-            cell.configure(model: searchedCountries[indexPath.item])
-        }
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
+//                                                            for: indexPath) as? HomeCollectionViewCell,
+//              let searchText = searchController.searchBar.text,
+//              let presenter,
+//              let filteredByContinents = presenter.getFilteredByContinents(),
+//              let searchedCountries = presenter.interactor.searchedCountries else { return UICollectionViewCell() }
+//        if searchText.isEmpty {
+//            cell.configure(model: filteredByContinents[indexPath.item])
+//        } else {
+//            cell.configure(model: searchedCountries[indexPath.item])
+//        }
+//        return cell
+        
+        guard let cell = presenter?.getCell(collectionView,
+                                            cellForItemAt: indexPath,
+                                            searchController: searchController) else { return UICollectionViewCell() }
         return cell
     }
 }

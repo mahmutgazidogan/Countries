@@ -20,13 +20,14 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
             switch result {
             case .success(let data):
                 self?.countryList = data.sorted {
-                    $0.name?.common?.lowercased() ?? AppConstants.emptyString.text < $1.name?.common?.lowercased() ?? AppConstants.emptyString.text
+                    $0.name?.common?.lowercased() ?? AppConstants.emptyString.text
+                    < $1.name?.common?.lowercased() ?? AppConstants.emptyString.text
                 }
                 self?.presenter?.reloadData()
                 self?.presenter?.hideLoadingIndicator()
             case .failure(let error):
                 self?.presenter?.showAlert(title: "Hata!",
-                                           message: "Ülkeler listesi getirilirken bir hata oluştu!\n Hata İçeriği: \(error.localizedDescription)")
+                                           message: "Ülkeler listesi getirilirken bir hata oluştu!")
             }
         }
     }
@@ -87,6 +88,52 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
             self.selectedContinent = selectedContinent
         } else {
             self.selectedContinent = .all
+        }
+    }
+    
+    // MARK: CollectionView Functions
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int,
+                        searchController: UISearchController) -> Int {
+        guard let searchText = searchController.searchBar.text,
+              let countOfFilteredByContinents = countOfFilteredByContinents(),
+              let countOfSearchedCountries = countOfSearchedCountries() else { return 0 }
+        if searchText.isEmpty {
+            return countOfFilteredByContinents
+        } else {
+            return countOfSearchedCountries
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath,
+                        searchController: UISearchController) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
+                                                            for: indexPath) as? HomeCollectionViewCell,
+              let searchText = searchController.searchBar.text,
+              let filteredByContinents = filterByContinents(),
+              let searchedCountries = searchedCountries else { return UICollectionViewCell() }
+        if searchText.isEmpty {
+            cell.configure(model: filteredByContinents[indexPath.item])
+        } else {
+            cell.configure(model: searchedCountries[indexPath.item])
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath,
+                        searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text,
+              let filteredByContinents = filterByContinents(),
+              let searchedCountries = searchedCountries else { return }
+        if searchText.isEmpty {
+            let country = filteredByContinents[indexPath.item]
+            presenter?.didSelectItemAt(country: country)
+        } else {
+            let country = searchedCountries[indexPath.item]
+            presenter?.didSelectItemAt(country: country)
         }
     }
 }
