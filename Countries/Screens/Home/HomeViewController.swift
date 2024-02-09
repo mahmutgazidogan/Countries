@@ -22,6 +22,16 @@ class HomeViewController: UIViewController {
         return search
     }()
     
+    private lazy var customView: DesignableView = {
+        let view = DesignableView()
+        view.backgroundColor = .cyan
+        view.animation = "slideUp"
+        view.duration = 2
+        view.damping = 1
+        view.animate()
+        return view
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -69,6 +79,15 @@ class HomeViewController: UIViewController {
         segmentedValueChanged(sender: segmented)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        customView.layer.cornerRadius = 80
+        customView.layer.maskedCorners = [.layerMaxXMinYCorner,
+                                          .layerMinXMinYCorner]
+        customView.layer.masksToBounds = true
+    }
+    
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
         searchController.searchBar.text?.removeAll()
         presenter?.changeContinent(segmented: sender)
@@ -87,9 +106,10 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         title = AppConstants.countries.text
-        collectionView.backgroundColor = AppColor.yellowBackground.color
+        collectionView.backgroundColor = .green
         navigationItem.searchController = searchController
-        view.addSubviews(segmented, collectionView, indicator)
+        view.addSubviews(segmented, customView)
+        customView.addSubviews(collectionView, indicator)
         
         setupLayouts()
         presenter?.getTitleForSegmentedControl(segmented: segmented)
@@ -99,14 +119,17 @@ class HomeViewController: UIViewController {
     private func setupLayouts() {
         segmented.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(5)
-            make.leading.equalToSuperview().offset(5)
-            make.trailing.equalToSuperview().offset(-5)
-            make.height.equalTo(30)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.05)
+        }
+        
+        customView.snp.makeConstraints { make in
+            make.top.equalTo(segmented.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(segmented.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         indicator.snp.makeConstraints { make in
@@ -165,19 +188,17 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         let count = collectionView.numberOfItems(inSection: indexPath.section)
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
+        if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                    withReuseIdentifier: SectionHeaderView.reuseIdentifier,
                                                                                    for: indexPath) as? SectionHeaderView
             else {
-                fatalError("Could not dequeue header view")
+                return UICollectionReusableView()
             }
             headerView.titleLabel.text = "\(count) countries listed."
             return headerView
-        default:
-            fatalError("Unexpected element kind")
         }
+        return UICollectionReusableView()
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -189,7 +210,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: collectionView.frame.width / 2.4 , height: 150)
+        let size = CGSize(width: view.frame.width / 2.4 , height: view.frame.height / 4)
         return size
     }
     

@@ -36,122 +36,110 @@ class DetailsViewController: UIViewController {
         return ind
     }()
     
-    private lazy var nameLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var detailsView: DesignableView = {
+        let view = DesignableView()
+        view.backgroundColor = .cyan
+        view.animation = "slideUp"
+        view.duration = 2
+        view.damping = 1
+        view.animate()
+        return view
     }()
     
-    private lazy var independencyLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
-        label.text = "Independent:"
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var nameView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Country"
+        view.iconImage = "country"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var capitalLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var capitalView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Capital"
+        view.iconImage = "capital"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var checkboxImageView: SpringImageView = {
-        let iv = SpringImageView()
-        iv.contentMode = .scaleToFill
-        iv.animation = "slideUp"
-        iv.duration = 2
-        iv.animate()
-        return iv
+    private lazy var independencyView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Independency"
+        view.iconImage = "independence"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var areaLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var areaView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Area"
+        view.iconImage = "area"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var populationLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var populationView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Population"
+        view.iconImage = "population"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var startOfWeekLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .center
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var startOfWeekView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Start of Week"
+        view.iconImage = "startOfWeek"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var currencyLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.layer.borderColor = UIColor.black.cgColor
-        label.layer.borderWidth = 1.0
-        label.backgroundColor = .systemYellow
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var currencyView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Currencies"
+        view.iconImage = "currency"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var timezonesLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var timezoneView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Timezones"
+        view.iconImage = "timezone"
+        view.contentLabel.textAlignment = .left
+        return view
     }()
     
-    private lazy var languagesLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var languageView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Languages"
+        view.iconImage = "languages"
+        view.contentLabel.textAlignment = .center
+        return view
     }()
     
-    private lazy var carDatasLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 30)
-        label.numberOfLines = 0
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
+    private lazy var plateCodeView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Plate Code"
+        view.iconImage = "carSign"
+        view.contentLabel.textAlignment = .center
+        return view
+    }()
+    
+    private lazy var trafficDirectionView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Traffic Direction"
+        view.iconImage = "leftRight"
+        view.contentLabel.textAlignment = .center
+        return view
+    }()
+    
+    private lazy var flagDescriptionView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Flag Description"
+        view.iconImage = "flag"
+        view.contentLabel.textAlignment = .left
+        return view
     }()
     
     private lazy var flagImageView: SpringImageView = {
@@ -161,17 +149,6 @@ class DetailsViewController: UIViewController {
         iv.duration = 2
         iv.animate()
         return iv
-    }()
-    
-    private lazy var flagDescriptionLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial", size: 10)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.animation = "slideUp"
-        label.duration = 2
-        label.animate()
-        return label
     }()
     
     override func viewDidLoad() {
@@ -188,12 +165,16 @@ class DetailsViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        checkboxImageView.layer.cornerRadius = 5
-        checkboxImageView.layer.maskedCorners = [.layerMaxXMaxYCorner,
-                                                 .layerMaxXMinYCorner,
-                                                 .layerMinXMaxYCorner,
-                                                 .layerMinXMinYCorner]
-        checkboxImageView.layer.masksToBounds = true
+        super.viewDidLayoutSubviews()
+        
+        layoutSubviews()
+    }
+    
+    private func layoutSubviews() {
+        detailsView.layer.cornerRadius = 80
+        detailsView.layer.maskedCorners = [.layerMaxXMinYCorner,
+                                           .layerMinXMinYCorner]
+        detailsView.layer.masksToBounds = true
         
         flagImageView.layer.borderWidth = 0.4
         flagImageView.layer.borderColor = AppColor.grayBorder.color.cgColor
@@ -227,11 +208,13 @@ class DetailsViewController: UIViewController {
         navigationController?.navigationBar.tintColor = AppColor.blackTint.color
         navigationController?.navigationBar.backgroundColor = AppColor.lightTextBackground.color
         view.backgroundColor = AppColor.whiteBackground.color
-        view.addSubviews(mapView, indicator, nameLabel, capitalLabel, independencyLabel,
-                         checkboxImageView, areaLabel, populationLabel, startOfWeekLabel,
-                         currencyLabel, timezonesLabel, languagesLabel, carDatasLabel,
-                         flagImageView, flagDescriptionLabel)
+        view.addSubviews(mapView, detailsView)
         mapView.addSubview(mapIndicator)
+        detailsView.addSubviews(indicator, nameView, capitalView, independencyView,
+                                areaView, populationView, startOfWeekView,
+                                currencyView, timezoneView, languageView,
+                                plateCodeView, trafficDirectionView, flagImageView,
+                                flagDescriptionView)
         
         setupLayouts()
     }
@@ -239,93 +222,91 @@ class DetailsViewController: UIViewController {
     private func setupLayouts() {
         mapView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalToSuperview().multipliedBy(0.3)
         }
         
         mapIndicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
         
+        detailsView.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
         indicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
+
         
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(mapView.snp.bottom).offset(10)
+        nameView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
             make.width.equalTo(300)
         }
         
-        capitalLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
+        capitalView.snp.makeConstraints { make in
+            make.top.equalTo(nameView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
+            make.width.equalTo(300)
         }
         
-        independencyLabel.snp.makeConstraints { make in
-            make.top.equalTo(capitalLabel.snp.bottom).offset(5)
-            make.leading.equalToSuperview().offset(20)
-            make.height.equalTo(20)
+        independencyView.snp.makeConstraints { make in
+            make.top.equalTo(capitalView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        checkboxImageView.snp.makeConstraints { make in
-            make.leading.equalTo(independencyLabel.snp.trailing).offset(5)
-            make.width.height.equalTo(15)
-            make.centerY.equalTo(independencyLabel.snp.centerY)
+        areaView.snp.makeConstraints { make in
+            make.top.equalTo(independencyView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        areaLabel.snp.makeConstraints { make in
-            make.top.equalTo(independencyLabel.snp.bottom)
-            make.leading.equalTo(independencyLabel.snp.leading)
-            make.height.equalTo(20)
+        populationView.snp.makeConstraints { make in
+            make.top.equalTo(areaView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        populationLabel.snp.makeConstraints { make in
-            make.top.equalTo(areaLabel.snp.bottom)
-            make.leading.equalTo(areaLabel.snp.leading)
-            make.height.equalTo(20)
+        startOfWeekView.snp.makeConstraints { make in
+            make.top.equalTo(populationView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        startOfWeekLabel.snp.makeConstraints { make in
-            make.top.equalTo(populationLabel.snp.bottom)
-            make.leading.equalTo(populationLabel.snp.leading)
-            make.height.equalTo(20)
+        currencyView.snp.makeConstraints { make in
+            make.top.equalTo(startOfWeekView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        currencyLabel.snp.makeConstraints { make in
-            make.top.equalTo(startOfWeekLabel.snp.bottom)
-            make.leading.equalTo(startOfWeekLabel.snp.leading)
-            make.trailing.equalToSuperview().offset(-20)
+        timezoneView.snp.makeConstraints { make in
+            make.top.equalTo(currencyView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        timezonesLabel.snp.makeConstraints { make in
-            make.top.equalTo(currencyLabel.snp.bottom)
-            make.leading.equalTo(currencyLabel.snp.leading)
-            make.trailing.equalToSuperview().offset(-20)
+        languageView.snp.makeConstraints { make in
+            make.top.equalTo(timezoneView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        languagesLabel.snp.makeConstraints { make in
-            make.top.equalTo(timezonesLabel.snp.bottom)
-            make.leading.equalTo(timezonesLabel.snp.leading)
-            make.trailing.equalToSuperview().offset(-20)
+        plateCodeView.snp.makeConstraints { make in
+            make.top.equalTo(languageView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
-        carDatasLabel.snp.makeConstraints { make in
-            make.top.equalTo(languagesLabel.snp.bottom)
-            make.leading.equalTo(languagesLabel.snp.leading)
-            make.trailing.equalToSuperview().offset(-20)
+        trafficDirectionView.snp.makeConstraints { make in
+            make.top.equalTo(plateCodeView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
         flagImageView.snp.makeConstraints { make in
-            make.top.equalTo(carDatasLabel.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
+            make.top.equalTo(trafficDirectionView.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(20)
             make.height.equalTo(90)
             make.width.equalTo(150)
         }
         
-        flagDescriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(flagImageView.snp.bottom).offset(20)
-            make.leading.equalTo(carDatasLabel.snp.leading)
-            make.trailing.equalToSuperview().offset(-20)
+        flagDescriptionView.snp.makeConstraints { make in
+            make.top.equalTo(flagImageView.snp.top)
+            make.leading.equalTo(flagImageView.snp.trailing)
+            make.trailing.equalToSuperview()
         }
         
     }
@@ -360,21 +341,22 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
                      population: String, startOfWeek: String,
                      currency: String, timezones: String,
                      flag: String, flagDescription: String,
-                     languages: String, carDetails: String,
-                     independency: UIImage?, latitude: Double, longitude: Double) {
+                     languages: String, sign: String, side: String,
+                     independency: String, latitude: Double, longitude: Double) {
         DispatchQueue.main.async { [weak self] in
-            self?.nameLabel.text = name
-            self?.capitalLabel.text = capital
-            self?.checkboxImageView.image = independency
-            self?.areaLabel.text = "Area: \(area) km²"
-            self?.populationLabel.text = "Population: \(population)"
-            self?.startOfWeekLabel.text = "Start of Week: \(startOfWeek)"
-            self?.currencyLabel.text = "Currency: \(currency)"
-            self?.timezonesLabel.text = "Timezones: \(timezones)"
-            self?.carDatasLabel.text = carDetails
+            self?.nameView.contentText = name
+            self?.capitalView.contentText = capital
+            self?.independencyView.contentText = independency
+            self?.areaView.contentText = "\(area) km²"
+            self?.populationView.contentText = population
+            self?.startOfWeekView.contentText = startOfWeek
+            self?.currencyView.contentText = currency
+            self?.timezoneView.contentText = timezones
+            self?.plateCodeView.contentText = sign
+            self?.trafficDirectionView.contentText = side
             self?.flagImageView.kf.setImage(with: URL(string: flag))
-            self?.flagDescriptionLabel.text = flagDescription
-            self?.languagesLabel.text = languages
+            self?.flagDescriptionView.contentText = flagDescription
+            self?.languageView.contentText = languages
             self?.showCountryOnMap(latitude: latitude, longitude: longitude, title: capital)
         }
     }

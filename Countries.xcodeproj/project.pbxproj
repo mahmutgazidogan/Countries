@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C0719C5E2B73F61000076F95 /* SpringStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0719C5D2B73F61000076F95 /* SpringStackView.swift */; };
+		C0A5ACF32B768C8D00FE7927 /* CustomLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5ACF22B768C8D00FE7927 /* CustomLabelView.swift */; };
 		C0AA61282B66DD16008599EF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AA61272B66DD16008599EF /* Helper.swift */; };
 		C0AED6DE2B5AF17E00CC5D03 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */; };
 		C0AED6E02B5AF18B00CC5D03 /* DetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */; };
@@ -64,6 +65,7 @@
 
 /* Begin PBXFileReference section */
 		C0719C5D2B73F61000076F95 /* SpringStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringStackView.swift; sourceTree = "<group>"; };
+		C0A5ACF22B768C8D00FE7927 /* CustomLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabelView.swift; sourceTree = "<group>"; };
 		C0AA61272B66DD16008599EF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		C0AED6DD2B5AF17E00CC5D03 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		C0AED6DF2B5AF18B00CC5D03 /* DetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInteractor.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				C0AA61272B66DD16008599EF /* Helper.swift */,
+				C0A5ACF22B768C8D00FE7927 /* CustomLabelView.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				C0D1DB102B73C2C200393649 /* UnwindSegue.swift in Sources */,
 				C0D1DB032B73C2C200393649 /* SpringTextView.swift in Sources */,
 				C0D1DAFD2B73C2C200393649 /* SpringImageView.swift in Sources */,
+				C0A5ACF32B768C8D00FE7927 /* CustomLabelView.swift in Sources */,
 				C0AED6DE2B5AF17E00CC5D03 /* DetailsViewController.swift in Sources */,
 				C0D1DB0F2B73C2C200393649 /* SpringAnimation.swift in Sources */,
 				C0D1DB0A2B73C2C200393649 /* AsyncButton.swift in Sources */,

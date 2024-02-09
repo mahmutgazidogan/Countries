@@ -29,7 +29,7 @@ class SectionHeaderView: UICollectionReusableView {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(15)
             make.centerX.equalToSuperview()
         }
     }
@@ -105,6 +105,21 @@ extension UIView {
             self.addSubview(v)
         })
         
+    }
+    
+    func addShadow() {
+        layer.shadowColor = UIColor.gray.cgColor
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 8
+        clipsToBounds = false
+        layer.cornerRadius = 16
+        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
+    }
+    
+    func addCornerRadius(corners: CACornerMask, radius: CGFloat) {
+        layer.cornerRadius = radius
+        layer.maskedCorners = corners
+        layer.masksToBounds = true
     }
     
     func roundCorners(corners: UIRectCorner, radius: CGFloat) {

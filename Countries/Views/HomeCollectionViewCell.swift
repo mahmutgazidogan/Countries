@@ -22,7 +22,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Medium", size: 14)
+        label.font = UIFont(name: AppFont.regular, size: FontSize.medium.fontSize)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -68,13 +68,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.75)
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(5)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-5)
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.25)
         }
         
     }

@@ -15,8 +15,8 @@ protocol DetailsPresenterToViewProtocol: AnyObject {
                      population: String, startOfWeek: String,
                      currency: String, timezones: String,
                      flag: String, flagDescription: String,
-                     languages: String, carDetails: String,
-                     independency: UIImage?, latitude: Double, longitude: Double)
+                     languages: String, sign: String, side: String,
+                     independency: String, latitude: Double, longitude: Double)
 }
 
 protocol DetailsViewToPresenterProtocol: AnyObject {
@@ -39,8 +39,8 @@ protocol DetailsInteractorToPresenterProtocol: AnyObject {
                     population: String, startOfWeek: String,
                     currency: String, timezones: String,
                     flag: String, flagDescription: String,
-                    languages: String, carDetails: String,
-                    independency: UIImage?, latitude: Double, longitude: Double)
+                    languages: String, sign: String, side: String,
+                    independency: String, latitude: Double, longitude: Double)
 }
 
 protocol DetailsPresenterToRouterProtocol: AnyObject {

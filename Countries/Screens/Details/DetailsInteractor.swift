@@ -25,12 +25,12 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
               let currency = giveCurrency(),
               let timezones = details.timezones else { return }
         let capital = returnCapital(details: details)
-        let carDetails = returnCarDetails(details: details)
+        let sign = returnSign(details: details)
+        let side = returnSide(details: details)
         let flagDescription = returnFlagDescription(details: details)
         let languages = returnLanguages(details: details)
         let timezone = returnTimezones(timezones: timezones)
         let independency = returnIndependencyImage(details: details)
-        
         let coordinates = returnCoordinates(details: details)
         let latitude = coordinates.latitude
         let longitude = coordinates.longitude
@@ -39,40 +39,50 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
                              population: numberOfPopulation, startOfWeek: startOfWeek,
                              currency: currency, timezones: timezone,
                              flag: flag, flagDescription: flagDescription,
-                             languages: languages, carDetails: carDetails,
+                             languages: languages, sign: sign, side: side,
                              independency: independency, latitude: latitude, longitude: longitude)
     }
 
     private func returnCapital(details: Country) -> String {
         if let capital = details.capital?.first {
-            return capital
+            return capital.uppercased()
         } else {
             return "No capital data found!"
         }
     }
 
-    private func returnIndependencyImage(details: Country) -> UIImage? {
+    private func returnIndependencyImage(details: Country) -> String {
         if let independent = details.independent {
             if independent {
-                return Icons.tick.image
+                return "Independent"
             } else {
-                return Icons.cross.image
+                return "Not Independent"
             }
         } else {
-            return Icons.tick.image
+            return "Independent"
         }
     }
 
-    private func returnCarDetails(details: Country) -> String {
-        if let sign = details.car?.signs?.first,
-           let side = details.car?.side?.rawValue.capitalized {
+    private func returnSign(details: Country) -> String {
+        if let sign = details.car?.signs?.first {
             if sign == "" {
-                return "Car Sign: No sign data found!\nCar Side: \(side)"
+                return "No plate code data found!"
             } else {
-                return "Car Sign: \(sign)\nCar Side: \(side)"
+                return sign
             }
         }
-        return "No car data found!"
+        return "No plate code data found!"
+    }
+    
+    private func returnSide(details: Country) -> String {
+        if let side = details.car?.side?.rawValue.capitalized {
+            if side == "" {
+                return side
+            } else {
+                return side
+            }
+        }
+        return "No direction data found!"
     }
 
     private func returnFlagDescription(details: Country) -> String {
@@ -88,14 +98,14 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             let languageNames = languages.map({ (_, language) in
                 language
             }).joined(separator: ", ")
-            return "Languages: \(languageNames)"
+            return languageNames
         } else {
-            return "Languages: No languages data found!"
+            return "No languages data found!"
         }
     }
 
     private func returnTimezones(timezones: [String]) -> String {
-        return timezones.joined(separator: ", ")
+        return timezones.joined(separator: " | ")
     }
 
     private func numberFormatter(number: Double) -> String? {

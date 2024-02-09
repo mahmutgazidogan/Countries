@@ -28,6 +28,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
             case .failure(let error):
                 self?.presenter?.showAlert(title: "Hata!",
                                            message: "Ülkeler listesi getirilirken bir hata oluştu!")
+                self?.presenter?.hideLoadingIndicator()
             }
         }
     }
