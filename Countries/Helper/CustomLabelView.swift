@@ -34,9 +34,9 @@ class CustomLabelView: SpringView {
         let sv = SpringStackView()
         sv.axis = .horizontal
         sv.spacing = 10
-        sv.distribution = .equalSpacing
-        sv.contentMode = .center
-        sv.alignment = .center
+        sv.distribution = .fill
+//        sv.contentMode = .center
+//        sv.alignment = .center
         return sv
     }()
     
@@ -98,9 +98,11 @@ class CustomLabelView: SpringView {
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(8)
-            make.centerX.equalToSuperview()
-            make.bottom.trailing.equalToSuperview().offset(-8)
+            make.top.equalTo(stackView.snp.bottom)
+//            make.centerX.equalTo(stackView.snp.centerX)
+            make.leading.equalToSuperview().offset(8)
+            make.trailing.equalToSuperview().offset(-8)
+            make.bottom.equalToSuperview()
         }
     }
     
