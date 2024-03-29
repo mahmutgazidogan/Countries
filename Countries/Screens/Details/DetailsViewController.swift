@@ -106,7 +106,7 @@ class DetailsViewController: UIViewController {
         let view = CustomLabelView()
         view.titleText = "Timezones"
         view.iconImage = "timezone"
-        view.contentLabel.textAlignment = .left
+        view.contentLabel.textAlignment = .center
         return view
     }()
     
@@ -253,51 +253,61 @@ class DetailsViewController: UIViewController {
         
         independencyView.snp.makeConstraints { make in
             make.top.equalTo(capitalView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalToSuperview().multipliedBy(0.45)
         }
         
         areaView.snp.makeConstraints { make in
-            make.top.equalTo(independencyView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(capitalView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-8)
+            make.width.equalToSuperview().multipliedBy(0.45)
+
         }
         
         populationView.snp.makeConstraints { make in
             make.top.equalTo(areaView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalToSuperview().multipliedBy(0.45)
         }
         
         startOfWeekView.snp.makeConstraints { make in
-            make.top.equalTo(populationView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(areaView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-8)
+            make.width.equalToSuperview().multipliedBy(0.45)
         }
         
         currencyView.snp.makeConstraints { make in
             make.top.equalTo(startOfWeekView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        timezoneView.snp.makeConstraints { make in
-            make.top.equalTo(currencyView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalToSuperview().multipliedBy(0.45)
         }
         
         languageView.snp.makeConstraints { make in
-            make.top.equalTo(timezoneView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(startOfWeekView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-8)
+            make.width.equalToSuperview().multipliedBy(0.45)
         }
         
         plateCodeView.snp.makeConstraints { make in
             make.top.equalTo(languageView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalToSuperview().multipliedBy(0.45)
         }
         
         trafficDirectionView.snp.makeConstraints { make in
+            make.top.equalTo(languageView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-8)
+            make.width.equalToSuperview().multipliedBy(0.45)
+        }
+        
+        timezoneView.snp.makeConstraints { make in
             make.top.equalTo(plateCodeView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(8)
+            make.trailing.equalToSuperview().offset(-8)
         }
         
         flagImageView.snp.makeConstraints { make in
-            make.top.equalTo(trafficDirectionView.snp.bottom).offset(10)
+            make.top.equalTo(timezoneView.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(20)
             make.height.equalTo(90)
             make.width.equalTo(150)

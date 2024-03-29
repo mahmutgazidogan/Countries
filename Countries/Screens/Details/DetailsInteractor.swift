@@ -105,7 +105,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     }
 
     private func returnTimezones(timezones: [String]) -> String {
-        return timezones.joined(separator: " | ")
+        return timezones.joined(separator: ", ")
     }
 
     private func numberFormatter(number: Double) -> String? {

@@ -30,13 +30,10 @@ class CustomLabelView: SpringView {
         }
     }
     
-    private lazy var stackView: SpringStackView = {
+    private lazy var titleStackView: SpringStackView = {
         let sv = SpringStackView()
         sv.axis = .horizontal
         sv.spacing = 10
-        sv.distribution = .fill
-//        sv.contentMode = .center
-//        sv.alignment = .center
         return sv
     }()
     
@@ -51,6 +48,7 @@ class CustomLabelView: SpringView {
         let label = SpringLabel()
         label.font = UIFont(name: AppFont.bold, size: FontSize.small.fontSize)
         label.textColor = AppColor.blackTint.color
+        label.contentMode = .center
         return label
     }()
 
@@ -62,6 +60,14 @@ class CustomLabelView: SpringView {
         return label
     }()
     
+    private lazy var secondStackView: SpringStackView = {
+        let sv = SpringStackView()
+        sv.axis = .vertical
+        sv.spacing = 5
+        sv.alignment = .center
+        return sv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
       
@@ -69,40 +75,39 @@ class CustomLabelView: SpringView {
     }
     
     override func layoutSubviews() {
-        self.addShadow()
+        self.addCornerRadius(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                       .layerMinXMaxYCorner, .layerMinXMinYCorner],
+                             radius: 16)
     }
     
     private func setupViews() {
         self.backgroundColor = .white
-        self.addSubviews(stackView,
-                         contentLabel)
-        stackView.addArrangedSubviews(iconImageView,
-                                      titleLabel)
+        self.addSubviews(secondStackView)
+        titleStackView.addArrangedSubviews(iconImageView, titleLabel)
+        secondStackView.addArrangedSubviews(titleStackView, contentLabel)
         setupLayouts()
     }
     
     private func setupLayouts() {
-        
         iconImageView.snp.makeConstraints { make in
             make.height.width.equalTo(20)
         }
 
         titleLabel.snp.makeConstraints { make in
-            make.width.equalTo(150)
             make.centerY.equalTo(iconImageView.snp.centerY)
         }
         
-        stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(8)
+        titleStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom)
-//            make.centerX.equalTo(stackView.snp.centerX)
-            make.leading.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().offset(-8)
-            make.bottom.equalToSuperview()
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        secondStackView.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().offset(8)
+            make.bottom.trailing.equalToSuperview().offset(-8)
         }
     }
     
