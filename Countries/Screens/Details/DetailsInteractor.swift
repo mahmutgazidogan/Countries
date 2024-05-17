@@ -31,6 +31,9 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
         let languages = returnLanguages(details: details)
         let timezone = returnTimezones(timezones: timezones)
         let independency = returnIndependencyImage(details: details)
+        
+        let countryCode = returnCountryCode(details: details)
+        
         let coordinates = returnCoordinates(details: details)
         let latitude = coordinates.latitude
         let longitude = coordinates.longitude
@@ -44,10 +47,20 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     }
 
     private func returnCapital(details: Country) -> String {
-        if let capital = details.capital?.first {
+        
+//        if let capitals = details.capital {
+//            for capital in capitals {
+//                return capital.uppercased()
+//            }
+//            return "No capital data found!"
+//        } else {
+//            return "No capital data found!"
+//        }
+        
+        if let capital = details.capital?.joined(separator: ", ") {
             return capital.uppercased()
         } else {
-            return "No capital data found!"
+            return "No data found!"
         }
     }
 
@@ -66,12 +79,12 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     private func returnSign(details: Country) -> String {
         if let sign = details.car?.signs?.first {
             if sign == "" {
-                return "No plate code data found!"
+                return "No data found!"
             } else {
                 return sign
             }
         }
-        return "No plate code data found!"
+        return "No data found!"
     }
     
     private func returnSide(details: Country) -> String {
@@ -82,14 +95,14 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
                 return side
             }
         }
-        return "No direction data found!"
+        return "No data found!"
     }
 
     private func returnFlagDescription(details: Country) -> String {
         if let description = details.flags?.alt {
             return description
         } else {
-            return "No flag description found!"
+            return "No description found!"
         }
     }
 
@@ -100,7 +113,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             }).joined(separator: ", ")
             return languageNames
         } else {
-            return "No languages data found!"
+            return "No data found!"
         }
     }
 
@@ -126,6 +139,23 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
             return (latitude, longitude)
         }
         return (latitude, longitude)
+    }
+    
+    private func returnCountryCode(details: Country) -> String {
+        if let idd = details.idd,
+           let root = idd.root,
+           let suffixes = idd.suffixes {
+            for suffix in suffixes {
+                if root == "+1" {
+                    return "\(root)-\(suffix)"
+                } else {
+                    return "\(root)\(suffix)"
+                }
+            }
+            return "No data found!"
+        } else {
+            return "No data found!"
+        }
     }
 
     // MARK: Currency Functions
@@ -159,7 +189,7 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
                 }
             }
         } else {
-            string = "No currency data found!"
+            string = "No data found!"
         }
         return string
     }

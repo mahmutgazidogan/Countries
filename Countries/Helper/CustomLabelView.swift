@@ -54,7 +54,7 @@ class CustomLabelView: SpringView {
 
     lazy var contentLabel: SpringLabel = {
         let label = SpringLabel()
-        label.font = UIFont(name: AppFont.bold, size: FontSize.small.fontSize)
+        label.font = UIFont(name: AppFont.regular, size: FontSize.small.fontSize)
         label.numberOfLines = 0
         label.textColor = AppColor.blackTint.color
         return label
@@ -72,6 +72,10 @@ class CustomLabelView: SpringView {
         super.init(frame: .zero)
       
         setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func layoutSubviews() {
@@ -111,7 +115,4 @@ class CustomLabelView: SpringView {
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

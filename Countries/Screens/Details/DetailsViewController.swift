@@ -36,7 +36,15 @@ class DetailsViewController: UIViewController {
         return ind
     }()
     
-    private lazy var detailsView: DesignableView = {
+    private lazy var scrollView: SpringScrollView = {
+        let scrollView = SpringScrollView()
+        scrollView.backgroundColor = AppColor.clearBackground.color
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.isScrollEnabled = true
+        return scrollView
+    }()
+    
+    private lazy var contentView: DesignableView = {
         let view = DesignableView()
         view.backgroundColor = .cyan
         view.animation = "slideUp"
@@ -102,6 +110,14 @@ class DetailsViewController: UIViewController {
         return view
     }()
     
+    private lazy var countryCodeView: CustomLabelView = {
+        let view = CustomLabelView()
+        view.titleText = "Country Code"
+        view.iconImage = "code"
+        view.contentLabel.textAlignment = .center
+        return view
+    }()
+    
     private lazy var timezoneView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Timezones"
@@ -139,15 +155,13 @@ class DetailsViewController: UIViewController {
         view.titleText = "Flag Description"
         view.iconImage = "flag"
         view.contentLabel.textAlignment = .left
+        view.contentLabel.font = UIFont(name: AppFont.regular, size: FontSize.small.fontSize)
         return view
     }()
     
     private lazy var flagImageView: SpringImageView = {
         let iv = SpringImageView()
-        iv.contentMode = .scaleToFill
-        iv.animation = "slideUp"
-        iv.duration = 2
-        iv.animate()
+        iv.contentMode = .scaleAspectFit
         return iv
     }()
     
@@ -171,11 +185,18 @@ class DetailsViewController: UIViewController {
     }
     
     private func layoutSubviews() {
-        detailsView.layer.cornerRadius = 80
-        detailsView.layer.maskedCorners = [.layerMaxXMinYCorner,
-                                           .layerMinXMinYCorner]
-        detailsView.layer.masksToBounds = true
+        scrollView.addCornerRadius(corners: [.layerMaxXMinYCorner,
+                                             .layerMinXMinYCorner],
+                                   radius: 80)
+        let height = countryCodeView.frame.height + countryCodeView.frame.origin.y
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: height)
+        contentView.addCornerRadius(corners: [.layerMaxXMinYCorner,
+                                              .layerMinXMinYCorner],
+                                    radius: 80)
         
+        flagImageView.addCornerRadius(corners: [.layerMinXMinYCorner, .layerMinXMaxYCorner,
+                                                .layerMaxXMinYCorner, .layerMaxXMaxYCorner],
+                                      radius: 16)
         flagImageView.layer.borderWidth = 0.4
         flagImageView.layer.borderColor = AppColor.grayBorder.color.cgColor
     }
@@ -208,13 +229,14 @@ class DetailsViewController: UIViewController {
         navigationController?.navigationBar.tintColor = AppColor.blackTint.color
         navigationController?.navigationBar.backgroundColor = AppColor.lightTextBackground.color
         view.backgroundColor = AppColor.whiteBackground.color
-        view.addSubviews(mapView, detailsView)
+        view.addSubviews(mapView, scrollView)
         mapView.addSubview(mapIndicator)
-        detailsView.addSubviews(indicator, nameView, capitalView, independencyView,
+        scrollView.addSubview(contentView)
+        contentView.addSubviews(indicator, nameView, capitalView, independencyView,
                                 areaView, populationView, startOfWeekView,
                                 currencyView, timezoneView, languageView,
-                                plateCodeView, trafficDirectionView, flagImageView,
-                                flagDescriptionView)
+                                plateCodeView, trafficDirectionView,
+                                countryCodeView, flagImageView, flagDescriptionView)
         
         setupLayouts()
     }
@@ -229,9 +251,14 @@ class DetailsViewController: UIViewController {
             make.centerX.centerY.equalToSuperview()
         }
         
-        detailsView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(mapView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview()
+            make.width.equalToSuperview()
         }
         
         indicator.snp.makeConstraints { make in
@@ -242,13 +269,13 @@ class DetailsViewController: UIViewController {
         nameView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
-            make.width.equalTo(300)
+            make.width.equalToSuperview().multipliedBy(0.75)
         }
         
         capitalView.snp.makeConstraints { make in
             make.top.equalTo(nameView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
-            make.width.equalTo(300)
+            make.width.equalToSuperview().multipliedBy(0.75)
         }
         
         independencyView.snp.makeConstraints { make in
@@ -261,7 +288,6 @@ class DetailsViewController: UIViewController {
             make.top.equalTo(capitalView.snp.bottom).offset(10)
             make.trailing.equalToSuperview().offset(-8)
             make.width.equalToSuperview().multipliedBy(0.45)
-
         }
         
         populationView.snp.makeConstraints { make in
@@ -289,7 +315,7 @@ class DetailsViewController: UIViewController {
         }
         
         plateCodeView.snp.makeConstraints { make in
-            make.top.equalTo(languageView.snp.bottom).offset(10)
+            make.top.equalTo(currencyView.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(8)
             make.width.equalToSuperview().multipliedBy(0.45)
         }
@@ -308,20 +334,28 @@ class DetailsViewController: UIViewController {
         
         flagImageView.snp.makeConstraints { make in
             make.top.equalTo(timezoneView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.height.equalTo(90)
-            make.width.equalTo(150)
+            make.leading.equalToSuperview().offset(8)
+            make.width.equalToSuperview().multipliedBy(0.45)
+            make.height.equalToSuperview().multipliedBy(0.05)
+            make.center.equalTo(flagDescriptionView.snp.center)
         }
         
         flagDescriptionView.snp.makeConstraints { make in
-            make.top.equalTo(flagImageView.snp.top)
-            make.leading.equalTo(flagImageView.snp.trailing)
-            make.trailing.equalToSuperview()
+            make.top.equalTo(timezoneView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-8)
+            make.width.equalToSuperview().multipliedBy(0.45)
+        }
+        
+        countryCodeView.snp.makeConstraints { make in
+            make.top.equalTo(flagDescriptionView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
         
     }
     
 }
+
+extension DetailsViewController: UIScrollViewDelegate {}
 
 extension DetailsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

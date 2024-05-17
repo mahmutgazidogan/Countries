@@ -61,6 +61,7 @@
 		C0D1DB102B73C2C200393649 /* UnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D1DAF32B73C2C200393649 /* UnwindSegue.swift */; };
 		C0D1DB112B73C2C200393649 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D1DAF42B73C2C200393649 /* LoadingView.swift */; };
 		C0D1DB132B73C2C200393649 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D1DAF62B73C2C200393649 /* AsyncImageView.swift */; };
+		C0F3E28B2BBB757000870656 /* SpringScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F3E28A2BBB757000870656 /* SpringScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,6 +118,7 @@
 		C0D1DAF32B73C2C200393649 /* UnwindSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindSegue.swift; sourceTree = "<group>"; };
 		C0D1DAF42B73C2C200393649 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		C0D1DAF62B73C2C200393649 /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		C0F3E28A2BBB757000870656 /* SpringScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 				C0D1DAF42B73C2C200393649 /* LoadingView.swift */,
 				C0D1DAF62B73C2C200393649 /* AsyncImageView.swift */,
 				C0719C5D2B73F61000076F95 /* SpringStackView.swift */,
+				C0F3E28A2BBB757000870656 /* SpringScrollView.swift */,
 			);
 			name = Spring;
 			path = ../../../../Spring/Spring;
@@ -395,6 +398,7 @@
 				C0D1DB112B73C2C200393649 /* LoadingView.swift in Sources */,
 				C0D0B50D2AF65C530050DE2C /* SceneDelegate.swift in Sources */,
 				C0D1DAF72B73C2C200393649 /* DesignableImageView.swift in Sources */,
+				C0F3E28B2BBB757000870656 /* SpringScrollView.swift in Sources */,
 				C0D0B5232AF662870050DE2C /* HomeViewController.swift in Sources */,
 				C0D1DAFB2B73C2C200393649 /* ImageLoader.swift in Sources */,
 				C0D1DAF82B73C2C200393649 /* KeyboardLayoutConstraint.swift in Sources */,
