@@ -31,7 +31,6 @@
 		C0D0B5382AF686030050DE2C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B5372AF686030050DE2C /* Extensions.swift */; };
 		C0D0B53B2AF687300050DE2C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B53A2AF687300050DE2C /* Router.swift */; };
 		C0D0B53D2AF6882E0050DE2C /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B53C2AF6882E0050DE2C /* NetworkingManager.swift */; };
-		C0D1DA642B73A3EE00393649 /* MorphingLabel in Frameworks */ = {isa = PBXBuildFile; productRef = C0D1DA632B73A3EE00393649 /* MorphingLabel */; };
 		F3FF68692BFD40C3009F7395 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = F3FF68682BFD40C3009F7395 /* Spring */; };
 		F3FF68B32BFD4449009F7395 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = F3FF68B22BFD4449009F7395 /* Spring */; };
 /* End PBXBuildFile section */
@@ -70,7 +69,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0BEDF0A2B39B3410036AC40 /* Kingfisher in Frameworks */,
-				C0D1DA642B73A3EE00393649 /* MorphingLabel in Frameworks */,
 				C0BEDF042B39B3270036AC40 /* Alamofire in Frameworks */,
 				C0BEDF072B39B3340036AC40 /* SnapKit in Frameworks */,
 			);
@@ -210,7 +208,6 @@
 				C0BEDF032B39B3270036AC40 /* Alamofire */,
 				C0BEDF062B39B3340036AC40 /* SnapKit */,
 				C0BEDF092B39B3410036AC40 /* Kingfisher */,
-				C0D1DA632B73A3EE00393649 /* MorphingLabel */,
 			);
 			productName = Countries;
 			productReference = C0D0B5072AF65C530050DE2C /* Countries.app */;
@@ -244,7 +241,6 @@
 				C0BEDF022B39B3270036AC40 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				C0BEDF052B39B3340036AC40 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C0BEDF082B39B3410036AC40 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				C0D1DA622B73A3EE00393649 /* XCRemoteSwiftPackageReference "LTMorphingLabel" */,
 			);
 			productRefGroup = C0D0B5082AF65C530050DE2C /* Products */;
 			projectDirPath = "";
@@ -530,14 +526,6 @@
 				kind = branch;
 			};
 		};
-		C0D1DA622B73A3EE00393649 /* XCRemoteSwiftPackageReference "LTMorphingLabel" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lexrus/LTMorphingLabel";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.3;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -555,11 +543,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C0BEDF082B39B3410036AC40 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		C0D1DA632B73A3EE00393649 /* MorphingLabel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C0D1DA622B73A3EE00393649 /* XCRemoteSwiftPackageReference "LTMorphingLabel" */;
-			productName = MorphingLabel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
