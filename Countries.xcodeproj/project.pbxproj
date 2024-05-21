@@ -33,7 +33,7 @@
 		C0D0B53D2AF6882E0050DE2C /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D0B53C2AF6882E0050DE2C /* NetworkingManager.swift */; };
 		C0D1DA642B73A3EE00393649 /* MorphingLabel in Frameworks */ = {isa = PBXBuildFile; productRef = C0D1DA632B73A3EE00393649 /* MorphingLabel */; };
 		F3FF68692BFD40C3009F7395 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = F3FF68682BFD40C3009F7395 /* Spring */; };
-		F3FF68B12BFD40EB009F7395 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = F3FF68B02BFD40EB009F7395 /* Spring */; };
+		F3FF68B32BFD4449009F7395 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = F3FF68B22BFD4449009F7395 /* Spring */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +61,7 @@
 		C0D0B53A2AF687300050DE2C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C0D0B53C2AF6882E0050DE2C /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		F3FF68682BFD40C3009F7395 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spring; sourceTree = "<group>"; };
-		F3FF68B02BFD40EB009F7395 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Spring; path = ../../Spring/Spring; sourceTree = "<group>"; };
+		F3FF68B22BFD4449009F7395 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spring; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +115,8 @@
 		C0D0B5092AF65C530050DE2C /* Countries */ = {
 			isa = PBXGroup;
 			children = (
+				F3FF68B22BFD4449009F7395 /* Spring */,
 				C0D0B51E2AF661BF0050DE2C /* Supporting Files */,
-				F3FF68B02BFD40EB009F7395 /* Spring */,
 				C0AA61262B66DCFE008599EF /* Helper */,
 				C0D0B5362AF685EB0050DE2C /* Extensions */,
 				C0D0B5392AF687250050DE2C /* Networking */,
@@ -261,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0D0B5172AF65C570050DE2C /* LaunchScreen.storyboard in Resources */,
-				F3FF68B12BFD40EB009F7395 /* Spring in Resources */,
+				F3FF68B32BFD4449009F7395 /* Spring in Resources */,
 				C0D0B5142AF65C570050DE2C /* Assets.xcassets in Resources */,
 				F3FF68692BFD40C3009F7395 /* Spring in Resources */,
 			);
