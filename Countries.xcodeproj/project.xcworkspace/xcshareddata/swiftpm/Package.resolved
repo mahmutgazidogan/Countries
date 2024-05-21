@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "b5c8945616aceab4c1afc96505314cb1a2947e7c"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher",
+      "state" : {
+        "branch" : "master",
+        "revision" : "a4d1b0fe30a63950c9d61e3e16694a511cc8d47c"
+      }
+    },
+    {
+      "identity" : "ltmorphinglabel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lexrus/LTMorphingLabel",
+      "state" : {
+        "revision" : "cbde73b207ac5cfcde289a09685ad0e62b75dc04",
+        "version" : "0.9.3"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4"
+      }
+    }
+  ],
+  "version" : 2
+}
