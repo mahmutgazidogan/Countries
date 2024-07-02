@@ -5,66 +5,51 @@
 //  Created by Mahmut Gazi Doğan on 9.02.2024.
 //
 
-import Foundation
-
 import UIKit
 import SnapKit
 
 class CustomLabelView: SpringView {
     
-    var iconImage: String = "" {
-        didSet {
-            iconImageView.image = UIImage(named: iconImage)
-        }
-    }
-    
+//    var iconImage: String = "" {
+//        didSet {
+//            iconImageView.image = UIImage(named: iconImage) ?? UIImage(systemName: iconImage)
+//        }
+//    }
     var titleText: String = "" {
         didSet {
             titleLabel.text = titleText
         }
     }
-    
     var contentText: String = "" {
         didSet {
             contentLabel.text = contentText
         }
     }
-    
-    private lazy var titleStackView: SpringStackView = {
-        let sv = SpringStackView()
-        sv.axis = .horizontal
-        sv.spacing = 10
-        return sv
-    }()
-    
-    private lazy var iconImageView: SpringImageView = {
-        let imageView = SpringImageView()
-        imageView.backgroundColor = .clear
+    lazy var iconImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = AppColor.title.color
         return imageView
     }()
-    
-    private lazy var titleLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: AppFont.bold, size: FontSize.small.fontSize)
-        label.textColor = AppColor.blackTint.color
-        label.contentMode = .center
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: AppFont.bold, size: 16)
+        label.textColor = AppColor.title.color
         return label
     }()
-
-    lazy var contentLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: AppFont.regular, size: FontSize.small.fontSize)
+    lazy var contentLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: AppFont.regular, size: 14)
         label.numberOfLines = 0
-        label.textColor = AppColor.blackTint.color
+        label.textColor = AppColor.subtitle.color
+        label.textAlignment = .left
         return label
     }()
-    
-    private lazy var secondStackView: SpringStackView = {
-        let sv = SpringStackView()
+    private lazy var labelsStackView: UIStackView = {
+        let sv = UIStackView()
         sv.axis = .vertical
-        sv.spacing = 5
-        sv.alignment = .center
+        sv.spacing = 4
+        sv.alignment = .leading
         return sv
     }()
     
@@ -82,37 +67,36 @@ class CustomLabelView: SpringView {
         self.addCornerRadius(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
                                        .layerMinXMaxYCorner, .layerMinXMinYCorner],
                              radius: 16)
+        self.addShadow()
     }
     
     private func setupViews() {
-        self.backgroundColor = .white
-        self.addSubviews(secondStackView)
-        titleStackView.addArrangedSubviews(iconImageView, titleLabel)
-        secondStackView.addArrangedSubviews(titleStackView, contentLabel)
+                
+        setupSubviews()
         setupLayouts()
     }
     
     private func setupLayouts() {
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentLabel.translatesAutoresizingMaskIntoConstraints = false
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.snp.makeConstraints { make in
-            make.height.width.equalTo(20)
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalTo(self.snp.centerY)
+            make.width.height.equalTo(30)
         }
-
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(iconImageView.snp.centerY)
-        }
-        
-        titleStackView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-        }
-        
-        contentLabel.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        secondStackView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(8)
-            make.bottom.trailing.equalToSuperview().offset(-8)
+        labelsStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview().offset(-8)
         }
     }
     
+    private func setupSubviews() {
+        self.backgroundColor = AppColor.contentBackground.color
+        labelsStackView.addArrangedSubviews(titleLabel, contentLabel)
+        self.addSubviews(iconImageView, labelsStackView)
+    }
 }

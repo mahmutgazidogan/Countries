@@ -7,6 +7,36 @@
 
 import UIKit
 
+enum IconType {
+    case systemName(String)
+    case named(String)
+    case url(String)
+    
+    var image: UIImage? {
+        switch self {
+        case .systemName(let name):
+            return UIImage(systemName: name)
+        case .named(let name):
+            return UIImage(named: name)
+        case .url(_):
+            return nil
+        }
+    }
+}
+
+extension UIImageView {
+    func setIcon(_ iconType: IconType) {
+        switch iconType {
+        case .named(_), .systemName(_):
+            self.image = iconType.image
+        case .url(let url):
+            if let url = URL(string: url) {
+                self.kf.setImage(with: url)
+            }
+        }
+    }
+}
+
 enum AppFont {
     static let regular = "ArialMT"
     static let bold = "Arial-BoldMT"
@@ -30,36 +60,28 @@ enum FontSize {
 }
 
 enum AppColor {
-    case yellowBackground
-    case blackTint
-    case whiteBackground
-    case selectedSegmentedTint
-    case clearBackground
-    case grayBorder
-    case lightTextBackground
+    case title
+    case subtitle
+    case mainBackground
+    case contentBackground
     
     var color: UIColor {
         switch self {
-        case .yellowBackground:
-            return UIColor.systemYellow
-        case .blackTint:
-            return UIColor.black
-        case .whiteBackground:
-            return UIColor.white
-        case .selectedSegmentedTint:
-            return UIColor.systemRed
-        case .clearBackground:
-            return UIColor.clear
-        case .grayBorder:
-            return UIColor.gray
-        case .lightTextBackground:
-            return UIColor.lightText
+        case .title:
+            return .label
+        case .subtitle:
+            return .secondaryLabel
+        case .mainBackground:
+            return .systemGroupedBackground
+        case .contentBackground:
+            return .secondarySystemGroupedBackground
         }
     }
 }
 
 enum AppConstants  {
     case countries
+    case details
     case capital
     case searchBarPlaceholder
     case emptyString
@@ -68,6 +90,8 @@ enum AppConstants  {
         switch self {
         case .countries:
             return "Countries"
+        case .details:
+            return "Details"
         case .capital:
             return "Capital"
         case .searchBarPlaceholder:
@@ -75,15 +99,6 @@ enum AppConstants  {
         case .emptyString:
             return ""
         }
-    }
-}
-
-enum Icons: String {
-    case tick = "tick"
-    case cross = "cross"
-    
-    var image: UIImage? {
-        return UIImage(named: self.rawValue)
     }
 }
 

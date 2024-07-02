@@ -25,24 +25,17 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
                 }
                 self?.presenter?.reloadData()
                 self?.presenter?.hideLoadingIndicator()
-            case .failure(let error):
-                self?.presenter?.showAlert(title: "Hata!",
-                                           message: "Ülkeler listesi getirilirken bir hata oluştu!")
+            case .failure(_):
+                self?.presenter?.showAlert(title: "Error!",
+                                           message: "An error occurred while fetching the country list! Please check your internet connetcion or try again later!",
+                                           tryAgainHandler: { [weak self] _ in self?.fetchAllCountries()},
+                                           exitHandler: { _ in exit(0) })
                 self?.presenter?.hideLoadingIndicator()
             }
         }
     }
     
-    func titleForSegmentedControl(segmented: UISegmentedControl) {
-        let allContinents = Continent.allCases.map {
-            $0.rawValue
-        }
-        for (index, title) in allContinents.enumerated() {
-            segmented.insertSegment(withTitle: title, at: index, animated: true)
-        }
-    }
-    
-    func filterByContinents() -> [Country]? {
+    private func filterByContinents() -> [Country]? {
         guard let countryList else { return [] }
         if selectedContinent == .all {
             return countryList
@@ -59,7 +52,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         }
     }
     
-    func countOfFilteredByContinents() -> Int? {
+    private func countOfFilteredByContinents() -> Int? {
         guard let filteredByContinents = filterByContinents() else { return 0 }
         return filteredByContinents.count
     }
@@ -77,7 +70,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         self.presenter?.reloadData()
     }
     
-    func countOfSearchedCountries() -> Int? {
+    private func countOfSearchedCountries() -> Int? {
         return searchedCountries?.count
     }
     

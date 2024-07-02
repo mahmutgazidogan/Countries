@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-class HomeViewController: UIViewController {
-    
+final class HomeViewController: UIViewController {
     var presenter: HomeViewToPresenterProtocol?
     
     private lazy var searchController: UISearchController = {
@@ -17,25 +16,15 @@ class HomeViewController: UIViewController {
         search.searchBar.placeholder = AppConstants.searchBarPlaceholder.text
         search.searchResultsUpdater = self
         search.delegate = self
-        search.searchBar.tintColor = AppColor.blackTint.color
-        search.searchBar.searchTextField.backgroundColor = AppColor.whiteBackground.color
+        search.searchBar.searchTextField.backgroundColor = AppColor.mainBackground.color
         return search
     }()
-    
-    private lazy var customView: DesignableView = {
-        let view = DesignableView()
-        view.backgroundColor = .cyan
-        view.animation = "slideUp"
-        view.duration = 2
-        view.damping = 1
-        view.animate()
-        return view
-    }()
-    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        flowLayout.minimumInteritemSpacing = 20.0
+        flowLayout.minimumLineSpacing = 20.0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         cv.delegate = self
         cv.dataSource = self
@@ -47,20 +36,17 @@ class HomeViewController: UIViewController {
                     withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         return cv
     }()
-    
-    private lazy var segmented: UISegmentedControl = {
+    private lazy var segmentedControl: UISegmentedControl = {
         let segment = UISegmentedControl()
-        segment.backgroundColor = AppColor.whiteBackground.color
-        segment.selectedSegmentTintColor = AppColor.selectedSegmentedTint.color
+        segment.backgroundColor = AppColor.mainBackground.color
         segment.apportionsSegmentWidthsByContent = true
         segment.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 8)], for: .normal)
         segment.addTarget(self, action: #selector(segmentedValueChanged), for: .valueChanged)
         return segment
     }()
-    
     private lazy var indicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
-        ind.color = AppColor.blackTint.color
+        ind.color = AppColor.title.color
         ind.style = .large
         return ind
     }()
@@ -75,17 +61,15 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        view.backgroundColor = AppColor.yellowBackground.color
-        segmentedValueChanged(sender: segmented)
+        view.backgroundColor = AppColor.mainBackground.color
+        segmentedValueChanged(sender: segmentedControl)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        customView.layer.cornerRadius = 80
-        customView.layer.maskedCorners = [.layerMaxXMinYCorner,
-                                          .layerMinXMinYCorner]
-        customView.layer.masksToBounds = true
+        searchController.searchBar.addShadow()
+        segmentedControl.addShadow()
     }
     
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
@@ -106,32 +90,31 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         title = AppConstants.countries.text
-        collectionView.backgroundColor = .green
+        collectionView.backgroundColor = AppColor.mainBackground.color
         navigationItem.searchController = searchController
-        view.addSubviews(segmented, customView)
-        customView.addSubviews(collectionView, indicator)
-        
+        view.addSubviews(segmentedControl, collectionView, indicator)
+        titleForSegmentedControl()
         setupLayouts()
-        presenter?.getTitleForSegmentedControl(segmented: segmented)
-        segmented.selectedSegmentIndex = 0
+        segmentedControl.selectedSegmentIndex = 0
+    }
+    
+    private func titleForSegmentedControl() {
+        let allContinents = Continent.allCases.map { $0.rawValue }
+        for (index, title) in allContinents.enumerated() {
+            segmentedControl.insertSegment(withTitle: title, at: index, animated: true)
+        }
     }
     
     private func setupLayouts() {
-        segmented.snp.makeConstraints { make in
+        segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(5)
             make.leading.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.05)
+            make.height.equalTo(30)
         }
-        
-        customView.snp.makeConstraints { make in
-            make.top.equalTo(segmented.snp.bottom)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         indicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
@@ -144,19 +127,15 @@ extension HomeViewController: HomePresenterToViewProtocol {
             self?.collectionView.reloadData()
         }
     }
-    
     func showLoadingIndicator() {
         indicator.startAnimating()
     }
-    
     func hideLoadingIndicator() {
         indicator.stopAnimating()
     }
-    
-    func showAlert(title: String, message: String) {
-        showAlert(title: title, message: message, handler: nil)
-    }
 }
+
+extension HomeViewController: UIScrollViewDelegate {}
 
 extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -164,20 +143,19 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
               let presenter else { return }
         if searchText.isEmpty {
             if !searchController.isActive {
-                presenter.changeContinent(segmented: segmented)
+                presenter.changeContinent(segmented: segmentedControl)
             }
             reloadData()
         } else {
-            segmented.selectedSegmentIndex = 0
+            segmentedControl.selectedSegmentIndex = 0
             presenter.getSearchedCountries(searchText: searchText)
             reloadData()
         }
     }
-    
     func willDismissSearchController(_ searchController: UISearchController) {
         guard let presenter else { return }
-        segmented.selectedSegmentIndex = 0
-        presenter.changeContinent(segmented: segmented)
+        segmentedControl.selectedSegmentIndex = 0
+        presenter.changeContinent(segmented: segmentedControl)
         reloadData()
     }
 }
@@ -192,9 +170,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                    withReuseIdentifier: SectionHeaderView.reuseIdentifier,
                                                                                    for: indexPath) as? SectionHeaderView
-            else {
-                return UICollectionReusableView()
-            }
+            else { return UICollectionReusableView() }
+            headerView.titleLabel.textColor = AppColor.title.color
             headerView.titleLabel.text = "\(count) countries listed."
             return headerView
         }
@@ -204,29 +181,20 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 30)
+        return CGSize(width: collectionView.bounds.width, 
+                      height: 30)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: view.frame.width / 2.4 , height: view.frame.height / 5)
+        let size = CGSize(width: view.frame.width / 2.4,
+                          height: view.frame.height / 5)
         return size
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-//        guard let searchText = searchController.searchBar.text,
-//              let presenter,
-//              let filteredByContinents = presenter.getFilteredByContinents(),
-//              let searchedCountries = presenter.interactor.searchedCountries else { return }
-//        if searchText.isEmpty {
-//            let country = filteredByContinents[indexPath.item]
-//            presenter.didSelectItemAt(country: country)
-//        } else {
-//            let country = searchedCountries[indexPath.item]
-//            presenter.didSelectItemAt(country: country)
-//        }
         presenter?.getSelectedItem(collectionView,
                                    didSelectItemAt: indexPath,
                                    searchController: searchController)
@@ -236,16 +204,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-//        guard let searchText = searchController.searchBar.text,
-//              let presenter,
-//              let countOfFilteredByContinents = presenter.getCountOfFilteredByContinents(),
-//              let countOfFilteredCountries = presenter.getCountOfSearchedCountries() else { return 0 }
-//        if searchText.isEmpty {
-//            return countOfFilteredByContinents
-//        } else {
-//            return countOfFilteredCountries
-//        }
-        
         guard let numberOfItems = presenter?.getNumberOfItems(collectionView,
                                                 numberOfItemsInSection: section,
                                                 searchController: searchController) else { return 0 }
@@ -254,22 +212,10 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
-//                                                            for: indexPath) as? HomeCollectionViewCell,
-//              let searchText = searchController.searchBar.text,
-//              let presenter,
-//              let filteredByContinents = presenter.getFilteredByContinents(),
-//              let searchedCountries = presenter.interactor.searchedCountries else { return UICollectionViewCell() }
-//        if searchText.isEmpty {
-//            cell.configure(model: filteredByContinents[indexPath.item])
-//        } else {
-//            cell.configure(model: searchedCountries[indexPath.item])
-//        }
-//        return cell
-        
         guard let cell = presenter?.getCell(collectionView,
                                             cellForItemAt: indexPath,
                                             searchController: searchController) else { return UICollectionViewCell() }
+        cell.addShadow()
         return cell
     }
 }

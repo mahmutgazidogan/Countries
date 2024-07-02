@@ -8,7 +8,6 @@
 import Foundation
 
 class DetailsRouter: DetailsPresenterToRouterProtocol {
-    
     static func createModule(selectedCountryDetails details: Country?) -> DetailsViewController {
         let view = DetailsViewController()
         let interactor: DetailsPresenterToInteractorProtocol = DetailsInteractor()
@@ -19,8 +18,6 @@ class DetailsRouter: DetailsPresenterToRouterProtocol {
         view.presenter = presenter        
         interactor.presenter = presenter
         interactor.details = details
-        
         return view
     }
-    
 }

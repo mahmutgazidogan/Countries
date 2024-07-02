@@ -1,0 +1,124 @@
+//
+//  String + Extension.swift
+//  Countries
+//
+//  Created by Mahmut Doğan on 20.06.2024.
+//
+
+import Foundation
+
+extension String {
+    static func returnCapital(details: Country) -> String {
+        if let capital = details.capital?.joined(separator: ", ") {
+            return capital.uppercased()
+        } else {
+            return "No data found!"
+        }
+    }
+    
+    static func returnIndependency(details: Country) -> String {
+        if let independent = details.independent {
+            return independent ? "Independent" : "Not Independent"
+        } else {
+            return "Independent"
+        }
+    }
+    
+    static func returnSign(details: Country) -> String {
+        if let sign = details.car?.signs?.first {
+            return sign.isEmpty ? "No data found!" : sign
+        }
+        return "No data found!"
+    }
+    
+    static func returnSide(details: Country) -> String {
+        if let side = details.car?.side?.rawValue.capitalized {
+            return side.isEmpty ? "No data found!" : side
+        }
+        return "No data found!"
+    }
+    
+    static func returnFlagDescription(details: Country) -> String {
+        if let description = details.flags?.alt {
+            return description
+        } else {
+            return "No description found!"
+        }
+    }
+    
+    static func returnLanguages(details: Country) -> String {
+        if let languages = details.languages {
+            let languageNames = languages.map({ (_, language) in
+                language
+            }).joined(separator: ", ")
+            return languageNames
+        } else {
+            return "No data found!"
+        }
+    }
+    
+    static func returnTimezones(details: Country) -> String {
+        if let timezones = details.timezones {
+            return timezones.joined(separator: ", ")
+        } else {
+            return "No data found!"
+        }
+    }
+    
+    static func numberFormatter(number: Double) -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let intValue = Int(number)
+        return formatter.string(from: NSNumber(value: intValue))
+    }
+    
+    static func returnCountryCode(details: Country) -> String {
+        guard let idd = details.idd,
+              let root = idd.root,
+              let suffixes = idd.suffixes else {
+            return "No data found!"
+        }
+        for suffix in suffixes {
+            if root == "+1" {
+                return "\(root) \(suffix)"
+            } else {
+                return "\(root)\(suffix)"
+            }
+        }
+        return "No data found!"
+    }
+    
+    static func returnCurrencies(details: Country) -> String {
+        var string = ""
+        if let currencies = details.currencies {
+            let allCurrencies = getAllCurrencyInfo(from: currencies)
+            for (index, currency) in allCurrencies.enumerated() {
+                string += "\(currency.name.capitalized) (\(currency.symbol.capitalized))"
+                if index < allCurrencies.count - 1 {
+                    string += ", "
+                }
+            }
+        } else {
+            string = "No data found!"
+        }
+        return string
+    }
+    
+    private static func getAllCurrencyInfo(from currencies: Currencies) -> [(name: String, symbol: String)] {
+        var currencyInfo: [(name: String, symbol: String)] = []
+        let mirror = Mirror(reflecting: currencies)
+        for child in mirror.children {
+            if let currency = child.value as? Aed,
+               let name = currency.name,
+               let symbol = currency.symbol {
+                let info = (name: name, symbol: symbol)
+                currencyInfo.append(info)
+            } else if let bamCurrency = child.value as? BAM,
+                      let name = bamCurrency.name {
+                let info = (name: name, symbol: "")
+                currencyInfo.append(info)
+            }
+        }
+        return currencyInfo
+    }
+}

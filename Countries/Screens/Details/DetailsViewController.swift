@@ -10,10 +10,24 @@ import SnapKit
 import Kingfisher
 import MapKit
 
-class DetailsViewController: UIViewController {
-    
+final class DetailsViewController: UIViewController {
     var presenter: DetailsViewToPresenterProtocol?
-    
+    private lazy var scrollView: SpringScrollView = {
+        let scrollView = SpringScrollView()
+        scrollView.backgroundColor = AppColor.mainBackground.color
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.isScrollEnabled = true
+        return scrollView
+    }()
+    private lazy var contentView: DesignableView = {
+        let view = DesignableView()
+        view.backgroundColor = AppColor.mainBackground.color
+        view.animation = "slideUp"
+        view.duration = 2
+        view.damping = 1
+        view.animate()
+        return view
+    }()
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -21,150 +35,110 @@ class DetailsViewController: UIViewController {
         mapView.delegate = self
         return mapView
     }()
-    
     private lazy var indicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
-        ind.color = AppColor.blackTint.color
         ind.style = .large
         return ind
     }()
-    
     private lazy var mapIndicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
-        ind.color = AppColor.blackTint.color
         ind.style = .large
         return ind
     }()
-    
-    private lazy var scrollView: SpringScrollView = {
-        let scrollView = SpringScrollView()
-        scrollView.backgroundColor = AppColor.clearBackground.color
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.isScrollEnabled = true
-        return scrollView
-    }()
-    
-    private lazy var contentView: DesignableView = {
-        let view = DesignableView()
-        view.backgroundColor = .cyan
-        view.animation = "slideUp"
-        view.duration = 2
-        view.damping = 1
-        view.animate()
-        return view
-    }()
-    
     private lazy var nameView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Country"
-        view.iconImage = "country"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "country"
+        view.iconImageView.setIcon(.systemName("globe"))
         return view
     }()
-    
     private lazy var capitalView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Capital"
-        view.iconImage = "capital"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "capital"
+        view.iconImageView.setIcon(.systemName("building.columns.circle.fill"))
         return view
     }()
-    
     private lazy var independencyView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Independency"
-        view.iconImage = "independence"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "independence"
+        view.iconImageView.setIcon(.systemName("flag.2.crossed.circle.fill"))
         return view
     }()
-    
     private lazy var areaView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Area"
-        view.iconImage = "area"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "area"
+        view.iconImageView.setIcon(.systemName("mappin.and.ellipse.circle.fill"))
         return view
     }()
-    
     private lazy var populationView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Population"
-        view.iconImage = "population"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "population"
+        view.iconImageView.setIcon(.systemName("person.3.fill"))
         return view
     }()
-    
     private lazy var startOfWeekView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Start of Week"
-        view.iconImage = "startOfWeek"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "startOfWeek"
+        view.iconImageView.setIcon(.systemName("calendar.circle.fill"))
         return view
     }()
-    
     private lazy var currencyView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Currencies"
-        view.iconImage = "currency"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "currency"
+        view.iconImageView.setIcon(.systemName("dollarsign.circle.fill"))
         return view
     }()
-    
     private lazy var countryCodeView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Country Code"
-        view.iconImage = "code"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "code"
+        view.iconImageView.setIcon(.systemName("phone.circle.fill"))
         return view
     }()
-    
     private lazy var timezoneView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Timezones"
-        view.iconImage = "timezone"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "timezone"
+        view.iconImageView.setIcon(.systemName("clock.fill"))
         return view
     }()
-    
     private lazy var languageView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Languages"
-        view.iconImage = "languages"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "languages"
+        view.iconImageView.setIcon(.systemName("text.bubble.fill"))
         return view
     }()
-    
     private lazy var plateCodeView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Plate Code"
-        view.iconImage = "carSign"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "carSign"
+        view.iconImageView.setIcon(.systemName("car.circle.fill"))
         return view
     }()
-    
     private lazy var trafficDirectionView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Traffic Direction"
-        view.iconImage = "leftRight"
-        view.contentLabel.textAlignment = .center
+//        view.iconImage = "leftRight"
+        view.iconImageView.setIcon(.systemName("arrow.left.arrow.right.circle.fill"))
         return view
     }()
-    
     private lazy var flagDescriptionView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Flag Description"
-        view.iconImage = "flag"
-        view.contentLabel.textAlignment = .left
+        view.iconImageView.layer.borderColor = AppColor.title.color.cgColor
+        view.iconImageView.layer.borderWidth = 0.2
+        view.iconImageView.contentMode = .scaleToFill
         view.contentLabel.font = UIFont(name: AppFont.regular, size: FontSize.small.fontSize)
         return view
     }()
-    
-    private lazy var flagImageView: SpringImageView = {
-        let iv = SpringImageView()
-        iv.contentMode = .scaleAspectFit
-        return iv
-    }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -185,20 +159,11 @@ class DetailsViewController: UIViewController {
     }
     
     private func layoutSubviews() {
-        scrollView.addCornerRadius(corners: [.layerMaxXMinYCorner,
-                                             .layerMinXMinYCorner],
-                                   radius: 80)
-        let height = countryCodeView.frame.height + countryCodeView.frame.origin.y
+        mapView.addCornerRadius(corners: [.layerMinXMinYCorner, .layerMinXMaxYCorner,
+                                          .layerMaxXMinYCorner, .layerMaxXMaxYCorner],
+                                radius: 16)
+        let height = timezoneView.frame.height + timezoneView.frame.origin.y
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: height)
-        contentView.addCornerRadius(corners: [.layerMaxXMinYCorner,
-                                              .layerMinXMinYCorner],
-                                    radius: 80)
-        
-        flagImageView.addCornerRadius(corners: [.layerMinXMinYCorner, .layerMinXMaxYCorner,
-                                                .layerMaxXMinYCorner, .layerMaxXMaxYCorner],
-                                      radius: 16)
-        flagImageView.layer.borderWidth = 0.4
-        flagImageView.layer.borderColor = AppColor.grayBorder.color.cgColor
     }
     
     private func updateUI() {
@@ -226,133 +191,109 @@ class DetailsViewController: UIViewController {
     }
     
     private func setupViews() {
-        navigationController?.navigationBar.tintColor = AppColor.blackTint.color
-        navigationController?.navigationBar.backgroundColor = AppColor.lightTextBackground.color
-        view.backgroundColor = AppColor.whiteBackground.color
-        view.addSubviews(mapView, scrollView)
-        mapView.addSubview(mapIndicator)
+        title = AppConstants.details.text
+        navigationController?.navigationBar.tintColor = AppColor.title.color
+        navigationController?.navigationBar.backgroundColor = AppColor.mainBackground.color.withAlphaComponent(0.5)
+        view.backgroundColor = AppColor.mainBackground.color
+        view.addSubviews(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(indicator, nameView, capitalView, independencyView,
+        contentView.addSubviews(mapView, indicator, nameView, capitalView, independencyView,
                                 areaView, populationView, startOfWeekView,
                                 currencyView, timezoneView, languageView,
                                 plateCodeView, trafficDirectionView,
-                                countryCodeView, flagImageView, flagDescriptionView)
-        
+                                flagDescriptionView, countryCodeView)
+        mapView.addSubview(mapIndicator)
         setupLayouts()
     }
     
     private func setupLayouts() {
-        mapView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.3)
-        }
-        
-        mapIndicator.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-        }
-        
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(mapView.snp.bottom)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        
         contentView.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()
             make.width.equalToSuperview()
         }
-        
+        mapView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(self.view.snp.height).multipliedBy(0.3)
+        }
+        mapIndicator.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
         indicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
-
-        
         nameView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.75)
+            make.top.equalTo(mapView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
-        
         capitalView.snp.makeConstraints { make in
-            make.top.equalTo(nameView.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.75)
+            make.top.equalTo(nameView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
-        
         independencyView.snp.makeConstraints { make in
-            make.top.equalTo(capitalView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(8)
-            make.width.equalToSuperview().multipliedBy(0.45)
+            make.top.equalTo(capitalView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
-        
-        areaView.snp.makeConstraints { make in
-            make.top.equalTo(capitalView.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().offset(-8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        populationView.snp.makeConstraints { make in
-            make.top.equalTo(areaView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        startOfWeekView.snp.makeConstraints { make in
-            make.top.equalTo(areaView.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().offset(-8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        currencyView.snp.makeConstraints { make in
-            make.top.equalTo(startOfWeekView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        languageView.snp.makeConstraints { make in
-            make.top.equalTo(startOfWeekView.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().offset(-8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        plateCodeView.snp.makeConstraints { make in
-            make.top.equalTo(currencyView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        trafficDirectionView.snp.makeConstraints { make in
-            make.top.equalTo(languageView.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().offset(-8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-        }
-        
-        timezoneView.snp.makeConstraints { make in
-            make.top.equalTo(plateCodeView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().offset(-8)
-        }
-        
-        flagImageView.snp.makeConstraints { make in
-            make.top.equalTo(timezoneView.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(8)
-            make.width.equalToSuperview().multipliedBy(0.45)
-            make.height.equalToSuperview().multipliedBy(0.05)
-            make.center.equalTo(flagDescriptionView.snp.center)
-        }
-        
         flagDescriptionView.snp.makeConstraints { make in
-            make.top.equalTo(timezoneView.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().offset(-8)
-            make.width.equalToSuperview().multipliedBy(0.45)
+            make.top.equalTo(independencyView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
-        
+        languageView.snp.makeConstraints { make in
+            make.top.equalTo(flagDescriptionView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
         countryCodeView.snp.makeConstraints { make in
-            make.top.equalTo(flagDescriptionView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(languageView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
-        
+        currencyView.snp.makeConstraints { make in
+            make.top.equalTo(countryCodeView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        areaView.snp.makeConstraints { make in
+            make.top.equalTo(currencyView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        populationView.snp.makeConstraints { make in
+            make.top.equalTo(areaView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        plateCodeView.snp.makeConstraints { make in
+            make.top.equalTo(populationView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        trafficDirectionView.snp.makeConstraints { make in
+            make.top.equalTo(plateCodeView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        startOfWeekView.snp.makeConstraints { make in
+            make.top.equalTo(trafficDirectionView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        timezoneView.snp.makeConstraints { make in
+            make.top.equalTo(startOfWeekView.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview()
+        }
     }
-    
 }
 
 extension DetailsViewController: UIScrollViewDelegate {}
@@ -361,7 +302,6 @@ extension DetailsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "customAnnotation"
         var annotationView: MKAnnotationView
-        
         if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) {
             dequeuedView.annotation = annotation
             annotationView = dequeuedView
@@ -372,6 +312,13 @@ extension DetailsViewController: MKMapViewDelegate {
         }
         return annotationView
     }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation else { return }
+        let coordinateRegion = MKCoordinateRegion(center: annotation.coordinate, 
+                                                  latitudinalMeters: 5000,
+                                                  longitudinalMeters: 5000)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
         mapIndicator.startAnimating()
     }
@@ -381,27 +328,42 @@ extension DetailsViewController: MKMapViewDelegate {
 }
 
 extension DetailsViewController: DetailsPresenterToViewProtocol {
-    func showDetails(name: String, capital: String, area: String,
-                     population: String, startOfWeek: String,
-                     currency: String, timezones: String,
-                     flag: String, flagDescription: String,
-                     languages: String, sign: String, side: String,
-                     independency: String, latitude: Double, longitude: Double) {
+    func showDetails(details: Country) {
+        guard let name = details.name?.official?.uppercased(),
+              let flag = details.flags?.png,
+              let area = details.area, 
+              let areaValue = String.numberFormatter(number: area),
+              let population = details.population,
+              let numberOfPopulation = String.numberFormatter(number: Double(population)),
+              let startOfWeek = details.startOfWeek?.rawValue.capitalized else { return }
+        let capital = String.returnCapital(details: details)
+        let sign = String.returnSign(details: details)
+        let side = String.returnSide(details: details)
+        let flagDescription = String.returnFlagDescription(details: details)
+        let languages = String.returnLanguages(details: details)
+        let currency = String.returnCurrencies(details: details)
+        let timezone = String.returnTimezones(details: details)
+        let independency = String.returnIndependency(details: details)
+        let countryCode = String.returnCountryCode(details: details)
+        let coordinates = Double.returnCoordinates(details: details)
         DispatchQueue.main.async { [weak self] in
+            self?.showCountryOnMap(latitude: coordinates.latitude, 
+                                   longitude: coordinates.longitude,
+                                   title: capital)
             self?.nameView.contentText = name
             self?.capitalView.contentText = capital
             self?.independencyView.contentText = independency
-            self?.areaView.contentText = "\(area) km²"
-            self?.populationView.contentText = population
-            self?.startOfWeekView.contentText = startOfWeek
-            self?.currencyView.contentText = currency
-            self?.timezoneView.contentText = timezones
-            self?.plateCodeView.contentText = sign
-            self?.trafficDirectionView.contentText = side
-            self?.flagImageView.kf.setImage(with: URL(string: flag))
+            self?.flagDescriptionView.iconImageView.setIcon(.url(flag))
             self?.flagDescriptionView.contentText = flagDescription
             self?.languageView.contentText = languages
-            self?.showCountryOnMap(latitude: latitude, longitude: longitude, title: capital)
+            self?.countryCodeView.contentText = countryCode
+            self?.currencyView.contentText = currency
+            self?.areaView.contentText = "\(areaValue) km²"
+            self?.populationView.contentText = numberOfPopulation
+            self?.plateCodeView.contentText = sign
+            self?.trafficDirectionView.contentText = side
+            self?.startOfWeekView.contentText = startOfWeek
+            self?.timezoneView.contentText = timezone
         }
     }
 }
