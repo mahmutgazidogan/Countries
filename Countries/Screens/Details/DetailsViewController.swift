@@ -170,14 +170,19 @@ final class DetailsViewController: UIViewController {
         presenter?.updateUI()
     }
     
-    private func showCountryOnMap(latitude: Double, longitude: Double, title: String) {
+    private func showCountryOnMap(latitude: Double, longitude: Double, title: String?) {
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
         let span = MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
         let region = MKCoordinateRegion(center: coordinates, span: span)
         annotation.coordinate = coordinates
-        annotation.subtitle = title
-        annotation.title = AppConstants.capital.text
+        if let title {
+            annotation.subtitle = title
+            annotation.title = AppConstants.capital.text
+        } else {
+            annotation.subtitle = "No data found!"
+            annotation.title = AppConstants.capital.text
+        }
         mapView.addAnnotation(annotation)
         mapView.setRegion(region, animated: true)
     }
@@ -314,7 +319,11 @@ extension DetailsViewController: MKMapViewDelegate {
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else { return }
-        let coordinateRegion = MKCoordinateRegion(center: annotation.coordinate, 
+        let coordinate = annotation.coordinate
+        if coordinate.latitude == -90.0 {
+            return
+        }
+        let coordinateRegion = MKCoordinateRegion(center: coordinate,
                                                   latitudinalMeters: 5000,
                                                   longitudinalMeters: 5000)
         mapView.setRegion(coordinateRegion, animated: true)

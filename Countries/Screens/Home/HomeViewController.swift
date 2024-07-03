@@ -161,7 +161,6 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
