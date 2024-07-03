@@ -170,19 +170,14 @@ final class DetailsViewController: UIViewController {
         presenter?.updateUI()
     }
     
-    private func showCountryOnMap(latitude: Double, longitude: Double, title: String?) {
+    private func showCountryOnMap(latitude: Double, longitude: Double, title: String) {
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
         let span = MKCoordinateSpan(latitudeDelta: 5.0, longitudeDelta: 5.0)
         let region = MKCoordinateRegion(center: coordinates, span: span)
         annotation.coordinate = coordinates
-        if let title {
-            annotation.subtitle = title
-            annotation.title = AppConstants.capital.text
-        } else {
-            annotation.subtitle = "No data found!"
-            annotation.title = AppConstants.capital.text
-        }
+        annotation.subtitle = title
+        annotation.title = AppConstants.capital.text
         mapView.addAnnotation(annotation)
         mapView.setRegion(region, animated: true)
     }
