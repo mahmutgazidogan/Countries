@@ -11,10 +11,10 @@ final class SplashViewController: UIViewController {
     var presenter: SplashViewToPresenterProtocol?
     let imageView: UIImageView = {
         let iv = UIImageView(frame: CGRect(x: (UIScreen.main.bounds.width - 300) / 2,
-                                                   y: (UIScreen.main.bounds.height - 300) / 2,
-                                                   width: 300,
-                                                   height: 300))
-        iv.image = UIImage(named: "dünya")
+                                           y: (UIScreen.main.bounds.height - 300) / 2,
+                                           width: 300,
+                                           height: 300))
+        iv.image = UIImage(named: "world")
         return iv
     }()
     
@@ -63,4 +63,3 @@ extension SplashViewController: ViewProtocol {
         presenter?.showHomeScreen()
     }
 }
-

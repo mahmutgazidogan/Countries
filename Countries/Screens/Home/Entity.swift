@@ -25,7 +25,6 @@ struct Country: Codable {
     let timezones: [String]?
     let continents: [Continent]?
     var flags: Flags?
-    let coatOfArms: CoatOfArms?
     let startOfWeek: StartOfWeek?
     let capitalInfo: CapitalInfo?
 }
@@ -44,11 +43,6 @@ struct Car: Codable {
 enum Side: String, Codable {
     case sideLeft = "left"
     case sideRight = "right"
-}
-
-// MARK: - CoatOfArms
-struct CoatOfArms: Codable {
-    let png: String?
 }
 
 enum Continent: String, Codable, CaseIterable {
@@ -300,15 +294,6 @@ struct Idd: Codable {
 // MARK: - Name
 struct Name: Codable {
     let common, official: String?
-}
-
-enum Region: String, Codable {
-    case africa = "Africa"
-    case americas = "Americas"
-    case antarctic = "Antarctic"
-    case asia = "Asia"
-    case europe = "Europe"
-    case oceania = "Oceania"
 }
 
 enum StartOfWeek: String, Codable {

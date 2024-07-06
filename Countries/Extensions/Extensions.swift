@@ -11,14 +11,10 @@ import SnapKit
 class SectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "SectionHeaderView"
     
-    lazy var titleLabel: SpringLabel = {
-        let label = SpringLabel()
-        label.font = UIFont(name: "Arial-Bold", size: 18)
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .body)
         label.contentMode = .center
-        label.animation = "fadeOutIn"
-        label.curve = "linear"
-        label.duration = 1.9
-        label.animate()
         return label
     }()
     

@@ -9,12 +9,6 @@ import UIKit
 import SnapKit
 
 class CustomLabelView: SpringView {
-    
-//    var iconImage: String = "" {
-//        didSet {
-//            iconImageView.image = UIImage(named: iconImage) ?? UIImage(systemName: iconImage)
-//        }
-//    }
     var titleText: String = "" {
         didSet {
             titleLabel.text = titleText
@@ -33,13 +27,13 @@ class CustomLabelView: SpringView {
     }()
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: AppFont.bold, size: 16)
+        label.font = .preferredFont(forTextStyle: .headline)
         label.textColor = AppColor.title.color
         return label
     }()
     lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: AppFont.regular, size: 14)
+        label.font = .preferredFont(forTextStyle: .subheadline)
         label.numberOfLines = 0
         label.textColor = AppColor.subtitle.color
         label.textAlignment = .left

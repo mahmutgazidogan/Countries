@@ -37,28 +37,6 @@ extension UIImageView {
     }
 }
 
-enum AppFont {
-    static let regular = "ArialMT"
-    static let bold = "Arial-BoldMT"
-}
-
-enum FontSize {
-    case small
-    case medium
-    case large
-    
-    var fontSize: CGFloat {
-        switch self {
-        case .small:
-            return UIFont.preferredFont(forTextStyle: .body).pointSize * 0.8 // Örnek bir oran
-        case .medium:
-            return UIFont.preferredFont(forTextStyle: .body).pointSize
-        case .large:
-            return UIFont.preferredFont(forTextStyle: .body).pointSize * 1.2 // Örnek bir oran
-        }
-    }
-}
-
 enum AppColor {
     case title
     case subtitle
@@ -101,5 +79,3 @@ enum AppConstants  {
         }
     }
 }
-
-

@@ -23,7 +23,7 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: AppFont.regular, size: FontSize.medium.fontSize)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label

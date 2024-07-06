@@ -8,7 +8,6 @@
 import UIKit
 
 final class HomeInteractor: HomePresenterToInteractorProtocol {
-    
     var presenter: HomeInteractorToPresenterProtocol?
     var countryList: Countries? = []
     var searchedCountries: Countries? = []
@@ -131,4 +130,3 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         }
     }
 }
-

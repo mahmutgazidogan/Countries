@@ -43,89 +43,78 @@ final class DetailsViewController: UIViewController {
     private lazy var mapIndicator: UIActivityIndicatorView = {
         let ind = UIActivityIndicatorView()
         ind.style = .large
+        ind.color = AppColor.title.color
         return ind
     }()
     private lazy var nameView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Country"
-//        view.iconImage = "country"
         view.iconImageView.setIcon(.systemName("globe"))
         return view
     }()
     private lazy var capitalView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Capital"
-//        view.iconImage = "capital"
         view.iconImageView.setIcon(.systemName("building.columns.circle.fill"))
         return view
     }()
     private lazy var independencyView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Independency"
-//        view.iconImage = "independence"
         view.iconImageView.setIcon(.systemName("flag.2.crossed.circle.fill"))
         return view
     }()
     private lazy var areaView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Area"
-//        view.iconImage = "area"
         view.iconImageView.setIcon(.systemName("mappin.and.ellipse.circle.fill"))
         return view
     }()
     private lazy var populationView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Population"
-//        view.iconImage = "population"
         view.iconImageView.setIcon(.systemName("person.3.fill"))
         return view
     }()
     private lazy var startOfWeekView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Start of Week"
-//        view.iconImage = "startOfWeek"
         view.iconImageView.setIcon(.systemName("calendar.circle.fill"))
         return view
     }()
     private lazy var currencyView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Currencies"
-//        view.iconImage = "currency"
         view.iconImageView.setIcon(.systemName("dollarsign.circle.fill"))
         return view
     }()
     private lazy var countryCodeView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Country Code"
-//        view.iconImage = "code"
         view.iconImageView.setIcon(.systemName("phone.circle.fill"))
         return view
     }()
     private lazy var timezoneView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Timezones"
-//        view.iconImage = "timezone"
         view.iconImageView.setIcon(.systemName("clock.fill"))
         return view
     }()
     private lazy var languageView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Languages"
-//        view.iconImage = "languages"
         view.iconImageView.setIcon(.systemName("text.bubble.fill"))
         return view
     }()
     private lazy var plateCodeView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Plate Code"
-//        view.iconImage = "carSign"
         view.iconImageView.setIcon(.systemName("car.circle.fill"))
         return view
     }()
     private lazy var trafficDirectionView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Traffic Direction"
-//        view.iconImage = "leftRight"
         view.iconImageView.setIcon(.systemName("arrow.left.arrow.right.circle.fill"))
         return view
     }()
@@ -135,7 +124,6 @@ final class DetailsViewController: UIViewController {
         view.iconImageView.layer.borderColor = AppColor.title.color.cgColor
         view.iconImageView.layer.borderWidth = 0.2
         view.iconImageView.contentMode = .scaleToFill
-        view.contentLabel.font = UIFont(name: AppFont.regular, size: FontSize.small.fontSize)
         return view
     }()
 
@@ -371,5 +359,3 @@ extension DetailsViewController: DetailsPresenterToViewProtocol {
         }
     }
 }
-
-

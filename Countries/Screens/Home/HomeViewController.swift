@@ -10,7 +10,6 @@ import SnapKit
 
 final class HomeViewController: UIViewController {
     var presenter: HomeViewToPresenterProtocol?
-    
     private lazy var searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
         search.searchBar.placeholder = AppConstants.searchBarPlaceholder.text
@@ -171,7 +170,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
                                                                                    for: indexPath) as? SectionHeaderView
             else { return UICollectionReusableView() }
             headerView.titleLabel.textColor = AppColor.title.color
-            headerView.titleLabel.text = "\(count) countries listed."
+            if count == 0 {
+                headerView.titleLabel.text = "Countries are loading..."
+            } else {
+                headerView.titleLabel.text = "\(count) countries listed."
+            }
             return headerView
         }
         return UICollectionReusableView()
