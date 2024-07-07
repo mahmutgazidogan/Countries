@@ -61,6 +61,9 @@ class CustomLabelView: SpringView {
         self.addCornerRadius(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
                                        .layerMinXMaxYCorner, .layerMinXMinYCorner],
                              radius: 16)
+        iconImageView.addCornerRadius(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner,
+                                       .layerMinXMaxYCorner, .layerMinXMinYCorner],
+                             radius: 8)
         self.addShadow()
     }
     

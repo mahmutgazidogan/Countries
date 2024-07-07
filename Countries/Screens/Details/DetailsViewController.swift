@@ -55,19 +55,19 @@ final class DetailsViewController: UIViewController {
     private lazy var capitalView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Capital"
-        view.iconImageView.setIcon(.systemName("building.columns.circle.fill"))
+        view.iconImageView.setIcon(.systemName("building.columns"))
         return view
     }()
     private lazy var independencyView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Independency"
-        view.iconImageView.setIcon(.systemName("flag.2.crossed.circle.fill"))
+        view.iconImageView.setIcon(.systemName("flag.2.crossed.fill"))
         return view
     }()
     private lazy var areaView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Area"
-        view.iconImageView.setIcon(.systemName("mappin.and.ellipse.circle.fill"))
+        view.iconImageView.setIcon(.systemName("mappin.and.ellipse"))
         return view
     }()
     private lazy var populationView: CustomLabelView = {
@@ -79,19 +79,19 @@ final class DetailsViewController: UIViewController {
     private lazy var startOfWeekView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Start of Week"
-        view.iconImageView.setIcon(.systemName("calendar.circle.fill"))
+        view.iconImageView.setIcon(.systemName("calendar"))
         return view
     }()
     private lazy var currencyView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Currencies"
-        view.iconImageView.setIcon(.systemName("dollarsign.circle.fill"))
+        view.iconImageView.setIcon(.systemName("dollarsign"))
         return view
     }()
     private lazy var countryCodeView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Country Code"
-        view.iconImageView.setIcon(.systemName("phone.circle.fill"))
+        view.iconImageView.setIcon(.systemName("phone.fill"))
         return view
     }()
     private lazy var timezoneView: CustomLabelView = {
@@ -109,13 +109,13 @@ final class DetailsViewController: UIViewController {
     private lazy var plateCodeView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Plate Code"
-        view.iconImageView.setIcon(.systemName("car.circle.fill"))
+        view.iconImageView.setIcon(.systemName("car.fill"))
         return view
     }()
     private lazy var trafficDirectionView: CustomLabelView = {
         let view = CustomLabelView()
         view.titleText = "Traffic Direction"
-        view.iconImageView.setIcon(.systemName("arrow.left.arrow.right.circle.fill"))
+        view.iconImageView.setIcon(.systemName("arrow.left.arrow.right"))
         return view
     }()
     private lazy var flagDescriptionView: CustomLabelView = {
@@ -137,7 +137,7 @@ final class DetailsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.navigationBar.backgroundColor = nil
+//        navigationController?.navigationBar.backgroundColor = nil
     }
     
     override func viewDidLayoutSubviews() {
