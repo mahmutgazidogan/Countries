@@ -9,9 +9,9 @@ import UIKit
 
 final class SplashViewController: UIViewController {
     var presenter: SplashViewToPresenterProtocol?
-    let imageView: UIImageView = {
-        let iv = UIImageView(frame: CGRect(x: (UIScreen.main.bounds.width - 300) / 2,
-                                           y: (UIScreen.main.bounds.height - 300) / 2,
+    private let imageView: UIImageView = {
+        let iv = UIImageView(frame: CGRect(x: 0,
+                                           y: 0,
                                            width: 300,
                                            height: 300))
         iv.image = UIImage(named: "world")
@@ -21,12 +21,12 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        animationStarting()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         imageView.center = view.center
+        self.animationStarting()
     }
     
     private func setupViews() {
@@ -37,26 +37,26 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: ViewProtocol {
     func animationStarting() {
-        UIView.animate(withDuration: 3, animations: { [weak self] in
-            let size = (self?.view.frame.size.width ?? 0.0)
-            let diffX = size - (self?.view.frame.width ?? 0.0)
-            let diffY = (self?.view.frame.height ?? 0.0) - size
+        UIView.animate(withDuration: 1.5, animations: {
+            let size = self.view.frame.size.width * 3
+            let diffX = size - self.view.frame.width
+            let diffY = self.view.frame.height - size
             
-            self?.imageView.frame = CGRect(x: -(diffX/2),
+            self.imageView.frame = CGRect(x: -(diffX/2),
                                            y: diffY/2,
                                            width: size,
                                            height: size)
         })
-        UIView.animate(withDuration: 2, animations: { [weak self] in
-            self?.imageView.alpha = 0
-        }) { done in
+        UIView.animate(withDuration: 1.5, animations: {
+            self.imageView.alpha = 0
+        }, completion: { done in
             if done {
-                DispatchQueue.main.asyncAfter(deadline: .now(),
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3,
                                               execute: {
                     self.goToHome()
                 })
             }
-        }
+        })
     }
     
     func goToHome() {
