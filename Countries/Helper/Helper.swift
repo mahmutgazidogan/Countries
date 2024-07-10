@@ -62,6 +62,7 @@ enum AppConstants  {
     case details
     case capital
     case searchBarPlaceholder
+    case noDataFound
     case emptyString
     
     var text: String {
@@ -74,6 +75,8 @@ enum AppConstants  {
             return "Capital"
         case .searchBarPlaceholder:
             return "Search any country..."
+        case .noDataFound:
+            return "No data found!"
         case .emptyString:
             return ""
         }

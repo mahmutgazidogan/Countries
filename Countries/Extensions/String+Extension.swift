@@ -12,7 +12,7 @@ extension String {
         if let capital = details.capital?.joined(separator: ", ") {
             return capital.uppercased()
         } else {
-            return "No data found!"
+            return AppConstants.noDataFound.text
         }
     }
     
@@ -26,23 +26,23 @@ extension String {
     
     static func returnSign(details: Country) -> String {
         if let sign = details.car?.signs?.first {
-            return sign.isEmpty ? "No data found!" : sign
+            return sign.isEmpty ? AppConstants.noDataFound.text : sign
         }
-        return "No data found!"
+        return AppConstants.noDataFound.text
     }
     
     static func returnSide(details: Country) -> String {
         if let side = details.car?.side?.rawValue.capitalized {
-            return side.isEmpty ? "No data found!" : side
+            return side.isEmpty ? AppConstants.noDataFound.text : side
         }
-        return "No data found!"
+        return AppConstants.noDataFound.text
     }
     
     static func returnFlagDescription(details: Country) -> String {
         if let description = details.flags?.alt {
             return description
         } else {
-            return "No description found!"
+            return AppConstants.noDataFound.text
         }
     }
     
@@ -53,7 +53,7 @@ extension String {
             }).joined(separator: ", ")
             return languageNames
         } else {
-            return "No data found!"
+            return AppConstants.noDataFound.text
         }
     }
     
@@ -61,7 +61,7 @@ extension String {
         if let timezones = details.timezones {
             return timezones.joined(separator: ", ")
         } else {
-            return "No data found!"
+            return AppConstants.noDataFound.text
         }
     }
     
@@ -76,7 +76,7 @@ extension String {
         guard let idd = details.idd,
               let root = idd.root,
               let suffixes = idd.suffixes else {
-            return "No data found!"
+            return AppConstants.noDataFound.text
         }
         for suffix in suffixes {
             if root == "+1" {
@@ -85,7 +85,7 @@ extension String {
                 return "\(root)\(suffix)"
             }
         }
-        return "No data found!"
+        return AppConstants.noDataFound.text
     }
     
     static func returnCurrencies(details: Country) -> String {
@@ -99,7 +99,7 @@ extension String {
                 }
             }
         } else {
-            string = "No data found!"
+            string = AppConstants.noDataFound.text
         }
         return string
     }
