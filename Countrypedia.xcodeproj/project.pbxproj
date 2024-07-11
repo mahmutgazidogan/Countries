@@ -57,7 +57,7 @@
 		C0AED6E32B5AF1BF00CC5D03 /* DetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsRouter.swift; sourceTree = "<group>"; };
 		C0AED6E52B5AF24F00CC5D03 /* DetailsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsProtocols.swift; sourceTree = "<group>"; };
 		C0BDAF5F2AFB8AAB00EC4E87 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
-		C0D0B5072AF65C530050DE2C /* Countries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Countries.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0D0B5072AF65C530050DE2C /* Countrypedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Countrypedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D0B50A2AF65C530050DE2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0D0B50C2AF65C530050DE2C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C0D0B5132AF65C570050DE2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		C0D0B4FE2AF65C530050DE2C = {
 			isa = PBXGroup;
 			children = (
-				C0D0B5092AF65C530050DE2C /* Countries */,
+				C0D0B5092AF65C530050DE2C /* Countrypedia */,
 				C0D0B5082AF65C530050DE2C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -132,12 +132,12 @@
 		C0D0B5082AF65C530050DE2C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C0D0B5072AF65C530050DE2C /* Countries.app */,
+				C0D0B5072AF65C530050DE2C /* Countrypedia.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C0D0B5092AF65C530050DE2C /* Countries */ = {
+		C0D0B5092AF65C530050DE2C /* Countrypedia */ = {
 			isa = PBXGroup;
 			children = (
 				F38B8E152C3450FD00C222F4 /* Spring */,
@@ -148,7 +148,7 @@
 				C0D0B51F2AF661E00050DE2C /* Screens */,
 				C0D0B5182AF65C570050DE2C /* Info.plist */,
 			);
-			path = Countries;
+			path = Countrypedia;
 			sourceTree = "<group>";
 		};
 		C0D0B51E2AF661BF0050DE2C /* Supporting Files */ = {
@@ -248,9 +248,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C0D0B5062AF65C530050DE2C /* Countries */ = {
+		C0D0B5062AF65C530050DE2C /* Countrypedia */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C0D0B51B2AF65C580050DE2C /* Build configuration list for PBXNativeTarget "Countries" */;
+			buildConfigurationList = C0D0B51B2AF65C580050DE2C /* Build configuration list for PBXNativeTarget "Countrypedia" */;
 			buildPhases = (
 				C0D0B5032AF65C530050DE2C /* Sources */,
 				C0D0B5042AF65C530050DE2C /* Frameworks */,
@@ -260,14 +260,14 @@
 			);
 			dependencies = (
 			);
-			name = Countries;
+			name = Countrypedia;
 			packageProductDependencies = (
 				C0BEDF032B39B3270036AC40 /* Alamofire */,
 				C0BEDF062B39B3340036AC40 /* SnapKit */,
 				C0BEDF092B39B3410036AC40 /* Kingfisher */,
 			);
 			productName = Countries;
-			productReference = C0D0B5072AF65C530050DE2C /* Countries.app */;
+			productReference = C0D0B5072AF65C530050DE2C /* Countrypedia.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,7 +285,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C0D0B5022AF65C530050DE2C /* Build configuration list for PBXProject "Countries" */;
+			buildConfigurationList = C0D0B5022AF65C530050DE2C /* Build configuration list for PBXProject "Countrypedia" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -303,7 +303,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C0D0B5062AF65C530050DE2C /* Countries */,
+				C0D0B5062AF65C530050DE2C /* Countrypedia */,
 			);
 		};
 /* End PBXProject section */
@@ -503,8 +503,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9Z5J5Q4MH4;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Countries/Info.plist;
+				INFOPLIST_FILE = Countrypedia/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Countrypedia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -518,8 +520,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mahmutdogan.Countries;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mahmutdogan.Countrypedia;
+				PRODUCT_NAME = Countrypedia;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -535,8 +537,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9Z5J5Q4MH4;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Countries/Info.plist;
+				INFOPLIST_FILE = Countrypedia/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Countrypedia;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -550,8 +554,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mahmutdogan.Countries;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mahmutdogan.Countrypedia;
+				PRODUCT_NAME = Countrypedia;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -561,7 +565,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C0D0B5022AF65C530050DE2C /* Build configuration list for PBXProject "Countries" */ = {
+		C0D0B5022AF65C530050DE2C /* Build configuration list for PBXProject "Countrypedia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C0D0B5192AF65C570050DE2C /* Debug */,
@@ -570,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C0D0B51B2AF65C580050DE2C /* Build configuration list for PBXNativeTarget "Countries" */ = {
+		C0D0B51B2AF65C580050DE2C /* Build configuration list for PBXNativeTarget "Countrypedia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C0D0B51C2AF65C580050DE2C /* Debug */,

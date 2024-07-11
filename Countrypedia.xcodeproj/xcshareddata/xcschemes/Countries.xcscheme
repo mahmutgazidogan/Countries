@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C0D0B5062AF65C530050DE2C"
-               BuildableName = "Countries.app"
-               BlueprintName = "Countries"
-               ReferencedContainer = "container:Countries.xcodeproj">
+               BuildableName = "Countrypedia.app"
+               BlueprintName = "Countrypedia"
+               ReferencedContainer = "container:Countrypedia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C0D0B5062AF65C530050DE2C"
-            BuildableName = "Countries.app"
-            BlueprintName = "Countries"
-            ReferencedContainer = "container:Countries.xcodeproj">
+            BuildableName = "Countrypedia.app"
+            BlueprintName = "Countrypedia"
+            ReferencedContainer = "container:Countrypedia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C0D0B5062AF65C530050DE2C"
-            BuildableName = "Countries.app"
-            BlueprintName = "Countries"
-            ReferencedContainer = "container:Countries.xcodeproj">
+            BuildableName = "Countrypedia.app"
+            BlueprintName = "Countrypedia"
+            ReferencedContainer = "container:Countrypedia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
