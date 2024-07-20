@@ -49,6 +49,22 @@ extension UIViewController {
     }
 }
 
+extension UIColor {
+     class func applyGradient(colors: [UIColor], bounds:CGRect) -> UIColor {
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+         
+        UIGraphicsBeginImageContext(gradientLayer.bounds.size)
+        gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return UIColor(patternImage: image!)
+    }
+}
+
 extension UIStackView {
     func addArrangedSubviews(_ view: UIView...) {
         view.forEach({ v in

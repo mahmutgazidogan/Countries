@@ -217,8 +217,6 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = presenter?.getCell(collectionView,
                                             cellForItemAt: indexPath,
                                             searchController: searchController) else { return UICollectionViewCell() }
-        cell.addShadow()
         return cell
     }
 }
-

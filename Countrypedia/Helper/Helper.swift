@@ -42,6 +42,7 @@ enum AppColor {
     case subtitle
     case mainBackground
     case contentBackground
+    case border
     
     var color: UIColor {
         switch self {
@@ -53,6 +54,8 @@ enum AppColor {
             return .systemGroupedBackground
         case .contentBackground:
             return .secondarySystemGroupedBackground
+        case .border:
+            return .darkGray
         }
     }
 }
