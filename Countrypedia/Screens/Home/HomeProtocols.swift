@@ -28,11 +28,14 @@ protocol HomeViewToPresenterProtocol: AnyObject {
                         numberOfItemsInSection section: Int,
                         searchController: UISearchController) -> Int
     func getCell(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath,
-                        searchController: UISearchController) -> UICollectionViewCell
+                 cellForItemAt indexPath: IndexPath,
+                 viewController: UIViewController,
+                 searchController: UISearchController) -> UICollectionViewCell
     func getSelectedItem(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath,
                         searchController: UISearchController)
+    
+    func toggleFavorite(index: Int)
 }
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
@@ -48,10 +51,13 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
                         searchController: UISearchController) -> Int
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath,
+                        viewController: UIViewController,
                         searchController: UISearchController) -> UICollectionViewCell
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath,
                         searchController: UISearchController)
+    
+    func toggleFavorite(country: Country)
 }
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    

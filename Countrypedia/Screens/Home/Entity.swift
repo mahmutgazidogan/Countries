@@ -27,6 +27,27 @@ struct Country: Codable {
     var flags: Flags?
     let startOfWeek: StartOfWeek?
     let capitalInfo: CapitalInfo?
+    
+    var isFavorited: Bool = false
+    
+    enum CodingKeys: CodingKey {
+        case name
+        case independent
+        case currencies
+        case idd
+        case capital
+        case languages
+        case latlng
+        case area
+        case flag
+        case population
+        case car
+        case timezones
+        case continents
+        case flags
+        case startOfWeek
+        case capitalInfo
+    }
 }
 
 // MARK: - CapitalInfo

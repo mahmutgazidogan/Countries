@@ -28,8 +28,8 @@ final class HomeViewController: UIViewController {
         cv.delegate = self
         cv.dataSource = self
         cv.showsVerticalScrollIndicator = false
-        cv.register(HomeCollectionViewCell.self,
-                    forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        cv.register(CommonCollectionViewCell.self,
+                    forCellWithReuseIdentifier: CommonCollectionViewCell.identifier)
         cv.register(SectionHeaderView.self,
                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                     withReuseIdentifier: SectionHeaderView.reuseIdentifier)
@@ -216,7 +216,16 @@ extension HomeViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = presenter?.getCell(collectionView,
                                             cellForItemAt: indexPath,
+                                            viewController: self,
                                             searchController: searchController) else { return UICollectionViewCell() }
         return cell
+    }
+}
+
+extension HomeViewController: CommonCellDelegate {
+    func didTapFavoriteButton(on cell: CommonCollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
+            presenter?.toggleFavorite(index: indexPath.item)
+        }
     }
 }

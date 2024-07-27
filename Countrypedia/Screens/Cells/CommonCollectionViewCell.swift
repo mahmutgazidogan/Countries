@@ -9,8 +9,13 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-final class HomeCollectionViewCell: UICollectionViewCell {
-    static let identifier = "HomeCell"
+protocol CommonCellDelegate: AnyObject {
+    func didTapFavoriteButton(on cell: CommonCollectionViewCell)
+}
+
+final class CommonCollectionViewCell: UICollectionViewCell {
+    static let identifier = "CommonCell"
+    weak var delegate: CommonCellDelegate?
     private let countryView = UIView()
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
@@ -28,11 +33,12 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
         button.tintColor = AppColor.title.color
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    var favoriteButtonTapped: (() -> ()) = {}
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -67,6 +73,7 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     public func configure(model: Country) {
         imageView.kf.setImage(with: URL(string: model.flags?.png ?? AppConstants.emptyString.text))
         nameLabel.text = model.name?.common
+        favoriteButton.isSelected = model.isFavorited 
     }
     private func setupViews() {
         contentView.backgroundColor = AppColor.mainBackground.color
@@ -108,18 +115,7 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     func buttonTapped() {
-        favoriteButtonTapped()
-//        isFavorited.toggle()
-//        switch isFavorited {
-//        case true:
-//            favoriteButton.tintColor = .systemRed
-//            favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-//            reloadInputViews()
-//        case false:
-//            favoriteButton.tintColor = AppColor.title.color
-//            favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-//            reloadInputViews()
-//        }
+        delegate?.didTapFavoriteButton(on: self)
     }
     
 }

@@ -19,11 +19,18 @@ final class SplashRouter: PresenterToRouterProtocol {
     }
     
     func navigateToHomeScreen(from view: ViewProtocol?) {
+//        if let viewController = view as? UIViewController {
+//            let homeViewController = HomeRouter.createModule()
+//            homeViewController.modalPresentationStyle = .fullScreen
+//            homeViewController.modalTransitionStyle = .crossDissolve
+//            viewController.present(homeViewController, animated: true)
+//        }
+        
         if let viewController = view as? UIViewController {
-            let homeViewController = HomeRouter.createModule()
-            homeViewController.modalPresentationStyle = .fullScreen
-            homeViewController.modalTransitionStyle = .crossDissolve
-            viewController.present(homeViewController, animated: true)
+            let tabBar = TabBarController()
+            tabBar.modalPresentationStyle = .fullScreen
+            tabBar.modalTransitionStyle = .crossDissolve
+            viewController.present(tabBar, animated: true)
         }
     }
 }

@@ -44,11 +44,19 @@ final class HomePresenter: HomeViewToPresenterProtocol {
     
     func getCell(_ collectionView: UICollectionView,
                  cellForItemAt indexPath: IndexPath,
+                 viewController: UIViewController,
                  searchController: UISearchController) -> UICollectionViewCell {
     return interactor.collectionView(collectionView,
                                      cellForItemAt: indexPath,
+                                     viewController: viewController,
                                      searchController: searchController)
 }
+    
+    func toggleFavorite(index: Int) {
+        guard let country = interactor.countryList?[index] else { return }
+        interactor.toggleFavorite(country: country)
+        reloadData()
+    }
 
     // MARK: - Presenter to Router - Navigation
     

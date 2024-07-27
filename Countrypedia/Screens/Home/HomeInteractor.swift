@@ -84,6 +84,12 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         }
     }
     
+    func toggleFavorite(country: Country) {
+        if let index = countryList?.firstIndex(where: { $0.name?.common == country.name?.common }) {
+            countryList?[index].isFavorited.toggle()
+        }
+    }
+    
     // MARK: CollectionView Functions
     
     func collectionView(_ collectionView: UICollectionView,
@@ -101,9 +107,10 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath,
+                        viewController: UIViewController,
                         searchController: UISearchController) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
-                                                            for: indexPath) as? HomeCollectionViewCell,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommonCollectionViewCell.identifier,
+                                                            for: indexPath) as? CommonCollectionViewCell,
               let searchText = searchController.searchBar.text,
               let filteredByContinents = filterByContinents(),
               let searchedCountries = searchedCountries else { return UICollectionViewCell() }
@@ -112,6 +119,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         } else {
             cell.configure(model: searchedCountries[indexPath.item])
         }
+        cell.delegate = viewController as? CommonCellDelegate 
         return cell
     }
     

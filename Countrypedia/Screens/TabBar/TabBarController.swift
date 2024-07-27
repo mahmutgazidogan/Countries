@@ -19,16 +19,14 @@ class TabBarController: UITabBarController {
 //        navigationController?.isNavigationBarHidden = false
         tabBar.backgroundColor = AppColor.mainBackground.color
         tabBar.tintColor = AppColor.title.color
-        
         let homeViewController = HomeRouter.createModule()
-        homeViewController.tabBarItem = UITabBarItem(title: homeViewController.title, 
-                                                     image: UIImage(systemName: "globe"),
-                                                     tag: 0)
-        
         let favoritesViewController = FavoritesRouter.createModule()
-        favoritesViewController.tabBarItem = UITabBarItem(title: "Favorites", 
-                                                          image: UIImage(systemName: "heart.fill"),
-                                                          tag: 1)
+        homeViewController.tabBarItem = UITabBarItem(title: homeViewController.title,
+                                                     image: UIImage(systemName: "globe.europe.africa"),
+                                                     selectedImage: UIImage(systemName: "globe.europe.africa.fill"))
+        favoritesViewController.tabBarItem = UITabBarItem(title: "Favorites",
+                                                          image: UIImage(systemName: "heart"),
+                                                          selectedImage: UIImage(systemName: "heart.fill"))
         
         viewControllers = [homeViewController, favoritesViewController]
     }

@@ -19,11 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-//        let countriesModule = SplashRouter.createModule()
-//        window.rootViewController = countriesModule
+        let countriesModule = SplashRouter.createModule()
+        window.rootViewController = countriesModule
         
-        let tabBarController = TabBarController()
-        window.rootViewController = tabBarController
+//        let tabBarController = TabBarController()
+//        window.rootViewController = tabBarController
         
         window.makeKeyAndVisible()
         self.window = window
