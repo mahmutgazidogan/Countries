@@ -13,6 +13,8 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
     var searchedCountries: Countries? = []
     var selectedContinent: Continent? = .all
     
+    // MARK: Fetch & Filter Functions
+    
     func fetchAllCountries() {
         presenter?.showLoadingIndicator()
         NetworkingManager.shared.routerRequest(request: Router.allCountries) { [weak self] (result: Result<Countries, Error>) in
@@ -34,7 +36,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         }
     }
     
-    private func filterByContinents() -> [Country]? {
+    func filterByContinents() -> [Country]? {
         guard let countryList else { return [] }
         if selectedContinent == .all {
             return countryList
@@ -84,10 +86,20 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         }
     }
     
-    func toggleFavorite(country: Country) {
-        if let index = countryList?.firstIndex(where: { $0.name?.common == country.name?.common }) {
-            countryList?[index].isFavorited.toggle()
+    // MARK: Favorite Function
+    // ENG: This function adds and removes favorites on the homepage and during search.
+    // TUR: Bu fonksiyon, anasayfada ve arama sırasında favorileri ekleme ve kaldırmaya yarar.
+    
+    func toggleFavorite(country: Country, searchText: String) {
+        guard let countryIndex = countryList?.firstIndex(where: { $0.name?.common == country.name?.common }) else { return }
+        if searchText.isEmpty {
+            countryList?[countryIndex].isFavorited.toggle()
+        } else {
+            guard let index = searchedCountries?.firstIndex(where: { $0.name?.common == country.name?.common }) else { return }
+            searchedCountries?[index].isFavorited.toggle()
+            countryList?[countryIndex].isFavorited = searchedCountries?[index].isFavorited ?? false
         }
+        presenter?.reloadData()
     }
     
     // MARK: CollectionView Functions

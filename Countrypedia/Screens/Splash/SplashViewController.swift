@@ -18,6 +18,8 @@ final class SplashViewController: UIViewController {
         return iv
     }()
     
+    // MARK: LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -29,11 +31,17 @@ final class SplashViewController: UIViewController {
         self.animationStarting()
     }
     
+    // MARK: View Layout Function
+    
     private func setupViews() {
         view.backgroundColor = AppColor.mainBackground.color
         view.addSubview(imageView)
     }
 }
+
+// MARK: Extensions
+
+// MARK: Splash View Protocol Functions
 
 extension SplashViewController: ViewProtocol {
     func animationStarting() {

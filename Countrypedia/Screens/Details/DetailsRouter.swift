@@ -8,6 +8,9 @@
 import Foundation
 
 class DetailsRouter: DetailsPresenterToRouterProtocol {
+    
+    // MARK: Creating ViewController Function
+    
     static func createModule(selectedCountryDetails details: Country?) -> DetailsViewController {
         let view = DetailsViewController()
         let interactor: DetailsPresenterToInteractorProtocol = DetailsInteractor()

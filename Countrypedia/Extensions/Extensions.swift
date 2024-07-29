@@ -8,9 +8,10 @@
 import UIKit
 import SnapKit
 
+// MARK: CollectionView Extensions
+
 class SectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "SectionHeaderView"
-    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .body)
@@ -35,6 +36,28 @@ class SectionHeaderView: UICollectionReusableView {
     }
 }
 
+extension UICollectionView {
+    public func hideableShowableTabBar(_ scrollView: UIScrollView) {
+        guard let tabBar = (scrollView.delegate as? UIViewController)?.tabBarController?.tabBar else { return }
+        
+        let translation = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
+        
+        if translation.y > 0 {
+            // Scroll down - show tabBar
+            UIView.animate(withDuration: 0.3) {
+                tabBar.frame.origin.y = UIScreen.main.bounds.height - tabBar.frame.height
+            }
+        } else if translation.y < 0 {
+            // Scroll up - hide tabBar
+            UIView.animate(withDuration: 0.3) {
+                tabBar.frame.origin.y = UIScreen.main.bounds.height
+            }
+        }
+    }
+}
+
+// MARK: ViewController Extension
+
 extension UIViewController {
     func showAlert(title: String, 
                    message: String,
@@ -49,21 +72,8 @@ extension UIViewController {
     }
 }
 
-extension UIColor {
-     class func applyGradient(colors: [UIColor], bounds:CGRect) -> UIColor {
-        let gradientLayer: CAGradientLayer = CAGradientLayer()
-        gradientLayer.frame = bounds
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-         
-        UIGraphicsBeginImageContext(gradientLayer.bounds.size)
-        gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return UIColor(patternImage: image!)
-    }
-}
+// MARK: View Extensions
+
 
 extension UIStackView {
     func addArrangedSubviews(_ view: UIView...) {

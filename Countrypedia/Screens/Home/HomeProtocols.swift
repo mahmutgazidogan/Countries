@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: Presenter to View Protocol
+
 protocol HomePresenterToViewProtocol: AnyObject {
     var presenter: HomeViewToPresenterProtocol? { get set }
     func reloadData()
@@ -16,6 +18,8 @@ protocol HomePresenterToViewProtocol: AnyObject {
                    tryAgainHandler: ((UIAlertAction) -> Void)?,
                    exitHandler: ((UIAlertAction) -> Void)?)
 }
+
+// MARK: View to Presenter Protocol
 
 protocol HomeViewToPresenterProtocol: AnyObject {
     var view: HomePresenterToViewProtocol { get set }
@@ -35,8 +39,10 @@ protocol HomeViewToPresenterProtocol: AnyObject {
                         didSelectItemAt indexPath: IndexPath,
                         searchController: UISearchController)
     
-    func toggleFavorite(index: Int)
+    func toggleFavorite(index: Int, searchText: String)
 }
+
+// MARK: Presenter to Interactor Protocol
 
 protocol HomePresenterToInteractorProtocol: AnyObject {
     var presenter: HomeInteractorToPresenterProtocol? { get set }
@@ -57,8 +63,11 @@ protocol HomePresenterToInteractorProtocol: AnyObject {
                         didSelectItemAt indexPath: IndexPath,
                         searchController: UISearchController)
     
-    func toggleFavorite(country: Country)
+    func toggleFavorite(country: Country, searchText: String)
+    func filterByContinents() -> [Country]?
 }
+
+// MARK: Interactor to Presenter Protocol
 
 protocol HomeInteractorToPresenterProtocol: AnyObject {    
     func reloadData()
@@ -69,6 +78,8 @@ protocol HomeInteractorToPresenterProtocol: AnyObject {
                    exitHandler: ((UIAlertAction) -> Void)?)
     func didSelectItemAt(country: Country?)
 }
+
+// MARK: Presenter to Router Protocol
 
 protocol HomePresenterToRouterProtocol: AnyObject {
     var viewController: UIViewController? { get set }

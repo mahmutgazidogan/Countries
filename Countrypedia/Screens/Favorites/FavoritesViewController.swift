@@ -10,7 +10,9 @@ import UIKit
 class FavoritesViewController: UIViewController {
     var presenter: FavoritesViewToPresenterProtocol?
     let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
-
+    
+    // MARK: LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +25,11 @@ class FavoritesViewController: UIViewController {
         imageView.setIcon(.systemName("heart.fill"))
     }
     
-
-    
-
 }
+
+// MARK: Extensions
+
+// MARK: FavoritesPresenterToViewProtocol Functions
 
 extension FavoritesViewController: FavoritesPresenterToViewProtocol {
     

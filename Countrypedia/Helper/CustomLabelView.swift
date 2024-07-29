@@ -47,6 +47,8 @@ class CustomLabelView: SpringView {
         return sv
     }()
     
+    // MARK: LifeCycle
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
       
@@ -66,6 +68,8 @@ class CustomLabelView: SpringView {
                              radius: 8)
         self.addShadow()
     }
+    
+    // MARK: View Layout & Setup Functions
     
     private func setupViews() {
                 

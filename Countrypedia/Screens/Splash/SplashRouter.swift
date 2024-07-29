@@ -8,6 +8,9 @@
 import UIKit
 
 final class SplashRouter: PresenterToRouterProtocol {
+    
+    // MARK: Creating ViewController Function
+    
     static func createModule() -> UIViewController {
         let viewController = SplashViewController()
         let presenter: SplashViewToPresenterProtocol = SplashPresenter()
@@ -18,7 +21,9 @@ final class SplashRouter: PresenterToRouterProtocol {
         return viewController
     }
     
-    func navigateToHomeScreen(from view: ViewProtocol?) {
+    // MARK: TabBar Navigation Function
+    
+    func navigateToTabBar(from view: ViewProtocol?) {
 //        if let viewController = view as? UIViewController {
 //            let homeViewController = HomeRouter.createModule()
 //            homeViewController.modalPresentationStyle = .fullScreen

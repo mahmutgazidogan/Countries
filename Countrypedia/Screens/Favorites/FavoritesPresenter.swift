@@ -22,6 +22,8 @@ final class FavoritesPresenter: FavoritesViewToPresenterProtocol {
     
 }
 
+// MARK: Favorites Interactor to Presenter Functions
+
 extension FavoritesPresenter: FavoritesInteractorToPresenterProtocol {
     
 }

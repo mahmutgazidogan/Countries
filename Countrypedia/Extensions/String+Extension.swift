@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: String Extension
+
 extension String {
     static func returnCapital(details: Country) -> String {
         if let capital = details.capital?.joined(separator: ", ") {

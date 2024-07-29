@@ -177,10 +177,10 @@
 		C0D0B51F2AF661E00050DE2C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				F394152D2C41E4DC004FB4CD /* Favorites */,
-				F394152C2C41C8C0004FB4CD /* TabBar */,
 				F38464732C1B1BB900614451 /* Splash */,
+				F394152C2C41C8C0004FB4CD /* TabBar */,
 				C0D0B5202AF662180050DE2C /* Home */,
+				F394152D2C41E4DC004FB4CD /* Favorites */,
 				C0D0B5212AF6621C0050DE2C /* Details */,
 				C0B205D52B5DBB28003993DD /* Cells */,
 			);
@@ -270,11 +270,11 @@
 		F394152D2C41E4DC004FB4CD /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				F39415362C41E671004FB4CD /* FavoritesProtocols.swift */,
 				F394152E2C41E52C004FB4CD /* FavoritesViewController.swift */,
 				F39415302C41E5B3004FB4CD /* FavoritesInteractor.swift */,
 				F39415322C41E5D0004FB4CD /* FavoritesPresenter.swift */,
 				F39415342C41E5EF004FB4CD /* FavoritesRouter.swift */,
-				F39415362C41E671004FB4CD /* FavoritesProtocols.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";

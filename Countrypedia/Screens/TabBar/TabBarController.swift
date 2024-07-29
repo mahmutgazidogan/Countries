@@ -15,8 +15,9 @@ class TabBarController: UITabBarController {
         setupViews()
     }
     
+    // MARK: View Layout & Setup Function
+    
     private func setupViews() {
-//        navigationController?.isNavigationBarHidden = false
         tabBar.backgroundColor = AppColor.mainBackground.color
         tabBar.tintColor = AppColor.title.color
         let homeViewController = HomeRouter.createModule()

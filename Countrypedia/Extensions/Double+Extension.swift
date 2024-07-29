@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: Double Extension
+
 extension Double {
     static func returnCoordinates(details: Country) -> (latitude: Double, longitude: Double) {
         if let capitalInfo = details.capitalInfo,

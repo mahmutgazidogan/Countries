@@ -7,10 +7,14 @@
 
 import UIKit
 
+// MARK: Splash View Protocol
+
 protocol ViewProtocol: AnyObject {
     func animationStarting()
     func goToHome()
 }
+
+// MARK: Splash View to Presenter Protocol
 
 protocol SplashViewToPresenterProtocol: AnyObject {
     var view: ViewProtocol? { get set }
@@ -18,7 +22,9 @@ protocol SplashViewToPresenterProtocol: AnyObject {
     func showHomeScreen()
 }
 
+// MARK: Splash Presenter to Router Protocol
+
 protocol PresenterToRouterProtocol: AnyObject {
     static func createModule() -> UIViewController
-    func navigateToHomeScreen(from view: ViewProtocol?)
+    func navigateToTabBar(from view: ViewProtocol?)
 }

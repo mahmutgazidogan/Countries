@@ -20,6 +20,8 @@ final class HomePresenter: HomeViewToPresenterProtocol {
         self.router = router
     }
     
+    // MARK: Fetch & Filter Functions
+    
     func updateUI() {
         interactor.fetchAllCountries()
     }
@@ -30,6 +32,18 @@ final class HomePresenter: HomeViewToPresenterProtocol {
     
     func changeContinent(segmented: UISegmentedControl) {
         interactor.changeContinent(segmented: segmented)
+    }
+    
+    // MARK: Favorite Function
+    
+    func toggleFavorite(index: Int, searchText: String) {
+        if searchText.isEmpty {
+            guard let country = interactor.filterByContinents() else { return }
+            interactor.toggleFavorite(country: country[index], searchText: searchText)
+        } else {
+            guard let country = interactor.searchedCountries else { return }
+            interactor.toggleFavorite(country: country[index], searchText: searchText)
+        }
     }
     
     // MARK: CollectionView Functions
@@ -51,14 +65,8 @@ final class HomePresenter: HomeViewToPresenterProtocol {
                                      viewController: viewController,
                                      searchController: searchController)
 }
-    
-    func toggleFavorite(index: Int) {
-        guard let country = interactor.countryList?[index] else { return }
-        interactor.toggleFavorite(country: country)
-        reloadData()
-    }
 
-    // MARK: - Presenter to Router - Navigation
+    // MARK: - Presenter to Interactor - Navigation
     
     func getSelectedItem(_ collectionView: UICollectionView,
                          didSelectItemAt indexPath: IndexPath,
@@ -69,7 +77,7 @@ final class HomePresenter: HomeViewToPresenterProtocol {
     }
 }
 
-    // MARK: Interactor to Presenter
+    // MARK: Interactor to Presenter Functions
 
 extension HomePresenter: HomeInteractorToPresenterProtocol {
     func reloadData() {

@@ -20,10 +20,14 @@ final class DetailsPresenter: DetailsViewToPresenterProtocol {
         self.router = router
     }
     
+    // MARK: Details Function
+    
     func updateUI() {
         interactor.giveDetails()
     }
 }
+
+// MARK: Details Interactor to Presenter Function
 
 extension DetailsPresenter: DetailsInteractorToPresenterProtocol {
     func getDetails(details: Country) {

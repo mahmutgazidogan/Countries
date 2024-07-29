@@ -11,8 +11,10 @@ final class SplashPresenter: SplashViewToPresenterProtocol {
     weak var view: ViewProtocol?
     var router: PresenterToRouterProtocol?
     
+    // MARK: Splash View to Presenter Function
+    
     func showHomeScreen() {
-        router?.navigateToHomeScreen(from: view)
+        router?.navigateToTabBar(from: view)
     }
 }
 

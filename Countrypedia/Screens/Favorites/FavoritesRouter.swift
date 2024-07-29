@@ -9,6 +9,9 @@ import UIKit
 
 final class FavoritesRouter: FavoritesPresenterToRouterProtocol {
     weak var viewController: UIViewController?
+    
+    // MARK: Creating ViewController Function
+    
     static func createModule() -> UIViewController {
         let view = FavoritesViewController()
         let interactor: FavoritesPresenterToInteractorProtocol = FavoritesInteractor()

@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: IconType Enum
+
 enum IconType {
     case systemName(String)
     case named(String)
@@ -24,6 +26,8 @@ enum IconType {
     }
 }
 
+// MARK: UIImageView Extension
+
 extension UIImageView {
     func setIcon(_ iconType: IconType) {
         switch iconType {
@@ -36,6 +40,8 @@ extension UIImageView {
         }
     }
 }
+
+// MARK: AppColor Enum
 
 enum AppColor {
     case title
@@ -60,12 +66,17 @@ enum AppColor {
     }
 }
 
+// MARK: AppConstants Enum
+
 enum AppConstants  {
     case countries
     case details
     case capital
     case searchBarPlaceholder
     case noDataFound
+    case countriesLoading
+    case noSuchCountryFound
+    case listedCountries(Int)
     case emptyString
     
     var text: String {
@@ -80,6 +91,12 @@ enum AppConstants  {
             return "Search any country..."
         case .noDataFound:
             return "No data found!"
+        case .countriesLoading:
+            return "Countries are loading..."
+        case .noSuchCountryFound:
+            return "No such country found!"
+        case .listedCountries(let count):
+            return "\(count) countries listed."
         case .emptyString:
             return ""
         }

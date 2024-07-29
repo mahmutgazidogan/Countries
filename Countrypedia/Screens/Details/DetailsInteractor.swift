@@ -11,6 +11,8 @@ final class DetailsInteractor: DetailsPresenterToInteractorProtocol {
     var presenter: DetailsInteractorToPresenterProtocol?
     var details: Country?
     
+    // MARK: Details Functions
+    
     func giveDetails() {
         guard let details else { return }
         presenter?.getDetails(details: details)

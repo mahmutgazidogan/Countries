@@ -9,9 +9,13 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+// MARK: CommonCellDelegate Protocol
+
 protocol CommonCellDelegate: AnyObject {
     func didTapFavoriteButton(on cell: CommonCollectionViewCell)
 }
+
+// MARK: CommonCollectionViewCell Class
 
 final class CommonCollectionViewCell: UICollectionViewCell {
     static let identifier = "CommonCell"
@@ -25,7 +29,7 @@ final class CommonCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .callout)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -38,6 +42,8 @@ final class CommonCollectionViewCell: UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    // MARK: LifeCycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,7 +58,7 @@ final class CommonCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
-        contentView.clipsToBounds = false // kalp butonuyla birlikte eklendi
+        contentView.clipsToBounds = false
         
         countryView.layer.cornerRadius = 20
         countryView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
@@ -70,17 +76,20 @@ final class CommonCollectionViewCell: UICollectionViewCell {
         favoriteButton.addShadow()
     }
     
+    // MARK: Cell Configuration Function
+    
     public func configure(model: Country) {
         imageView.kf.setImage(with: URL(string: model.flags?.png ?? AppConstants.emptyString.text))
         nameLabel.text = model.name?.common
         favoriteButton.isSelected = model.isFavorited 
     }
+    
+    // MARK: Cell View Layout & Setup Functions
     private func setupViews() {
         contentView.backgroundColor = AppColor.mainBackground.color
         countryView.backgroundColor = AppColor.contentBackground.color
         countryView.addSubviews(imageView, nameLabel)
         contentView.addSubviews(countryView, favoriteButton)
-//        let gradient = UIColor.applyGradient(colors: [#colorLiteral(red: 0.9921568627, green: 0.7254901961, blue: 0.07058823529, alpha: 1), #colorLiteral(red: 0.662745098, green: 0.01568627451, blue: 0.1960784314, alpha: 1)], bounds: CGRect(x: 0, y: 0, width: 30, height: 30))
         favoriteButton.backgroundColor = AppColor.contentBackground.color
         setupLayouts()
         setupFavoriteButton()
@@ -93,12 +102,10 @@ final class CommonCollectionViewCell: UICollectionViewCell {
         }
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-//            make.height.equalTo(contentView.snp.height).multipliedBy(0.75)
             make.height.equalToSuperview().multipliedBy(0.75)
         }
         nameLabel.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-//            make.height.equalTo(contentView.snp.height).multipliedBy(0.25)
             make.height.equalToSuperview().multipliedBy(0.25)
         }
         favoriteButton.snp.makeConstraints { make in
@@ -107,14 +114,16 @@ final class CommonCollectionViewCell: UICollectionViewCell {
             make.trailing.equalTo(contentView.snp.trailing)
         }
     }
+    
+    // MARK: Favorite Button Functions,
+    
     private func setupFavoriteButton() {
         let action = UIAction { [weak self] _ in
             self?.buttonTapped()
         }
         favoriteButton.addAction(action, for: .primaryActionTriggered)
     }
-    
-    func buttonTapped() {
+    private func buttonTapped() {
         delegate?.didTapFavoriteButton(on: self)
     }
     

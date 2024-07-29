@@ -50,6 +50,8 @@ final class HomeViewController: UIViewController {
         return ind
     }()
     
+    // MARK: LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,6 +73,8 @@ final class HomeViewController: UIViewController {
         segmentedControl.addShadow()
     }
     
+    // MARK: Segmented Control Functions
+    
     @objc private func segmentedValueChanged(sender: UISegmentedControl) {
         searchController.searchBar.text?.removeAll()
         presenter?.changeContinent(segmented: sender)
@@ -82,6 +86,15 @@ final class HomeViewController: UIViewController {
         let desiredOffset = CGPoint(x: 0, y: 0)
         collectionView.setContentOffset(desiredOffset, animated: true)
     }
+    
+    private func titleForSegmentedControl() {
+        let allContinents = Continent.allCases.map { $0.rawValue }
+        for (index, title) in allContinents.enumerated() {
+            segmentedControl.insertSegment(withTitle: title, at: index, animated: true)
+        }
+    }
+    
+    // MARK: Fetching & View Layout Functions
     
     private func getDatas() {
         presenter?.updateUI()
@@ -95,13 +108,6 @@ final class HomeViewController: UIViewController {
         titleForSegmentedControl()
         setupLayouts()
         segmentedControl.selectedSegmentIndex = 0
-    }
-    
-    private func titleForSegmentedControl() {
-        let allContinents = Continent.allCases.map { $0.rawValue }
-        for (index, title) in allContinents.enumerated() {
-            segmentedControl.insertSegment(withTitle: title, at: index, animated: true)
-        }
     }
     
     private func setupLayouts() {
@@ -120,6 +126,10 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: Extensions
+
+// MARK: HomePresenterToViewProtocol Functions
+
 extension HomeViewController: HomePresenterToViewProtocol {
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
@@ -135,6 +145,8 @@ extension HomeViewController: HomePresenterToViewProtocol {
 }
 
 extension HomeViewController: UIScrollViewDelegate {}
+
+// MARK: SearchController Functions
 
 extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -159,6 +171,8 @@ extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate, U
     }
 }
 
+// MARK: CollectionView Delegate & DataSource Functions
+
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
@@ -170,10 +184,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
                                                                                    for: indexPath) as? SectionHeaderView
             else { return UICollectionReusableView() }
             headerView.titleLabel.textColor = AppColor.title.color
+            guard let searchText = searchController.searchBar.text else { return headerView }
             if count == 0 {
-                headerView.titleLabel.text = "Countries are loading..."
+                if searchText.isEmpty {
+                    headerView.titleLabel.text = AppConstants.countriesLoading.text
+                } else {
+                    headerView.titleLabel.text = AppConstants.noSuchCountryFound.text
+                }
+                
             } else {
-                headerView.titleLabel.text = "\(count) countries listed."
+                headerView.titleLabel.text = AppConstants.listedCountries(count).text
             }
             return headerView
         }
@@ -201,6 +221,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
                                    didSelectItemAt: indexPath,
                                    searchController: searchController)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        collectionView.hideableShowableTabBar(scrollView)
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
@@ -222,10 +246,13 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: CommonCellDelegate Protocol Function
+
 extension HomeViewController: CommonCellDelegate {
     func didTapFavoriteButton(on cell: CommonCollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
-            presenter?.toggleFavorite(index: indexPath.item)
+            guard let searchText = searchController.searchBar.text, let presenter else { return }
+            presenter.toggleFavorite(index: indexPath.item, searchText: searchText)
         }
     }
 }

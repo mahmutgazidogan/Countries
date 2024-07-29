@@ -11,6 +11,8 @@ import UIKit
 final class HomeRouter: HomePresenterToRouterProtocol {
     weak var viewController: UIViewController?
     
+    // MARK: Creating ViewController Function
+    
     static func createModule() -> UIViewController {
         let view = HomeViewController()
         let interactor: HomePresenterToInteractorProtocol = HomeInteractor()
@@ -25,8 +27,11 @@ final class HomeRouter: HomePresenterToRouterProtocol {
         return navigation
     }
     
+    // MARK: Detail Navigation Function
+    
     func navigateToDetails(selectedCountryDetails details: Country?) {
         let detailsViewController = DetailsRouter.createModule(selectedCountryDetails: details)
+        detailsViewController.hidesBottomBarWhenPushed = true
         viewController?.navigationController?.pushViewController(detailsViewController, animated: true)
     }
 }

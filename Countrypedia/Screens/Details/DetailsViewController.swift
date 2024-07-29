@@ -126,18 +126,14 @@ final class DetailsViewController: UIViewController {
         view.iconImageView.contentMode = .scaleToFill
         return view
     }()
+    
+    // MARK: LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         updateUI()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-//        navigationController?.navigationBar.backgroundColor = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -154,9 +150,7 @@ final class DetailsViewController: UIViewController {
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: height)
     }
     
-    private func updateUI() {
-        presenter?.updateUI()
-    }
+    // MARK: Map Function
     
     private func showCountryOnMap(latitude: Double, longitude: Double, title: String) {
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -168,6 +162,12 @@ final class DetailsViewController: UIViewController {
         annotation.title = AppConstants.capital.text
         mapView.addAnnotation(annotation)
         mapView.setRegion(region, animated: true)
+    }
+    
+    // MARK: Details & View Layout Functions
+    
+    private func updateUI() {
+        presenter?.updateUI()
     }
     
     private func showLoadingIndicator() {
@@ -284,7 +284,11 @@ final class DetailsViewController: UIViewController {
     }
 }
 
+// MARK: Extensions
+
 extension DetailsViewController: UIScrollViewDelegate {}
+
+// MARK: MapKit Functions
 
 extension DetailsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -318,6 +322,8 @@ extension DetailsViewController: MKMapViewDelegate {
         mapIndicator.stopAnimating()
     }
 }
+
+// MARK: DetailsPresenterToView Protocol Function
 
 extension DetailsViewController: DetailsPresenterToViewProtocol {
     func showDetails(details: Country) {
