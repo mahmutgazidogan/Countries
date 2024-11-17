@@ -20,7 +20,8 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         NetworkingManager.shared.routerRequest(request: Router.allCountries) { [weak self] (result: Result<Countries, Error>) in
             switch result {
             case .success(let data):
-                self?.countryList = data.sorted {
+                let updatedCountries = CoreDataManager.shared.checkFavoriteStatus(for: data)
+                self?.countryList = updatedCountries.sorted {
                     $0.name?.common?.lowercased() ?? AppConstants.emptyString.text
                     < $1.name?.common?.lowercased() ?? AppConstants.emptyString.text
                 }
@@ -28,7 +29,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
                 self?.presenter?.hideLoadingIndicator()
             case .failure(_):
                 self?.presenter?.showAlert(title: "Error!",
-                                           message: "An error occurred while fetching the country list! Please check your internet connetcion or try again later!",
+                                           message: "An error occurred while fetching the country list! Please check your internet connection or try again later!",
                                            tryAgainHandler: { [weak self] _ in self?.fetchAllCountries()},
                                            exitHandler: { _ in exit(0) })
                 self?.presenter?.hideLoadingIndicator()
@@ -91,14 +92,27 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
     // TUR: Bu fonksiyon, anasayfada ve arama sırasında favorileri ekleme ve kaldırmaya yarar.
     
     func toggleFavorite(country: Country, searchText: String) {
-        guard let countryIndex = countryList?.firstIndex(where: { $0.name?.common == country.name?.common }) else { return }
+        guard let countryIndex = countryList?.firstIndex(where: { $0.name?.common == country.name?.common }),
+              let name = countryList?[countryIndex].name?.common,
+              let flag = countryList?[countryIndex].flags?.png else { return }
+        let isFavoriteToggled: Bool
+        
         if searchText.isEmpty {
             countryList?[countryIndex].isFavorited.toggle()
+            isFavoriteToggled = countryList?[countryIndex].isFavorited ?? false
         } else {
             guard let index = searchedCountries?.firstIndex(where: { $0.name?.common == country.name?.common }) else { return }
             searchedCountries?[index].isFavorited.toggle()
             countryList?[countryIndex].isFavorited = searchedCountries?[index].isFavorited ?? false
+            isFavoriteToggled = searchedCountries?[index].isFavorited ?? false
         }
+        
+        if isFavoriteToggled {
+            CoreDataManager.shared.addToFavorites(name: name, flag: flag)
+        } else {
+            CoreDataManager.shared.removeFromFavorites(name: name)
+        }
+        
         presenter?.reloadData()
     }
     
