@@ -13,6 +13,13 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         setupViews()
+        setupFavoriteBadge()
+        updateFavoriteBadge()
+        addNotificationObserver()
+    }
+    
+    deinit {
+        removeNotificationObserver()
     }
     
     // MARK: View Layout & Setup Function
@@ -31,5 +38,39 @@ class TabBarController: UITabBarController {
         
         viewControllers = [homeViewController, favoritesViewController]
     }
-
+    
+    private func setupFavoriteBadge() {
+        if let favorites = tabBar.items?[1] {
+            favorites.badgeColor = AppColor.title.color
+            favorites.setBadgeTextAttributes([NSAttributedString.Key.foregroundColor: AppColor.mainBackground.color],
+                                                for: .normal)
+        }
+    }
+    
+    private func updateFavoriteBadge() {
+        let favoriteCount = CoreDataManager.shared.getFavoriteCount()
+        if let favorites = tabBar.items?[1] {
+            if favoriteCount > 0 {
+                favorites.badgeValue = String(favoriteCount)
+            } else {
+                favorites.badgeValue = nil
+            }
+        }
+    }
+    
+    private func addNotificationObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleFavoritesChanged),
+                                               name: NSNotification.Name("UpdateFavoriteBadge"),
+                                               object: nil)
+    }
+    
+    private func removeNotificationObserver() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func handleFavoritesChanged() {
+        updateFavoriteBadge()
+    }
+    
 }

@@ -34,7 +34,7 @@ final class CommonCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    private lazy var favoriteButton: UIButton = {
+    lazy var favoriteButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
@@ -82,6 +82,12 @@ final class CommonCollectionViewCell: UICollectionViewCell {
         imageView.kf.setImage(with: URL(string: model.flags?.png ?? AppConstants.emptyString.text))
         nameLabel.text = model.name?.common
         favoriteButton.isSelected = model.isFavorited 
+    }
+    
+    public func configure(coreData: FavoriteCountry) {
+        imageView.kf.setImage(with: URL(string: coreData.flag ?? AppConstants.emptyString.text))
+        nameLabel.text = coreData.name
+        favoriteButton.isSelected = true
     }
     
     // MARK: Cell View Layout & Setup Functions

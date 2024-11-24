@@ -127,7 +127,6 @@ final class HomeViewController: UIViewController {
 }
 
 // MARK: Extensions
-
 // MARK: HomePresenterToViewProtocol Functions
 
 extension HomeViewController: HomePresenterToViewProtocol {

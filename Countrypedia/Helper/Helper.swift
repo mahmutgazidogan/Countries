@@ -71,6 +71,7 @@ enum AppColor {
 enum AppConstants  {
     case countries
     case details
+    case favorites
     case capital
     case searchBarPlaceholder
     case noDataFound
@@ -85,6 +86,8 @@ enum AppConstants  {
             return "Countries"
         case .details:
             return "Details"
+        case .favorites:
+            return "Favorites"
         case .capital:
             return "Capital"
         case .searchBarPlaceholder:

@@ -101,7 +101,7 @@
 		F39415322C41E5D0004FB4CD /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		F39415342C41E5EF004FB4CD /* FavoritesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRouter.swift; sourceTree = "<group>"; };
 		F39415362C41E671004FB4CD /* FavoritesProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesProtocols.swift; sourceTree = "<group>"; };
-		F399F2042C4718B00089A9FC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F3E14A522CEB769800E2258F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F3E271E62CE69B72006A538D /* CountryModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CountryModel.xcdatamodel; sourceTree = "<group>"; };
 		F3E271E92CE69D46006A538D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -339,6 +339,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C0D0B4FE2AF65C530050DE2C;
 			packageReferences = (
@@ -423,7 +424,7 @@
 		C0D0B5152AF65C570050DE2C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F399F2042C4718B00089A9FC /* en */,
+				F3E14A522CEB769800E2258F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

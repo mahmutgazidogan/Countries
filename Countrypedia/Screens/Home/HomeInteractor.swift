@@ -13,6 +13,29 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
     var searchedCountries: Countries? = []
     var selectedContinent: Continent? = .all
     
+    init() {
+        addNotificationObserver()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: Notification Center Functions
+        
+    private func addNotificationObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshFavorites),
+                                               name: NSNotification.Name("FavoriteStatusChanged"),
+                                               object: nil)
+    }
+    
+    @objc private func refreshFavorites() {
+        let updatedCountries = CoreDataManager.shared.checkFavoriteStatus(for: countryList ?? [])
+        self.countryList = updatedCountries
+        presenter?.reloadData()
+    }
+    
     // MARK: Fetch & Filter Functions
     
     func fetchAllCountries() {
@@ -112,7 +135,7 @@ final class HomeInteractor: HomePresenterToInteractorProtocol {
         } else {
             CoreDataManager.shared.removeFromFavorites(name: name)
         }
-        
+        NotificationCenter.default.post(name: NSNotification.Name("UpdateFavoriteBadge"), object: nil)
         presenter?.reloadData()
     }
     

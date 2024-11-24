@@ -10,7 +10,7 @@ import SnapKit
 
 // MARK: CollectionView Extensions
 
-class SectionHeaderView: UICollectionReusableView {
+final class SectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "SectionHeaderView"
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -73,7 +73,6 @@ extension UIViewController {
 }
 
 // MARK: View Extensions
-
 
 extension UIStackView {
     func addArrangedSubviews(_ view: UIView...) {

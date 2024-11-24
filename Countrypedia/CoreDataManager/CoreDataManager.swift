@@ -65,7 +65,8 @@ final class CoreDataManager {
     // Get All Favorite Items
     func getAllFavorites() -> [FavoriteCountry] {
         let fetchRequest: NSFetchRequest<FavoriteCountry> = FavoriteCountry.fetchRequest()
-        
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         do {
             return try context.fetch(fetchRequest)
         } catch {
@@ -73,7 +74,6 @@ final class CoreDataManager {
         }
     }
     
-    //TODO: Favori sayısını badge olarak tabbarda favori kısmında göster
     func getFavoriteCount() -> Int {
         let fetchRequest: NSFetchRequest<FavoriteCountry> = FavoriteCountry.fetchRequest()
         do {
@@ -82,18 +82,6 @@ final class CoreDataManager {
         } catch {
             print("Core Data count error: \(error)")
             return 0
-        }
-    }
-    
-    // Clear Core Data
-    func clearEntityData() {
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "FavoriteCountry"))
-        
-        do {
-            try context.execute(deleteRequest)
-            save()
-        } catch {
-            print("Core Data clearing error: \(error)")
         }
     }
     

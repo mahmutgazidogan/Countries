@@ -8,8 +8,7 @@
 import Foundation
 import Alamofire
 
-class NetworkingManager {
-    
+final class NetworkingManager {
     static let shared = NetworkingManager()
     
     func routerRequest<T: Decodable>(request: URLRequestConvertible,
@@ -24,6 +23,5 @@ class NetworkingManager {
                 callback(.failure(error))
             }
         }
-    }
-    
+    }    
 }

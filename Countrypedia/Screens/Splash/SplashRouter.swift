@@ -24,13 +24,6 @@ final class SplashRouter: PresenterToRouterProtocol {
     // MARK: TabBar Navigation Function
     
     func navigateToTabBar(from view: ViewProtocol?) {
-//        if let viewController = view as? UIViewController {
-//            let homeViewController = HomeRouter.createModule()
-//            homeViewController.modalPresentationStyle = .fullScreen
-//            homeViewController.modalTransitionStyle = .crossDissolve
-//            viewController.present(homeViewController, animated: true)
-//        }
-        
         if let viewController = view as? UIViewController {
             let tabBar = TabBarController()
             tabBar.modalPresentationStyle = .fullScreen

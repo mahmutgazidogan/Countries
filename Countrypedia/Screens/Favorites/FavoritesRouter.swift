@@ -25,4 +25,5 @@ final class FavoritesRouter: FavoritesPresenterToRouterProtocol {
         router.viewController = view
         return navigation
     }
+    
 }
